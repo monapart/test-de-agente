@@ -293,38 +293,42 @@
     }
 
     function showResult() {
-        document.getElementById('lead-screen').classList.remove('active');
-        document.getElementById('result-screen').classList.add('active');
-        let title = "";
-        let text = "";
-        let angle = -90; 
+    document.getElementById('lead-screen').classList.remove('active');
+    document.getElementById('result-screen').classList.add('active');
+    let title = "";
+    let text = "";
+    let angle = -90; 
 
-        if (totalScore <= 60) {
-            title = "En Nómina";
-            text = totalScore <= 30 ? results.nom_low : results.nom_high;
-            angle = -90 + (totalScore / 60) * 45;
-        } else if (totalScore <= 130) {
-            title = "Autónomo con Broker";
-            text = totalScore <= 95 ? results.bro_low : results.bro_high;
-            angle = -45 + ((totalScore - 60) / 70) * 45;
-        } else if (totalScore <= 255) {
-            title = "Autónomo en Plataforma";
-            if (totalScore <= 160) text = results.pla_1;
-            else if (totalScore <= 190) text = results.pla_2;
-            else if (totalScore <= 225) text = results.pla_3;
-            else text = results.pla_4;
-            angle = 0 + ((totalScore - 130) / 125) * 45;
-        } else {
-            title = "Autónomo en Solitario";
-            text = results.solo;
-            angle = 45 + ((totalScore - 255) / 39) * 45;
-        }
+    // Mantenemos tus rangos y lógica de textos [cite: 165-171]
+    if (totalScore <= 60) {
+        title = "En Nómina";
+        text = totalScore <= 30 ? results.nom_low : results.nom_high;
+        angle = -90 + (totalScore / 60) * 45;
+    } else if (totalScore <= 130) {
+        title = "Autónomo con Broker";
+        text = totalScore <= 95 ? results.bro_low : results.bro_high;
+        angle = -45 + ((totalScore - 60) / 70) * 45;
+    } else if (totalScore <= 255) {
+        title = "Autónomo en Plataforma";
+        if (totalScore <= 160) text = results.pla_1;
+        else if (totalScore <= 190) text = results.pla_2;
+        else if (totalScore <= 225) text = results.pla_3;
+        else text = results.pla_4;
+        angle = 0 + ((totalScore - 130) / 125) * 45;
+    } else {
+        title = "Autónomo en Solitario";
+        text = results.solo;
+        angle = 45 + ((totalScore - 255) / 39) * 45;
+    }
 
-        document.getElementById('res-title').innerText = title;
-        document.getElementById('res-text').innerText = text;
-        setTimeout(() => {
-            document.getElementById('needle').style.transform = `rotate(${angle}deg)`;
-        }, 300);
+    document.getElementById('res-title').innerText = title;
+    document.getElementById('res-text').innerText = text;
+    
+    // Animación de la aguja: se aplica el ángulo calculado sobre el punto central (250, 250)
+    setTimeout(() => {
+        document.getElementById('needle').style.transform = `rotate(${angle}deg)`;
+    }, 300);
+}
     }
 
     function sendResult() {
