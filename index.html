@@ -4,18 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Test Monapart: Tu Futuro Inmobiliario</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&family=Lora:wght@400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;400;500&family=Lora:wght@400&display=swap" rel="stylesheet">
     <style>
         :root {
             --monapart-dark: #2d2d2c;
             --monapart-accent: #a36756;
             --monapart-grey: #f4f7f6;
             --bg-white: #ffffff;
-            /* Colores del Arco */
-            --color-nomina: #2d2d2c;
-            --color-broker: #669eac;
-            --color-plataforma: #a9984a;
-            --color-solitario: #a36756;
+            /* Colores del Marcador */
+            --c-nom: #2d2d2c;
+            --c-bro: #669eac;
+            --c-pla: #a9984a;
+            --c-sol: #a36756;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -33,7 +33,7 @@
 
         #app-container {
             width: 95%;
-            max-width: 900px;
+            max-width: 850px;
             height: 90vh;
             background: var(--bg-white);
             border-radius: 4px;
@@ -41,39 +41,36 @@
             display: flex;
             flex-direction: column;
             position: relative;
-            padding: 60px; /* Márgenes amplios pero no excesivos */
+            padding: 50px; /* Márgenes amplios pero ajustados */
         }
 
-        /* Tipografía Introducción */
-        .intro-title { 
+        /* Pantalla de Introducción */
+        .intro-title {
             font-family: 'Roboto', sans-serif;
-            font-weight: 300; 
-            font-size: 42px; /* 50% más grande que el base de 28px */
-            color: var(--monapart-accent); 
-            margin-bottom: 25px;
-            text-transform: none;
+            font-weight: 100; /* Roboto Fino */
+            font-size: 42px; /* 50% más grande */
+            color: var(--monapart-accent);
+            margin-bottom: 20px;
         }
 
         .intro-text {
             font-family: 'Lora', serif;
             font-weight: 400;
-            font-size: 24px; /* 50% más grande que el base de 16px */
+            font-size: 24px; /* 50% más grande */
             color: var(--monapart-dark);
             line-height: 1.4;
-            margin-bottom: 35px;
-            text-transform: lowercase;
+            margin-bottom: 30px;
         }
-        .intro-text::first-letter { text-transform: uppercase; }
 
-        .btn-intro {
+        .btn-start {
             background-color: var(--monapart-dark);
             color: white;
             border: none;
-            padding: 20px 40px;
+            padding: 18px 36px;
             border-radius: 4px;
             cursor: pointer;
             font-family: 'Roboto', sans-serif;
-            font-weight: 500;
+            font-weight: 500; /* Roboto Medium */
             font-size: 24px; /* 50% más grande */
             transition: opacity 0.3s;
             align-self: flex-start;
@@ -82,63 +79,59 @@
         /* Cuestionario */
         .question-counter {
             font-family: 'Roboto', sans-serif;
-            font-weight: 400;
+            font-size: 14px;
             color: var(--monapart-dark);
             margin-bottom: 10px;
+            font-weight: 400;
         }
 
-        .question-text { 
+        .question-text {
             font-family: 'Roboto', sans-serif;
-            font-size: 18px; 
-            margin-bottom: 25px; 
-            color: var(--monapart-dark); 
+            font-size: 18px;
+            font-weight: 400;
+            margin-bottom: 25px;
         }
 
         .option-item {
             font-family: 'Roboto', sans-serif;
+            font-size: 16px;
             padding: 15px;
             border: 1px solid #ddd;
             border-radius: 4px;
             cursor: pointer;
-            transition: all 0.2s;
-            font-size: 16px;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
+            transition: background 0.2s;
         }
-        .option-item:hover { background: #f9f9f9; }
-        .option-item.selected { background: var(--monapart-dark); color: white; border-color: var(--monapart-dark); }
+
+        .option-item:hover { background-color: #f9f9f9; }
+        .option-item.selected { background-color: var(--monapart-dark); color: white; border-color: var(--monapart-dark); }
 
         .btn-next {
             background-color: var(--monapart-dark);
             color: white;
             border: none;
-            padding: 15px 35px;
+            padding: 12px 30px;
             border-radius: 4px;
             cursor: pointer;
             font-weight: 500;
             align-self: flex-end;
+            margin-top: 10px;
         }
         .btn-next:disabled { opacity: 0.3; cursor: not-allowed; }
 
         /* Marcador SVG */
-        .gauge-wrapper { width: 100%; max-width: 500px; margin: 0 auto; position: relative; }
+        .gauge-container { width: 100%; max-width: 450px; margin: 0 auto; position: relative; }
         #gauge-svg { width: 100%; height: auto; }
-        .needle { fill: #ff8c00; transition: transform 1.5s ease-in-out; transform-origin: 250px 250px; }
+        .needle { fill: #ff8c00; transition: transform 1.5s ease-out; transform-origin: 250px 250px; }
         
-        /* Texto de resultados - Corrección de lectura */
-        .result-content { 
-            flex-grow: 1; 
-            overflow-y: auto; 
-            margin-top: 20px; 
-            padding-right: 15px;
-            max-height: 40vh;
-        }
-        .result-text { font-family: 'Roboto', sans-serif; font-size: 15px; line-height: 1.6; color: #444; }
+        /* Resultados */
+        .result-content { flex-grow: 1; overflow-y: auto; padding-top: 15px; }
+        .result-text { font-family: 'Roboto', sans-serif; font-size: 15px; line-height: 1.6; text-align: justify; }
 
-        /* Pantallas */
         .screen { display: none; flex-direction: column; height: 100%; }
         .screen.active { display: flex; }
 
-        input[type="text"], input[type="email"] { padding: 12px; border: 1px solid #ddd; margin-bottom: 10px; font-family: 'Roboto'; }
+        input { padding: 12px; border: 1px solid #ddd; border-radius: 4px; margin-bottom: 10px; font-family: 'Roboto'; }
     </style>
 </head>
 <body>
@@ -147,66 +140,64 @@
     <div id="intro-screen" class="screen active" style="justify-content: center;">
         <h1 class="intro-title">Descubre TU modelo de trabajo ideal</h1>
         <p class="intro-text">¿Eres un agente en nómina, un asociado a un broker o un agente independiente? A través de este cuestionario diseñado bajo criterios de psicología organizacional y análisis de mercado, evaluaremos tu perfil profesional ideal</p>
-        <button class="btn-intro" onclick="startQuiz()">Quiero empezar el test</button>
+        <button class="btn-start" onclick="startQuiz()">Quiero empezar el test</button>
     </div>
 
     <div id="quiz-screen" class="screen">
-        <p id="question-counter" class="question-counter"></p>
-        <div class="question-text" id="question-text"></div>
+        <p id="q-counter" class="question-counter"></p>
+        <div id="q-text" class="question-text"></div>
         <div id="options-container"></div>
-        <button class="btn-next" id="next-btn" disabled onclick="nextQuestion()">Siguiente</button>
+        <button id="next-btn" class="btn-next" disabled onclick="nextQuestion()">Siguiente</button>
     </div>
 
-    <div id="lead-screen" class="screen">
-        <h2 style="margin-bottom:20px">Calculando tu perfil...</h2>
-        <form id="lead-form" onsubmit="event.preventDefault(); submitLead();">
-            <input type="text" id="fname" placeholder="Nombre" required style="width:100%">
-            <input type="text" id="lname" placeholder="Apellido" required style="width:100%">
-            <input type="email" id="email" placeholder="Email" required style="width:100%">
-            <div style="font-size:12px; margin: 15px 0; display:flex; gap:10px">
-                <input type="checkbox" id="rgpd" required>
-                <label for="rgpd">Doy permiso a Monapart para suscribirme a su newsletter y enviarme información comercial en virtud de la RGPD.</label>
-            </div>
-            <button type="submit" class="btn-next" style="width:100%">Muéstrame el resultado</button>
-        </form>
+    <div id="lead-screen" class="screen" style="justify-content: center;">
+        <h2 style="margin-bottom:20px; font-weight: 400;">Finalizar evaluación</h2>
+        <input type="text" id="fname" placeholder="Nombre" required>
+        <input type="text" id="lname" placeholder="Apellido" required>
+        <input type="email" id="u-email" placeholder="Email" required>
+        <div style="font-size:12px; margin: 15px 0; display: flex; gap: 8px;">
+            <input type="checkbox" id="rgpd" required>
+            <label for="rgpd">Doy permiso a Monapart para suscribirme a su newsletter y enviarme información comercial en virtud de la RGPD.</label>
+        </div>
+        <button class="btn-next" style="width:100%" onclick="submitLead()">Muéstrame el resultado</button>
     </div>
 
     <div id="result-screen" class="screen">
-        <div class="gauge-wrapper">
-            <svg id="gauge-svg" viewBox="0 0 500 300">
+        <div class="gauge-container">
+            <svg id="gauge-svg" viewBox="0 0 500 280">
                 <defs>
-                    <path id="path-nomina" d="M 100 250 A 150 150 0 0 1 144 144" />
-                    <path id="path-broker" d="M 144 144 A 150 150 0 0 1 250 100" />
-                    <path id="path-plataforma" d="M 250 100 A 150 150 0 0 1 356 144" />
-                    <path id="path-solitario" d="M 356 144 A 150 150 0 0 1 400 250" />
+                    <path id="txt-path1" d="M 100 240 A 150 150 0 0 1 144 134" />
+                    <path id="txt-path2" d="M 144 134 A 150 150 0 0 1 250 90" />
+                    <path id="txt-path3" d="M 250 90 A 150 150 0 0 1 356 134" />
+                    <path id="txt-path4" d="M 356 134 A 150 150 0 0 1 400 240" />
                 </defs>
-                <path d="M 50 250 A 200 200 0 0 1 108.5 108.5" fill="none" stroke="#2d2d2c" stroke-width="60" />
-                <path d="M 108.5 108.5 A 200 200 0 0 1 250 50" fill="none" stroke="#669eac" stroke-width="60" />
-                <path d="M 250 50 A 200 200 0 0 1 391.5 108.5" fill="none" stroke="#a9984a" stroke-width="60" />
-                <path d="M 391.5 108.5 A 200 200 0 0 1 450 250" fill="none" stroke="#a36756" stroke-width="60" />
+                <path d="M 50 250 A 200 200 0 0 1 108.5 108.5" fill="none" stroke="#2d2d2c" stroke-width="70" />
+                <path d="M 108.5 108.5 A 200 200 0 0 1 250 50" fill="none" stroke="#669eac" stroke-width="70" />
+                <path d="M 250 50 A 200 200 0 0 1 391.5 108.5" fill="none" stroke="#a9984a" stroke-width="70" />
+                <path d="M 391.5 108.5 A 200 200 0 0 1 450 250" fill="none" stroke="#a36756" stroke-width="70" />
                 
-                <text font-family="Roboto" font-size="14" fill="white" text-anchor="middle">
-                    <textPath href="#path-nomina" startOffset="50%">nómina</textPath>
+                <text font-family="Roboto" font-size="12" fill="white" text-anchor="middle">
+                    <textPath href="#txt-path1" startOffset="50%">nómina</textPath>
                 </text>
-                <text font-family="Roboto" font-size="14" fill="white" text-anchor="middle">
-                    <textPath href="#path-broker" startOffset="50%">con broker</textPath>
+                <text font-family="Roboto" font-size="12" fill="white" text-anchor="middle">
+                    <textPath href="#txt-path2" startOffset="50%">con broker</textPath>
                 </text>
-                <text font-family="Roboto" font-size="14" fill="white" text-anchor="middle">
-                    <textPath href="#path-plataforma" startOffset="50%">plataforma</textPath>
+                <text font-family="Roboto" font-size="12" fill="white" text-anchor="middle">
+                    <textPath href="#txt-path3" startOffset="50%">plataforma</textPath>
                 </text>
-                <text font-family="Roboto" font-size="14" fill="white" text-anchor="middle">
-                    <textPath href="#path-solitario" startOffset="50%">en solitario</textPath>
+                <text font-family="Roboto" font-size="12" fill="white" text-anchor="middle">
+                    <textPath href="#txt-path4" startOffset="50%">en solitario</textPath>
                 </text>
 
-                <line id="needle" x1="250" y1="250" x2="60" y2="250" stroke="#ff8c00" stroke-width="3" stroke-linecap="round" />
-                <circle cx="250" cy="250" r="6" fill="#2d2d2c" />
+                <line id="needle" x1="250" y1="250" x2="70" y2="250" stroke="#ff8c00" stroke-width="2" />
+                <circle cx="250" cy="250" r="5" fill="#2d2d2c" />
             </svg>
         </div>
         <div class="result-content">
-            <h2 id="result-title" style="color:#2d2d2c; margin-bottom:10px"></h2>
-            <div id="result-text" class="result-text"></div>
+            <h2 id="res-title" style="margin-bottom:10px; font-weight: 500;"></h2>
+            <div id="res-text" class="result-text"></div>
         </div>
-        <button class="btn-next" style="margin-top:20px; align-self:center" onclick="alert('Enviando informe...')">Enviar resultado por email</button>
+        <button class="btn-next" style="align-self:center; margin-top:15px" onclick="location.reload()">Repetir test</button>
     </div>
 </div>
 
@@ -240,57 +231,55 @@
         { q: "¿Qué posición adoptas ante la irrupción de la Inteligencia Artificial y las nuevas tecnologías en tu operativa diaria?", w: 1.1, a: ["Investigo e implemento proactivamente mis propias herramientas de IA para ganar eficiencia y superar a la competencia por mi cuenta.", 10, "Adopto las innovaciones tecnológicas pero valoro que me lleguen filtradas y testadas por un tercero que conoce mis necesidades.", 6, "Prefiero seguir con los métodos tradicionales que me han funcionado y que la empresa decida qué tecnología debemos usar todos.", 0] }
     ];
 
-    const resultTexts = {
-        nom_low: "Tus respuestas dibujan un perfil con un protagonismo sobre tus resultados externo dominante y una alta necesidad de seguridad psicológica. Científicamente, esto indica que tu productividad florece cuando los factores de estrés ambiental están bajo el control de una organización. No es falta de ambición, es optimización de energía: prefieres canalizar todo tu talento hacia el cliente en lugar de malgastarlo peleando con Hacienda. Para ti, la red de protección de un contrato laboral es el andamio que te permite subir más alto. Eres el activo ideal para estructuras corporativas que necesitan 'vendedores puros'. Disfrutas del ritual de la oficina y de saber que, pase lo que pase, el día 30 tu cuenta emitirá un sonido reconfortante. Si alguna vez te sientes tentado por la aventura solitaria, recuerda que ser tu propio jefe implica ser tu propio administrativo, y esa es una relación que prefieres evitar.",
-        nom_high: "Tu perfil muestra una autoeficacia performativa latente, pero frenada por una baja tolerancia a la incertidumbre. Te gusta el juego inmobiliario y te sientes capaz de liderar operaciones complejas, pero valoras demasiado la infraestructura compartida. La ciencia organizacional sugiere que eres un 'intraemprendedor': alguien que quiere proponer y crecer, pero bajo un paraguas de marca que ya haya hecho el trabajo sucio. Te sientes cómodo donde el soporte administrativo es el motor de tu productividad. Tu bienestar emocional está ligado a la estabilidad, y eso es inteligente; no todo el mundo tiene por qué disfrutar de la 'montaña rusa' del autónomo. Tu modelo ideal es una agencia consolidada con incentivos por objetivos pero con red de seguridad. Eso sí, asegúrate de que tu empresa no sea rígida, porque tienes un punto de autonomía que podría asfixiarse.",
-        bro_low: "Tus resultados indican una transición clara hacia la independencia, pero con un anclaje fuerte en la necesidad de afiliación. Posees la disciplina para ser autónomo, pero el 'lobo solitario' no es tu animal espiritual. Necesitas el contacto social diario y el refuerzo de un equipo presencial. El modelo de broker tradicional te ofrece lo que buscas: una oficina donde tomar café y comentar las jugadas, un líder que marque dirección y una estructura física que separe casa y trabajo. Operas mejor en una comunidad local con marca reconocida. Tu resiliencia se apoya en el grupo; los meses flojos se pasan mejor compartiendo la frustración en el office. Es un modelo honesto, siempre que el porcentaje que cedes te parezca un precio justo por evitar la soledad del corredor de fondo.",
-        bro_high: "Estás en un punto de inflexión psicológico interesante. Tu anclaje de carrera se ha desplazado hacia la independencia, pero tu necesidad de estructura aún te mantiene ligado a modelos tradicionales. Eres un agente con gran capacidad de autogestión que teme el vacío de gestionar tecnología, marketing y soporte legal por cuenta propia. Por eso buscas el refugio de un broker: seguridad jurídica a cambio de una parte de tu beneficio. Sin embargo, podrías estar 'pagando de más'. Deberías vigilar si el soporte justifica el reparto de comisiones. En un mercado tecnológico, perfiles como el tuyo a menudo descubren que el modelo de plataforma de servicios es el paso lógico: misma infraestructura pero con mucha más libertad y retorno mayor. En un escenario de mercado cambiante, este salto será casi obligatorio para mantener tu competitividad.",
-        plat_1: "Tu perfil es el del pragmático por excelencia. Tienes un protagonismo sobre tus resultados muy fuerte: sabes que tus éxitos dependen de ti y no tienes miedo a volar sin motor. Pero tu autoeficacia está unida a un sentido práctico: ¿por qué perder tres horas en contratos o edición de vídeo si una plataforma lo hace profesionalmente? Entiendes que tu tiempo es dinero y tu zona de genialidad es el cierre. El modelo de plataforma es tu simbiosis perfecta. Eres un empresario de ti mismo que utiliza servicios compartidos como apalancamiento operativo. No necesitas oficina para motivarte, pero eres inteligente para no querer estar solo ante el peligro. Tienes la libertad del autónomo y la potencia de fuego de una multinacional.",
-        plat_2: "Tus respuestas demuestran una alta capacidad de adaptación al mercado. Eres consciente de que la IA, los cambios normativos y la escasez de oferta exigen un agente más sofisticado y menos 'artesanal'. Tu perfil puntúa alto en curiosidad tecnológica y resiliencia. No buscas una agencia que te diga qué hacer, sino una plataforma que te dé las armas más avanzadas. Te sientes cómodo en la liquidez actual. No te asusta el final de ciclo porque confías en tu capacidad para ajustar costes. El modelo de plataforma te encaja como un guante: respeta tu independencia total mientras te mantiene actualizado. Prefieres invertir en tu propio crecimiento que en el alquiler de la oficina de un broker. Tu operativa es pura eficiencia.",
-        plat_3: "Tu prioridad absoluta es la gestión de límites. Has alcanzado un nivel de madurez donde entiendes que el éxito no es solo facturar, sino ser dueño de tu tiempo. Tu puntuación en autonomía es altísima; no necesitas vigilancia porque tu propia disciplina es más exigente que cualquier jefe. Buscas un ecosistema que elimine las fricciones diarias. El modelo de plataforma te permite integrar vida personal y profesional sin ataduras presenciales ni pesadillas administrativas. Eres un agente de alto rendimiento que ha decidido no ser esclavo de su estructura. Al delegar lo rutinario, aseguras que tu negocio trabaje para ti, y no al revés. Tienes el control total y el silencio administrativo necesario para enfocarte en tu pasión.",
-        plat_4: "Estás rozando el límite superior de la independencia, pero tu realismo económico te mantiene dentro de la plataforma. Tu análisis de coste de oportunidad te dice que, aunque podrías hacerlo todo solo, no sería rentable. Posees una resiliencia envidiable y una visión de mercado aguda. Sabes que el prestigio de una plataforma sólida y el soporte experto multiplican tu valor ante clientes de alto nivel. Eres un perfil atractivo para cualquier modelo, pero ya has decidido que no quieres techos. La plataforma es tu socio silencioso: no interfiere en tus decisiones pero asegura una infraestructura impecable. Probablemente seas el referente de tu zona y tus clientes te busquen a ti, no a las siglas de tu tarjeta.",
-        solo: "Eres el 'Lobo Estepario' del sector. Tu autoeficacia es máxima y tu tolerancia al riesgo, absoluta. Tienes una necesidad de autonomía radical: cualquier estructura externa te genera fricción. Estás dispuesto a asumir la carga total del back-office con tal de no rendir cuentas ni compartir honorarios. Eres una inmobiliaria unipersonal. Disfrutas el control total del proceso. Pero cuidado: en un escenario de hiper-especialización tecnológica o cambios legales complejos, la carga de gestionar la estructura solo puede canibalizar tu tiempo de venta. Si el papeleo empieza a quitarte más de lo que te da, considera que una plataforma de servicios no es perder independencia, sino externalizar el mantenimiento para seguir siendo el arquitecto jefe. Por ahora, disfruta de tu reino 100% tuyo."
+    const results = {
+        nom_low: "Tus respuestas dibujan un perfil con un protagonismo sobre tus resultados externo dominante y una alta necesidad de seguridad psicológica. Científicamente, esto indica que tu productividad florece cuando los factores de estrés ambiental (incertidumbre de ingresos, cambios legales, gestión de marca) están bajo el control de una organización. No es falta de ambición, es optimización de energía: prefieres canalizar todo tu talento hacia el cliente en lugar de malgastarlo peleando con Hacienda o configurando un CRM. Para ti, la red de protección de un contrato laboral no es una jaula, sino el andamio que te permite subir más alto. Eres el activo ideal para estructuras corporativas que necesitan 'vendedores puros'. Disfrutas del ritual de la oficina y de saber que, pase lo que pase en el mercado, el día 30 tu cuenta bancaria emitirá un sonido reconfortante. Si alguna vez te sientes tentado por la aventura solitaria, recuerda que ser tu propio jefe también implica ser tu propio administrativo, y esa es una relación que, por ahora, prefieres evitar.",
+        nom_high: "Tu perfil muestra una autoeficacia performativa latente, pero frenada por una baja tolerancia a la incertidumbre. Te gusta el juego inmobiliario y te sientes capaz de liderar operaciones complejas, pero valoras demasiado la infraestructura compartida. La ciencia organizacional sugiere que eres un 'intraemprendedor': alguien que quiere proponer y crecer, pero bajo un paraguas de marca que ya haya hecho el trabajo sucio de posicionamiento. Te sientes cómodo en entornos donde el soporte administrativo es el motor de tu productividad. Tu bienestar emocional está muy ligado a la estabilidad, y eso es inteligente; no todo el mundo tiene por qué disfrutar de la 'montaña rusa' del autónomo. Tu modelo ideal es una agencia consolidada que te ofrezca incentivos por objetivos pero mantenga tu red de seguridad intacta. Eso sí, asegúrate de que tu empresa no sea demasiado rígida, porque tienes un punto de autonomía que podría asfixiarse si te obligan a pedir permiso hasta para cambiar el color de una tarjeta de visita.",
+        bro_low: "Tus resultados indican una transición clara hacia la independencia, pero con un anclaje fuerte en la necesidad de afiliación. Posees la disciplina para ser autónomo, pero el 'lobo solitario' no es tu animal espiritual. Necesitas el contacto social diario y el refuerzo de un equipo presencial. El modelo de broker tradicional te ofrece lo que buscas: una oficina donde tomar café y comentar las jugadas, un líder que marque cierta dirección estratégica y una estructura física que separe tu casa de tu trabajo. Operas mejor cuando sientes que formas parte de una comunidad local con una marca que tus vecinos reconozcan. Tu resiliencia se apoya en el grupo; los meses flojos se pasan mejor cuando puedes compartir la frustración en el office. Eres un agente de relaciones, y mientras el broker se encargue de que la impresora funcione y de que haya leads en el sistema, tú serás feliz. Es un modelo honesto y equilibrado, siempre y cuando el porcentaje que cedes de tus comisiones te siga pareciendo un precio justo por no sentir la soledad del corredor de fondo.",
+        bro_high: "Estás en un punto de inflexión psicológico interesante. Tu anclaje de carrera se ha desplazado hacia la independencia, pero tu necesidad de estructura aún te mantiene ligado a modelos tradicionales. Eres un agente con gran capacidad de autogestión que, sin embargo, teme el vacío que supone gestionar la tecnología, el marketing y el soporte legal por cuenta propia. Por eso buscas el refugio de un broker: te da seguridad jurídica y operativa a cambio de una parte sustancial de tu beneficio. Sin embargo, tu puntuación sugiere que podrías estar 'pagando de más' por servicios que ya no necesitas tanto. Deberías vigilar si el soporte que te da tu broker actual realmente justifica la cuota o el reparto de comisiones. En un mercado tan tecnológico y cambiante, los perfiles como el tuyo a menudo descubren que el modelo de plataforma de servicios es el siguiente paso lógico: te daría la misma (o mejor) infraestructura legal y técnica, pero con mucha más libertad y un retorno económico significativamente mayor. No dejes que la costumbre te impida optimizar tu margen neto. En un escenario de mercado cada vez más complejo, este modelo híbrido será tu mejor aliado.",
+        pla_1: "Tu perfil es el del pragmático por excelencia. Tienes un protagonismo sobre tus resultados muy fuerte: sabes que tus éxitos dependen de ti y no tienes miedo a volar sin motor. Sin embargo, tu autoeficacia está unida a un sentido práctico de la economía: ¿por qué iba a perder tres horas resolviendo un contrato legal o editando un vídeo si hay una plataforma que lo hace por mí de forma profesional? Entiendes que tu tiempo vale dinero y que tu zona de genialidad es el cierre, no el back-office. Para ti, el modelo de plataforma es la simbiosis perfecta. Eres un empresario de ti mismo que utiliza la tecnología y los servicios compartidos como 'apalancamiento operativo'. No necesitas una oficina llena de gente para motivarte, pero eres lo suficientemente inteligente como para no querer estar solo ante el peligro. Valoras la marca personal pero entiendes que un respaldo de prestigio te abre puertas más rápido. En definitiva, has hackeado el sistema: tienes la libertad del autónomo y la potencia de fuego de una multinacional.",
+        pla_2: "Tus respuestas demuestran una alta capacidad de adaptación al mercado. Eres consciente de que la IA, los cambios normativos y la escasez de oferta exigen un agente más sofisticado y menos 'artesanal'. Tu perfil puntúa alto en curiosidad tecnológica y resiliencia. No buscas una agencia que te diga qué hacer, sino una plataforma que te dé las armas más avanzadas para que tú ejecutes tu propia estrategia. Te sientes cómodo en la liquidez del mercado actual. No te asusta el final de ciclo porque confías en tu capacidad para ajustar costes. El modelo de plataforma te encaja como un guante porque es el único que respeta tu necesidad de independencia total mientras te mantiene actualizado en lo que de verdad importa. Eres el tipo de profesional que prefiere invertir en su propio crecimiento que en pagar el alquiler de la oficina de un broker. Tu mentalidad es 100% digital y tu operativa, pura eficiencia.",
+        pla_3: "Tu prioridad absoluta es la gestión de límites. Has alcanzado un nivel de madurez profesional donde entiendes que el éxito no es solo facturar, sino ser dueño de tu tiempo. Tu puntuación en autonomía y volición es altísima; no necesitas a nadie que te vigile porque tu propia disciplina es más exigente que cualquier jefe. Lo que buscas es un ecosistema que elimine las fricciones de tu día a día. El modelo de plataforma te permite integrar tu vida personal y profesional sin las ataduras de un modelo presencial ni las pesadillas administrativas del que va por libre. Eres un agente de alto rendimiento que ha decidido que no quiere ser 'esclavo' de su propia estructura. Al delegar lo rutinario en una plataforma de servicios, te aseguras de que tu negocio trabaje para ti, y no al revés. Tienes el control total, el máximo beneficio y, lo más importante, el silencio administrativo necesario para enfocarte en lo que de verdad te apasiona.",
+        pla_4: "Estás rozando el límite superior de la independencia, pero tu realismo económico te mantiene dentro del modelo de plataforma. Tu análisis de coste de oportunidad te dice que, aunque podrías hacerlo todo tú solo, no sería rentable. Posees una resiliencia envidiable y una visión de mercado muy aguda. Sabes que el prestigio de una plataforma sólida y una red de soporte experto son activos que multiplican tu valor ante clientes de alto nivel. Eres un perfil muy atractivo para cualquier modelo laboral, pero tú ya has decidido que no quieres techos. La plataforma es para ti un socio silencioso: no interfiere en tus decisiones pero está ahí para asegurar que tu infraestructura legal y técnica sea impecable. Tu ambición es alta y tu necesidad de supervisión es nula. Probablemente seas el referente de tu zona y tus clientes te busquen a ti, no a las siglas de tu tarjeta. Estás en el punto óptimo de la cadena trófica inmobiliaria.",
+        solo: "Eres el 'Lobo Estepario' del sector inmobiliario. Tu autoeficacia performativa es máxima y tu tolerancia al riesgo, absoluta. La ciencia de la personalidad dice de ti que tienes una necesidad de autonomía radical: cualquier estructura externa te genera una sensación de fricción o pérdida de control. Estás dispuesto a asumir la carga total del back-office, el marketing y la asesoría legal con tal de no rendir cuentas a nadie y de no compartir ni un céntimo de tus honorarios. Eres, en esencia, una inmobiliaria unipersonal. Disfrutas teniendo el control total del proceso, desde el diseño de los contratos hasta el color del logo. Sin embargo, un profesional de tu inteligencia debe estar atento a las señales: en un escenario de hiper-especialización tecnológica o cambios legales complejos, la carga de gestionar la estructura por ti solo puede empezar a canibalizar tu tiempo de venta. Si algún día sientes que el papeleo te quita más de lo que te da, considera que pasar a una plataforma de servicios no es perder independencia, sino externalizar el mantenimiento para seguir siendo el arquitecto jefe. Por ahora, disfruta de tu reino; es 100% tuyo."
     };
 
-    let currentIdx = 0;
-    let score = 0;
-    let selectedValue = null;
+    let currentIndex = 0;
+    let totalScore = 0;
+    let selectedAnswerValue = null;
 
     function startQuiz() {
         document.getElementById('intro-screen').classList.remove('active');
         document.getElementById('quiz-screen').classList.add('active');
-        showQuestion();
+        loadQuestion();
     }
 
-    function showQuestion() {
-        const q = questions[currentIdx];
-        document.getElementById('question-counter').innerText = `Pregunta ${currentIdx + 1} de 26`;
-        document.getElementById('question-text').innerText = q.q;
-        const container = document.getElementById('options-container');
-        container.innerHTML = '';
+    function loadQuestion() {
+        const q = questions[currentIndex];
+        document.getElementById('q-counter').innerText = `Pregunta ${currentIndex + 1} de 26`;
+        document.getElementById('q-text').innerText = q.q;
+        const optionsDiv = document.getElementById('options-container');
+        optionsDiv.innerHTML = '';
         
         for (let i = 0; i < q.a.length; i += 2) {
-            const div = document.createElement('div');
-            div.className = 'option-item';
-            div.innerText = q.a[i];
-            div.onclick = () => selectOption(div, q.a[i+1]);
-            container.appendChild(div);
+            const btn = document.createElement('div');
+            btn.className = 'option-item';
+            btn.innerText = q.a[i];
+            btn.onclick = () => {
+                document.querySelectorAll('.option-item').forEach(el => el.classList.remove('selected'));
+                btn.classList.add('selected');
+                selectedAnswerValue = q.a[i+1];
+                document.getElementById('next-btn').disabled = false;
+            };
+            optionsDiv.appendChild(btn);
         }
         document.getElementById('next-btn').disabled = true;
     }
 
-    function selectOption(el, val) {
-        document.querySelectorAll('.option-item').forEach(i => i.classList.remove('selected'));
-        el.classList.add('selected');
-        selectedValue = val;
-        document.getElementById('next-btn').disabled = false;
-    }
-
     function nextQuestion() {
-        score += selectedValue * questions[currentIdx].w;
-        currentIdx++;
-        if (currentIdx < questions.length) {
-            showQuestion();
+        totalScore += selectedAnswerValue * questions[currentIndex].w;
+        currentIndex++;
+        if (currentIndex < questions.length) {
+            loadQuestion();
         } else {
             document.getElementById('quiz-screen').classList.remove('active');
             document.getElementById('lead-screen').classList.add('active');
@@ -298,45 +287,48 @@
     }
 
     function submitLead() {
+        if (!document.getElementById('rgpd').checked) {
+            alert("Debes aceptar la política de privacidad.");
+            return;
+        }
         document.getElementById('lead-screen').classList.remove('active');
         showResult();
-        // Enviar a info@monapart.com vía backend o servicio tipo Formspree
     }
 
     function showResult() {
         document.getElementById('result-screen').classList.add('active');
         let title = "";
-        let desc = "";
-        let angle = 0; // -90 a 90 grados para el marcador SVG
+        let text = "";
+        let angle = -90; 
 
-        if (score <= 60) {
+        if (totalScore <= 60) {
             title = "En Nómina";
-            desc = score <= 30 ? resultTexts.nom_low : resultTexts.nom_high;
-            angle = -90 + (score / 60) * 45;
-        } else if (score <= 130) {
+            text = totalScore <= 30 ? results.nom_low : results.nom_high;
+            angle = -90 + (totalScore / 60) * 45;
+        } else if (totalScore <= 130) {
             title = "Autónomo con Broker";
-            desc = score <= 95 ? resultTexts.bro_low : resultTexts.bro_high;
-            angle = -45 + ((score - 60) / 70) * 45;
-        } else if (score <= 255) {
+            text = totalScore <= 95 ? results.bro_low : results.bro_high;
+            angle = -45 + ((totalScore - 60) / 70) * 45;
+        } else if (totalScore <= 255) {
             title = "Autónomo en Plataforma";
-            if (score <= 160) desc = resultTexts.plat_1;
-            else if (score <= 190) desc = resultTexts.plat_2;
-            else if (score <= 225) desc = resultTexts.plat_3;
-            else desc = resultTexts.plat_4;
-            angle = 0 + ((score - 130) / 125) * 45;
+            if (totalScore <= 160) text = results.pla_1;
+            else if (totalScore <= 190) text = results.pla_2;
+            else if (totalScore <= 225) text = results.pla_3;
+            else text = results.pla_4;
+            angle = 0 + ((totalScore - 130) / 125) * 45;
         } else {
             title = "Autónomo en Solitario";
-            desc = resultTexts.solo;
-            angle = 45 + ((score - 255) / 39) * 45;
+            text = results.solo;
+            angle = 45 + ((totalScore - 255) / 39) * 45;
         }
 
-        document.getElementById('result-title').innerText = title;
-        document.getElementById('result-text').innerText = desc;
-        // Animación aguja
+        document.getElementById('res-title').innerText = title;
+        document.getElementById('res-text').innerText = text;
         setTimeout(() => {
             document.getElementById('needle').style.transform = `rotate(${angle}deg)`;
         }, 300);
     }
 </script>
+
 </body>
 </html>
