@@ -21,25 +21,26 @@
             font-family: 'Montserrat', sans-serif;
             background-color: var(--monapart-grey);
             color: var(--text-main);
-            height: 100vh;
+            min-height: 100vh; /* Cambiado de height a min-height */
             display: flex;
             justify-content: center;
             align-items: center;
-            overflow: hidden;
+            padding: 20px 0; /* Añadido espacio para que no pegue a los bordes al hacer scroll */
+            /* Se elimina overflow: hidden para permitir el scroll general */
         }
 
         #app-container {
-            width: 100%;
+            width: 95%; /* Cambiado de 100% a 95% para asegurar margen lateral en móvil */
             max-width: 800px;
             height: auto;
-            max-height: 90vh;
+            /* Se elimina max-height: 90vh para que el contenedor crezca con el contenido */
             background: var(--bg-white);
             border-radius: 8px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.05);
             display: flex;
             flex-direction: column;
             position: relative;
-            padding: 60px;
+            padding: 40px; /* Reducido ligeramente de 60px para ganar espacio en pantallas pequeñas */
         }
 
         h1, h2 { font-weight: 600; color: var(--monapart-dark); margin-bottom: 20px; }
@@ -143,25 +144,26 @@
         .result-content { overflow-y: auto; padding-right: 10px; flex-grow: 1; }
         .result-text { font-family: 'Roboto', sans-serif; font-size: 14px; color: #555; text-align: justify; line-height: 1.5; }
 
-        @@media (max-width: 600px) {
+        @media (max-width: 600px) {
             #app-container { 
                 padding: 20px; 
-                height: auto; 
-                max-height: 95vh; 
-                display: flex; 
-                flex-direction: column; 
-                align-items: center; /* Asegura el centrado horizontal de los elementos */
+                margin: 10px auto; /* Centra el contenedor horizontalmente */
             }
             .gauge-container { 
                 width: 100%; 
-                max-width: 300px; 
-                display: flex; 
-                justify-content: center; 
+                max-width: 280px; 
+                transform: scale(0.85); /* Ajuste de tamaño para que quepa en pantallas estrechas */
             }
             .gauge-svg { 
                 width: 100%; 
                 height: auto; 
             }
+            .needle { 
+                /* Ajuste de posición de la aguja para el escalado móvil */
+                left: 10px; 
+                bottom: 20px;
+            }
+        }
             .needle { 
                 width: 40%; /* La aguja se hace proporcional al contenedor */
                 margin-left: -40%; 
