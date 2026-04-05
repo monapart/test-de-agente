@@ -192,8 +192,8 @@
         <div class="gauge-container">
             <svg class="gauge-svg" viewBox="0 0 200 110">
     <defs>
-        <path id="arcPath" d="M 30 100 A 70 70 0 0 1 170 100" />
-    </defs>
+    <path id="arcPath" d="M 12.5 100 A 87.5 87.5 0 0 1 187.5 100" />
+</defs>
     <path d="M 20 100 A 80 80 0 0 1 43.4 43.4" fill="none" stroke="#2d2d2c" stroke-width="25" />
     <path d="M 43.4 43.4 A 80 80 0 0 1 100 20" fill="none" stroke="#669eac" stroke-width="25" />
     <path d="M 100 20 A 80 80 0 0 1 156.6 43.4" fill="none" stroke="#a9984a" stroke-width="25" />
@@ -316,7 +316,12 @@
     }
 
     function showResult() {
-        document.getElementById('result-screen').classList.add('active');
+        const titleElement = document.getElementById('result-title');
+        titleElement.style.textAlign = "center";
+        titleElement.innerHTML = `
+            <div style="font-family: 'Roboto', sans-serif; font-weight: 100; font-size: 0.75em; margin-bottom: 5px; color: #555;">Tu modelo ideal es:</div>
+            <div style="font-family: 'Montserrat', sans-serif; font-weight: 600;">${title}</div>
+        `;
         let title = "";
         let desc = "";
         let deg = 0;
