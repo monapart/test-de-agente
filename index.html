@@ -131,8 +131,10 @@
             width: 140px; height: 4px; 
             background: orange; 
             position: absolute;
-            bottom: 20px; left: 30px; 
-            transform-origin: 140px center;
+            bottom: 20px; 
+            left: 50%; /* Cambiar de 30px a 50% */
+            margin-left: -140px; /* Desplazar hacia la izquierda el ancho total para que el origen (right) quede en el centro */
+            transform-origin: right center;
             transition: transform 1.5s cubic-bezier(0.17, 0.67, 0.83, 0.67);
             transform: rotate(0deg); z-index: 10;
             border-radius: 4px;
@@ -141,9 +143,29 @@
         .result-content { overflow-y: auto; padding-right: 10px; flex-grow: 1; }
         .result-text { font-family: 'Roboto', sans-serif; font-size: 14px; color: #555; text-align: justify; line-height: 1.5; }
 
-        @media (max-width: 600px) {
-            #app-container { padding: 20px; height: 95vh; }
-            .gauge-container { width: 300px; transform: scale(0.8); }
+        @@media (max-width: 600px) {
+            #app-container { 
+                padding: 20px; 
+                height: auto; 
+                max-height: 95vh; 
+                display: flex; 
+                flex-direction: column; 
+                align-items: center; /* Asegura el centrado horizontal de los elementos */
+            }
+            .gauge-container { 
+                width: 100%; 
+                max-width: 300px; 
+                display: flex; 
+                justify-content: center; 
+            }
+            .gauge-svg { 
+                width: 100%; 
+                height: auto; 
+            }
+            .needle { 
+                width: 40%; /* La aguja se hace proporcional al contenedor */
+                margin-left: -40%; 
+            }
         }
     </style>
 </head>
