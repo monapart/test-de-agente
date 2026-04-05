@@ -21,26 +21,26 @@
             font-family: 'Montserrat', sans-serif;
             background-color: var(--monapart-grey);
             color: var(--text-main);
-            min-height: 100vh; /* Cambiado de height a min-height */
+            min-height: 100dvh; /* Usa la altura dinámica del móvil */
             display: flex;
             justify-content: center;
-            align-items: center;
-            padding: 20px 0; /* Añadido espacio para que no pegue a los bordes al hacer scroll */
-            /* Se elimina overflow: hidden para permitir el scroll general */
+            align-items: flex-start; /* Permite que el contenido empiece arriba si es largo */
+            overflow-x: hidden; /* Evita el baile lateral */
+            overflow-y: auto;   /* Activa el scroll vertical */
+            padding: 20px 0;
         }
 
         #app-container {
-            width: 95%; /* Cambiado de 100% a 95% para asegurar margen lateral en móvil */
+            width: 92%; /* Deja un margen de seguridad a los lados */
             max-width: 800px;
-            height: auto;
-            /* Se elimina max-height: 90vh para que el contenedor crezca con el contenido */
+            margin: auto; /* Centrado automático */
             background: var(--bg-white);
             border-radius: 8px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.05);
             display: flex;
             flex-direction: column;
             position: relative;
-            padding: 40px; /* Reducido ligeramente de 60px para ganar espacio en pantallas pequeñas */
+            padding: 30px; /* Un padding más equilibrado para móvil y desktop */
         }
 
         h1, h2 { font-weight: 600; color: var(--monapart-dark); margin-bottom: 20px; }
@@ -146,28 +146,28 @@
 
         @media (max-width: 600px) {
             #app-container { 
-                padding: 20px; 
-                margin: 10px auto; /* Centra el contenedor horizontalmente */
+                padding: 20px 15px;
+                margin: 10px auto;
             }
             .gauge-container { 
                 width: 100%; 
-                max-width: 280px; 
-                transform: scale(0.85); /* Ajuste de tamaño para que quepa en pantallas estrechas */
+                max-width: 260px; /* Reducimos un poco más para evitar desbordes */
+                margin: 0 auto 10px;
+                transform: scale(1); /* Quitamos el scale para evitar bugs de posición */
             }
             .gauge-svg { 
                 width: 100%; 
                 height: auto; 
             }
             .needle { 
-                /* Ajuste de posición de la aguja para el escalado móvil */
-                left: 10px; 
+                /* Ajuste fino para que la aguja no se mueva del sitio en móvil */
+                width: 100px; /* Aguja más corta para el arco reducido */
+                left: 30px; 
                 bottom: 20px;
+                transform-origin: 100px center; /* Origen ajustado al nuevo ancho */
             }
-        }
-            .needle { 
-                width: 40%; /* La aguja se hace proporcional al contenedor */
-                margin-left: -40%; 
-            }
+            h1 { font-size: 32px !important; } /* Ajuste de título para que no ocupe 5 líneas */
+            #intro-screen p { font-size: 18px !important; }
         }
     </style>
 </head>
