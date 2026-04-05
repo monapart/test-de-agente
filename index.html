@@ -124,28 +124,19 @@
         }
         #next-btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
-        .form-group { display: flex; flex-direction: column; gap: 10px; margin-bottom: 15px; }
-        input[type="text"], input[type="email"] { padding: 12px; border: 1px solid #ddd; border-radius: 4px; }
-        .checkbox-group { display: flex; align-items: flex-start; gap: 10px; font-size: 12px; margin-top: 10px; }
-
-        .gauge-container { position: relative; width: 300px; margin: 0 auto 20px; }
-        .gauge { width: 300px; height: 150px; position: relative; overflow: hidden; }
-        .gauge-bg { width: 300px; height: 300px; border-radius: 50%; border: 20px solid #eee; position: absolute; top: 0; box-sizing: border-box; }
+        /* Estilos del Velocímetro Mejorado (Puntos 1, 2 y 3) */
+        .gauge-container { position: relative; width: 340px; margin: 0 auto 20px; }
+        .gauge-svg { width: 340px; height: 180px; }
         
-        .gauge-segment {
-            width: 300px; height: 300px; border-radius: 50%; border: 20px solid transparent;
-            position: absolute; top: 0; transform: rotate(-45deg); box-sizing: border-box;
-        }
-        .s1 { border-left-color: #d1d8e0; transform: rotate(45deg); }
-        .s2 { border-left-color: #a5b1c2; transform: rotate(90deg); }
-        .s3 { border-left-color: var(--monapart-teal); transform: rotate(135deg); }
-        .s4 { border-left-color: var(--monapart-dark); transform: rotate(180deg); }
-
         .needle {
-            width: 140px; height: 4px; background: #333; position: absolute;
-            bottom: 0; left: 10px; transform-origin: right center;
+            width: 140px; height: 4px; 
+            background: orange; /* Aguja color naranja - Punto 1 */
+            position: absolute;
+            bottom: 20px; left: 30px; 
+            transform-origin: 140px center;
             transition: transform 1.5s cubic-bezier(0.17, 0.67, 0.83, 0.67);
             transform: rotate(0deg); z-index: 10;
+            border-radius: 4px;
         }
 
         .result-content { overflow-y: auto; padding-right: 10px; flex-grow: 1; }
@@ -153,10 +144,7 @@
 
         @media (max-width: 600px) {
             #app-container { padding: 20px; height: 95vh; }
-            .gauge-container { width: 200px; }
-            .gauge { width: 200px; height: 100px; }
-            .gauge-bg, .gauge-segment { width: 200px; height: 200px; border-width: 15px; }
-            .needle { width: 90px; }
+            .gauge-container { width: 300px; transform: scale(0.8); }
         }
     </style>
 </head>
@@ -203,14 +191,23 @@
 
     <div id="result-screen" class="screen">
         <div class="gauge-container">
-            <div class="gauge">
-                <div class="gauge-bg"></div>
-                <div class="gauge-segment s1"></div>
-                <div class="gauge-segment s2"></div>
-                <div class="gauge-segment s3"></div>
-                <div class="gauge-segment s4"></div>
-                <div class="needle" id="needle"></div>
-            </div>
+            <svg class="gauge-svg" viewBox="0 0 200 110">
+                <defs>
+                    <path id="arcPath" d="M 20 100 A 80 80 0 0 1 180 100" />
+                </defs>
+                <path d="M 20 100 A 80 80 0 0 1 60 30.7" fill="none" stroke="#2d2d2c" stroke-width="25" />
+                <path d="M 60 30.7 A 80 80 0 0 1 100 20" fill="none" stroke="#669eac" stroke-width="25" />
+                <path d="M 100 20 A 80 80 0 0 1 140 30.7" fill="none" stroke="#a9984a" stroke-width="25" />
+                <path d="M 140 30.7 A 80 80 0 0 1 180 100" fill="none" stroke="#a36756" stroke-width="25" />
+                
+                <text font-size="6" fill="white" font-family="Montserrat" font-weight="600">
+                    <textPath xlink:href="#arcPath" startOffset="6%">nómina</textPath>
+                    <textPath xlink:href="#arcPath" startOffset="30%">con broker</textPath>
+                    <textPath xlink:href="#arcPath" startOffset="56%">plataforma</textPath>
+                    <textPath xlink:href="#arcPath" startOffset="82%">en solitario</textPath>
+                </text>
+            </svg>
+            <div class="needle" id="needle"></div>
         </div>
         <div class="result-content">
             <h2 id="result-title" style="text-align: center;"></h2>
@@ -251,15 +248,15 @@
     ];
 
     const resultTexts = {
-        nom_low: "Tus respuestas dibujan un perfil con un Locus de Control externo dominante y una alta necesidad de seguridad psicológica[cite: 197]. Científicamente, esto indica que tu productividad florece cuando los factores de estrés ambiental están bajo el control de una organización[cite: 198]. No es falta de ambición, es optimización de energía[cite: 199]. La red de protección de un contrato laboral es el andamio que te permite subir más alto[cite: 200].",
-        nom_high: "Tu perfil muestra una autoeficacia performativa latente, pero frenada por una baja tolerancia a la incertidumbre[cite: 205]. Te gusta el juego inmobiliario pero valoras la infraestructura compartida[cite: 206]. La ciencia organizacional sugiere que eres un 'intraemprendedor': alguien que quiere proponer y crecer bajo un paraguas de marca[cite: 207]. Tu bienestar emocional está muy ligado a la estabilidad[cite: 209].",
-        bro_low: "Tus resultados indican una transición clara hacia la independencia, pero con un anclaje fuerte en la necesidad de afiliación[cite: 215]. Posees la disciplina para ser autónomo, pero el 'lobo solitario' no es tu animal espiritual[cite: 216]. Necesitas el contacto social diario y el refuerzo de un equipo presencial[cite: 217]. El modelo de broker tradicional te ofrece una oficina donde compartir la frustración en los meses flojos[cite: 218, 220].",
-        bro_high: "Estás en un punto de inflexión psicológico interesante[cite: 224]. Tu anclaje de carrera se ha desplazado hacia la independencia, pero tu necesidad de estructura aún te mantiene ligado a modelos tradicionales[cite: 224]. Buscas seguridad jurídica y operativa a cambio de una parte de tu beneficio[cite: 226]. Tu puntuación sugiere que podrías estar 'pagando de más' por servicios que ya no necesitas tanto[cite: 227].",
-        plat_1: "Tu perfil es el del pragmático por excelencia[cite: 233]. Tienes una responsabilidad sobre tus resultados muy fuerte, pero tu autoeficacia está unida a un sentido práctico: ¿por qué perder tiempo en el back-office si una plataforma lo hace mejor?[cite: 233, 234]. Entiendes que tu tiempo vale dinero y tu zona de genialidad es el cierre[cite: 235]. Tienes la libertad del autónomo y la potencia de fuego de una multinacional[cite: 241].",
-        plat_2: "Tus respuestas demuestran una alta capacidad de adaptación al mercado[cite: 243]. Eres consciente de que la IA y la escasez de oferta exigen un agente más sofisticado[cite: 244]. No buscas una agencia que te diga qué hacer, sino una plataforma que te dé las armas más avanzadas[cite: 245]. Tu mentalidad es 100% digital y tu operativa, pura eficiencia[cite: 249].",
-        plat_3: "Tu prioridad absoluta es la gestión de límites[cite: 251]. Has alcanzado un nivel de madurez donde entiendes que el éxito no es solo facturar, sino ser dueño de tu tiempo[cite: 251]. Tu propia disciplina es más exigente que cualquier jefe[cite: 252]. El modelo de plataforma te permite integrar vida personal y profesional sin las ataduras de un modelo presencial[cite: 254].",
-        plat_4: "Estás rozando el límite superior de la independencia, pero tu realismo económico te mantiene dentro de la plataforma[cite: 259]. Tu análisis de coste de oportunidad te dice que, aunque podrías hacerlo solo, no sería rentable[cite: 260]. Sabes que el prestigio de una plataforma sólida y el soporte experto multiplican tu valor ante clientes de alto nivel[cite: 262]. La plataforma es para ti un socio silencioso[cite: 264].",
-        solo: "Eres el 'Lobo Estepario' del sector inmobiliario[cite: 270]. Tu autoeficacia performativa es máxima y tu tolerancia al riesgo, absoluta[cite: 270]. Tienes una necesidad de autonomía radical: cualquier estructura externa te genera fricción[cite: 271]. Estás dispuesto a asumir la carga total del back-office con tal de no rendir cuentas a nadie[cite: 272]."
+        nom_low: "Tus respuestas dibujan un perfil con un Locus de Control externo dominante y una alta necesidad de seguridad psicológica. Científicamente, esto indica que tu productividad florece cuando los factores de estrés ambiental están bajo el control de una organización. No es falta de ambición, es optimización de energía. La red de protección de un contrato laboral es el andamio que te permite subir más alto.",
+        nom_high: "Tu perfil muestra una autoeficacia performativa latente, pero frenada por una baja tolerancia a la incertidumbre. Te gusta el juego inmobiliario pero valoras la infraestructura compartida. La ciencia organizacional sugiere que eres un 'intraemprendedor': alguien que quiere proponer y crecer bajo un paraguas de marca. Tu bienestar emocional está muy ligado a la estabilidad.",
+        bro_low: "Tus resultados indican una transición clara hacia la independencia, pero con un anclaje fuerte en la necesidad de afiliación. Posees la disciplina para ser autónomo, pero el 'lobo solitario' no es tu animal espiritual. Necesitas el contacto social diario y el refuerzo de un equipo presencial. El modelo de broker tradicional te ofrece una oficina donde compartir la frustración en los meses flojos.",
+        bro_high: "Estás en un punto de inflexión psicológico interesante. Tu anclaje de carrera se ha desplazado hacia la independencia, pero tu necesidad de estructura aún te mantiene ligado a modelos tradicionales. Buscas seguridad jurídica y operativa a cambio de una parte de tu beneficio. Tu puntuación sugiere que podrías estar 'pagando de más' por servicios que ya no necesitas tanto.",
+        plat_1: "Tu perfil es el del pragmático por excelencia. Tienes una responsabilidad sobre tus resultados muy fuerte, pero tu autoeficacia está unida a un sentido práctico: ¿por qué perder tiempo en el back-office si una plataforma lo hace mejor?. Entiendes que tu tiempo vale dinero y tu zona de genialidad es el cierre. Tienes la libertad del autónomo y la potencia de fuego de una multinacional.",
+        plat_2: "Tus respuestas demuestran una alta capacidad de adaptación al mercado. Eres consciente de que la IA y la escasez de oferta exigen un agente más sofisticado. No buscas una agencia que te diga qué hacer, sino una plataforma que te dé las armas más avanzadas. Tu mentalidad es 100% digital y tu operativa, pura eficiencia.",
+        plat_3: "Tu prioridad absoluta es la gestión de límites. Has alcanzado un nivel de madurez donde entiendes que el éxito no es solo facturar, sino ser dueño de tu tiempo. Tu propia disciplina es más exigente que cualquier jefe. El modelo de plataforma te permite integrar vida personal y profesional sin las ataduras de un modelo presencial.",
+        plat_4: "Estás rozando el límite superior de la independencia, pero tu realismo económico te mantiene dentro de la plataforma. Tu análisis de coste de oportunidad te dice que, aunque podrías hacerlo solo, no sería rentable. Sabes que el prestigio de una plataforma sólida y el soporte experto multiplican tu valor ante clientes de alto nivel. La plataforma es para ti un socio silencioso.",
+        solo: "Eres el 'Lobo Estepario' del sector inmobiliario. Tu autoeficacia performativa es máxima y tu tolerancia al riesgo, absoluta. Tienes una necesidad de autonomía radical: cualquier estructura externa te genera fricción. Estás dispuesto a asumir la carga total del back-office con tal de no rendir cuentas a nadie."
     };
 
     let currentIdx = 0;
