@@ -11,7 +11,6 @@
             --monapart-accent: #a36756;
             --monapart-grey: #f4f7f6;
             --bg-white: #ffffff;
-            /* Colores del Marcador */
             --c-nom: #2d2d2c;
             --c-bro: #669eac;
             --c-pla: #a9984a;
@@ -34,21 +33,21 @@
         #app-container {
             width: 95%;
             max-width: 850px;
-            height: 90vh;
+            height: 95vh;
             background: var(--bg-white);
             border-radius: 4px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.05);
             display: flex;
             flex-direction: column;
             position: relative;
-            padding: 50px; /* Márgenes amplios pero ajustados */
+            padding: 30px 50px;
         }
 
         /* Pantalla de Introducción */
         .intro-title {
             font-family: 'Roboto', sans-serif;
-            font-weight: 100; /* Roboto Fino */
-            font-size: 42px; /* 50% más grande */
+            font-weight: 100;
+            font-size: 42px;
             color: var(--monapart-accent);
             margin-bottom: 20px;
         }
@@ -56,7 +55,7 @@
         .intro-text {
             font-family: 'Lora', serif;
             font-weight: 400;
-            font-size: 24px; /* 50% más grande */
+            font-size: 24px;
             color: var(--monapart-dark);
             line-height: 1.4;
             margin-bottom: 30px;
@@ -70,8 +69,8 @@
             border-radius: 4px;
             cursor: pointer;
             font-family: 'Roboto', sans-serif;
-            font-weight: 500; /* Roboto Medium */
-            font-size: 24px; /* 50% más grande */
+            font-weight: 500;
+            font-size: 24px;
             transition: opacity 0.3s;
             align-self: flex-start;
         }
@@ -81,25 +80,24 @@
             font-family: 'Roboto', sans-serif;
             font-size: 14px;
             color: var(--monapart-dark);
-            margin-bottom: 10px;
-            font-weight: 400;
+            margin-bottom: 5px;
         }
 
         .question-text {
             font-family: 'Roboto', sans-serif;
             font-size: 18px;
             font-weight: 400;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
         }
 
         .option-item {
             font-family: 'Roboto', sans-serif;
-            font-size: 16px;
-            padding: 15px;
+            font-size: 15px;
+            padding: 12px;
             border: 1px solid #ddd;
             border-radius: 4px;
             cursor: pointer;
-            margin-bottom: 12px;
+            margin-bottom: 8px;
             transition: background 0.2s;
         }
 
@@ -115,20 +113,20 @@
             cursor: pointer;
             font-weight: 500;
             align-self: flex-end;
-            margin-top: 10px;
+            margin-top: 5px;
         }
         .btn-next:disabled { opacity: 0.3; cursor: not-allowed; }
 
         /* Marcador SVG */
-        .gauge-container { width: 100%; max-width: 450px; margin: 0 auto; position: relative; }
-        #gauge-svg { width: 100%; height: auto; }
-        .needle { fill: #ff8c00; transition: transform 1.5s ease-out; transform-origin: 250px 250px; }
+        .gauge-container { width: 100%; max-width: 400px; margin: 0 auto; position: relative; flex-shrink: 0; }
+        #gauge-svg { width: 100%; height: auto; display: block; overflow: visible; }
+        #needle { fill: #ff8c00; transition: transform 1.5s ease-out; transform-origin: 250px 250px; z-index: 10; position: relative; }
         
         /* Resultados */
-        .result-content { flex-grow: 1; overflow-y: auto; padding-top: 15px; }
-        .result-text { font-family: 'Roboto', sans-serif; font-size: 15px; line-height: 1.6; text-align: justify; }
+        .result-content { flex-grow: 1; overflow-y: auto; padding-top: 10px; margin-bottom: 10px; }
+        .result-text { font-family: 'Roboto', sans-serif; font-size: 14px; line-height: 1.5; text-align: justify; }
 
-        .screen { display: none; flex-direction: column; height: 100%; }
+        .screen { display: none; flex-direction: column; height: 100%; overflow: hidden; }
         .screen.active { display: flex; }
 
         input { padding: 12px; border: 1px solid #ddd; border-radius: 4px; margin-bottom: 10px; font-family: 'Roboto'; }
@@ -166,15 +164,15 @@
         <div class="gauge-container">
             <svg id="gauge-svg" viewBox="0 0 500 280">
                 <defs>
-                    <path id="txt-path1" d="M 100 240 A 150 150 0 0 1 144 134" />
-                    <path id="txt-path2" d="M 144 134 A 150 150 0 0 1 250 90" />
-                    <path id="txt-path3" d="M 250 90 A 150 150 0 0 1 356 134" />
-                    <path id="txt-path4" d="M 356 134 A 150 150 0 0 1 400 240" />
+                    <path id="txt-path1" d="M 115 235 A 140 140 0 0 1 154 139" />
+                    <path id="txt-path2" d="M 154 139 A 140 140 0 0 1 250 110" />
+                    <path id="txt-path3" d="M 250 110 A 140 140 0 0 1 346 139" />
+                    <path id="txt-path4" d="M 346 139 A 140 140 0 0 1 385 235" />
                 </defs>
-                <path d="M 50 250 A 200 200 0 0 1 108.5 108.5" fill="none" stroke="#2d2d2c" stroke-width="70" />
-                <path d="M 108.5 108.5 A 200 200 0 0 1 250 50" fill="none" stroke="#669eac" stroke-width="70" />
-                <path d="M 250 50 A 200 200 0 0 1 391.5 108.5" fill="none" stroke="#a9984a" stroke-width="70" />
-                <path d="M 391.5 108.5 A 200 200 0 0 1 450 250" fill="none" stroke="#a36756" stroke-width="70" />
+                <path d="M 50 250 A 200 200 0 0 1 108.5 108.5" fill="none" stroke="#2d2d2c" stroke-width="60" />
+                <path d="M 108.5 108.5 A 200 200 0 0 1 250 50" fill="none" stroke="#669eac" stroke-width="60" />
+                <path d="M 250 50 A 200 200 0 0 1 391.5 108.5" fill="none" stroke="#a9984a" stroke-width="60" />
+                <path d="M 391.5 108.5 A 200 200 0 0 1 450 250" fill="none" stroke="#a36756" stroke-width="60" />
                 
                 <text font-family="Roboto" font-size="12" fill="white" text-anchor="middle">
                     <textPath href="#txt-path1" startOffset="50%">nómina</textPath>
@@ -189,15 +187,15 @@
                     <textPath href="#txt-path4" startOffset="50%">en solitario</textPath>
                 </text>
 
-                <line id="needle" x1="250" y1="250" x2="70" y2="250" stroke="#ff8c00" stroke-width="2" />
-                <circle cx="250" cy="250" r="5" fill="#2d2d2c" />
+                <path id="needle" d="M 250 255 L 250 245 L 80 250 Z" />
+                <circle cx="250" cy="250" r="8" fill="#2d2d2c" />
             </svg>
         </div>
         <div class="result-content">
-            <h2 id="res-title" style="margin-bottom:10px; font-weight: 500;"></h2>
+            <h2 id="res-title" style="margin-bottom:5px; font-weight: 500;"></h2>
             <div id="res-text" class="result-text"></div>
         </div>
-        <button class="btn-next" style="align-self:center; margin-top:15px" onclick="location.reload()">Repetir test</button>
+        <button class="btn-next" style="align-self:center; margin-top:5px" onclick="sendResult()">Envíame el resultado</button>
     </div>
 </div>
 
@@ -232,15 +230,15 @@
     ];
 
     const results = {
-        nom_low: "Tus respuestas dibujan un perfil con un protagonismo sobre tus resultados externo dominante y una alta necesidad de seguridad psicológica. Científicamente, esto indica que tu productividad florece cuando los factores de estrés ambiental (incertidumbre de ingresos, cambios legales, gestión de marca) están bajo el control de una organización. No es falta de ambición, es optimización de energía: prefieres canalizar todo tu talento hacia el cliente en lugar de malgastarlo peleando con Hacienda o configurando un CRM. Para ti, la red de protección de un contrato laboral no es una jaula, sino el andamio que te permite subir más alto. Eres el activo ideal para estructuras corporativas que necesitan 'vendedores puros'. Disfrutas del ritual de la oficina y de saber que, pase lo que pase en el mercado, el día 30 tu cuenta bancaria emitirá un sonido reconfortante. Si alguna vez te sientes tentado por la aventura solitaria, recuerda que ser tu propio jefe también implica ser tu propio administrativo, y esa es una relación que, por ahora, prefieres evitar.",
-        nom_high: "Tu perfil muestra una autoeficacia performativa latente, pero frenada por una baja tolerancia a la incertidumbre. Te gusta el juego inmobiliario y te sientes capaz de liderar operaciones complejas, pero valoras demasiado la infraestructura compartida. La ciencia organizacional sugiere que eres un 'intraemprendedor': alguien que quiere proponer y crecer, pero bajo un paraguas de marca que ya haya hecho el trabajo sucio de posicionamiento. Te sientes cómodo en entornos donde el soporte administrativo es el motor de tu productividad. Tu bienestar emocional está muy ligado a la estabilidad, y eso es inteligente; no todo el mundo tiene por qué disfrutar de la 'montaña rusa' del autónomo. Tu modelo ideal es una agencia consolidada que te ofrezca incentivos por objetivos pero mantenga tu red de seguridad intacta. Eso sí, asegúrate de que tu empresa no sea demasiado rígida, porque tienes un punto de autonomía que podría asfixiarse si te obligan a pedir permiso hasta para cambiar el color de una tarjeta de visita.",
-        bro_low: "Tus resultados indican una transición clara hacia la independencia, pero con un anclaje fuerte en la necesidad de afiliación. Posees la disciplina para ser autónomo, pero el 'lobo solitario' no es tu animal espiritual. Necesitas el contacto social diario y el refuerzo de un equipo presencial. El modelo de broker tradicional te ofrece lo que buscas: una oficina donde tomar café y comentar las jugadas, un líder que marque cierta dirección estratégica y una estructura física que separe tu casa de tu trabajo. Operas mejor cuando sientes que formas parte de una comunidad local con una marca que tus vecinos reconozcan. Tu resiliencia se apoya en el grupo; los meses flojos se pasan mejor cuando puedes compartir la frustración en el office. Eres un agente de relaciones, y mientras el broker se encargue de que la impresora funcione y de que haya leads en el sistema, tú serás feliz. Es un modelo honesto y equilibrado, siempre y cuando el porcentaje que cedes de tus comisiones te siga pareciendo un precio justo por no sentir la soledad del corredor de fondo.",
-        bro_high: "Estás en un punto de inflexión psicológico interesante. Tu anclaje de carrera se ha desplazado hacia la independencia, pero tu necesidad de estructura aún te mantiene ligado a modelos tradicionales. Eres un agente con gran capacidad de autogestión que, sin embargo, teme el vacío que supone gestionar la tecnología, el marketing y el soporte legal por cuenta propia. Por eso buscas el refugio de un broker: te da seguridad jurídica y operativa a cambio de una parte sustancial de tu beneficio. Sin embargo, tu puntuación sugiere que podrías estar 'pagando de más' por servicios que ya no necesitas tanto. Deberías vigilar si el soporte que te da tu broker actual realmente justifica la cuota o el reparto de comisiones. En un mercado tan tecnológico y cambiante, los perfiles como el tuyo a menudo descubren que el modelo de plataforma de servicios es el siguiente paso lógico: te daría la misma (o mejor) infraestructura legal y técnica, pero con mucha más libertad y un retorno económico significativamente mayor. No dejes que la costumbre te impida optimizar tu margen neto. En un escenario de mercado cada vez más complejo, este modelo híbrido será tu mejor aliado.",
-        pla_1: "Tu perfil es el del pragmático por excelencia. Tienes un protagonismo sobre tus resultados muy fuerte: sabes que tus éxitos dependen de ti y no tienes miedo a volar sin motor. Sin embargo, tu autoeficacia está unida a un sentido práctico de la economía: ¿por qué iba a perder tres horas resolviendo un contrato legal o editando un vídeo si hay una plataforma que lo hace por mí de forma profesional? Entiendes que tu tiempo vale dinero y que tu zona de genialidad es el cierre, no el back-office. Para ti, el modelo de plataforma es la simbiosis perfecta. Eres un empresario de ti mismo que utiliza la tecnología y los servicios compartidos como 'apalancamiento operativo'. No necesitas una oficina llena de gente para motivarte, pero eres lo suficientemente inteligente como para no querer estar solo ante el peligro. Valoras la marca personal pero entiendes que un respaldo de prestigio te abre puertas más rápido. En definitiva, has hackeado el sistema: tienes la libertad del autónomo y la potencia de fuego de una multinacional.",
-        pla_2: "Tus respuestas demuestran una alta capacidad de adaptación al mercado. Eres consciente de que la IA, los cambios normativos y la escasez de oferta exigen un agente más sofisticado y menos 'artesanal'. Tu perfil puntúa alto en curiosidad tecnológica y resiliencia. No buscas una agencia que te diga qué hacer, sino una plataforma que te dé las armas más avanzadas para que tú ejecutes tu propia estrategia. Te sientes cómodo en la liquidez del mercado actual. No te asusta el final de ciclo porque confías en tu capacidad para ajustar costes. El modelo de plataforma te encaja como un guante porque es el único que respeta tu necesidad de independencia total mientras te mantiene actualizado en lo que de verdad importa. Eres el tipo de profesional que prefiere invertir en su propio crecimiento que en pagar el alquiler de la oficina de un broker. Tu mentalidad es 100% digital y tu operativa, pura eficiencia.",
-        pla_3: "Tu prioridad absoluta es la gestión de límites. Has alcanzado un nivel de madurez profesional donde entiendes que el éxito no es solo facturar, sino ser dueño de tu tiempo. Tu puntuación en autonomía y volición es altísima; no necesitas a nadie que te vigile porque tu propia disciplina es más exigente que cualquier jefe. Lo que buscas es un ecosistema que elimine las fricciones de tu día a día. El modelo de plataforma te permite integrar tu vida personal y profesional sin las ataduras de un modelo presencial ni las pesadillas administrativas del que va por libre. Eres un agente de alto rendimiento que ha decidido que no quiere ser 'esclavo' de su propia estructura. Al delegar lo rutinario en una plataforma de servicios, te aseguras de que tu negocio trabaje para ti, y no al revés. Tienes el control total, el máximo beneficio y, lo más importante, el silencio administrativo necesario para enfocarte en lo que de verdad te apasiona.",
-        pla_4: "Estás rozando el límite superior de la independencia, pero tu realismo económico te mantiene dentro del modelo de plataforma. Tu análisis de coste de oportunidad te dice que, aunque podrías hacerlo todo tú solo, no sería rentable. Posees una resiliencia envidiable y una visión de mercado muy aguda. Sabes que el prestigio de una plataforma sólida y una red de soporte experto son activos que multiplican tu valor ante clientes de alto nivel. Eres un perfil muy atractivo para cualquier modelo laboral, pero tú ya has decidido que no quieres techos. La plataforma es para ti un socio silencioso: no interfiere en tus decisiones pero está ahí para asegurar que tu infraestructura legal y técnica sea impecable. Tu ambición es alta y tu necesidad de supervisión es nula. Probablemente seas el referente de tu zona y tus clientes te busquen a ti, no a las siglas de tu tarjeta. Estás en el punto óptimo de la cadena trófica inmobiliaria.",
-        solo: "Eres el 'Lobo Estepario' del sector inmobiliario. Tu autoeficacia performativa es máxima y tu tolerancia al riesgo, absoluta. La ciencia de la personalidad dice de ti que tienes una necesidad de autonomía radical: cualquier estructura externa te genera una sensación de fricción o pérdida de control. Estás dispuesto a asumir la carga total del back-office, el marketing y la asesoría legal con tal de no rendir cuentas a nadie y de no compartir ni un céntimo de tus honorarios. Eres, en esencia, una inmobiliaria unipersonal. Disfrutas teniendo el control total del proceso, desde el diseño de los contratos hasta el color del logo. Sin embargo, un profesional de tu inteligencia debe estar atento a las señales: en un escenario de hiper-especialización tecnológica o cambios legales complejos, la carga de gestionar la estructura por ti solo puede empezar a canibalizar tu tiempo de venta. Si algún día sientes que el papeleo te quita más de lo que te da, considera que pasar a una plataforma de servicios no es perder independencia, sino externalizar el mantenimiento para seguir siendo el arquitecto jefe. Por ahora, disfruta de tu reino; es 100% tuyo."
+        nom_low: "Tus respuestas dibujan un perfil con un protagonismo sobre tus resultados externo dominante y una alta necesidad de seguridad psicológica. Científicamente, esto indica que tu productividad florece cuando los factores de estrés ambiental están bajo el control de una organización. No es falta de ambición, es optimización de energía: prefieres canalizar todo tu talento hacia el cliente en lugar de malgastarlo peleando con Hacienda. Para ti, la red de protección de un contrato laboral no es una jaula, sino el andamio que te permite subir más alto. Eres el activo ideal para estructuras corporativas que necesitan 'vendedores puros'. Disfrutas del ritual de la oficina y de saber que, pase lo que pase, el día 30 tu cuenta bancaria emitirá un sonido reconfortante. Si alguna vez te sientes tentado por la aventura solitaria, recuerda que ser tu propio jefe también implica ser tu propio administrativo, y esa es una relación que, por ahora, prefieres evitar.",
+        nom_high: "Tu perfil muestra una autoeficacia performativa latente, pero frenada por una baja tolerancia a la incertidumbre. Te gusta el juego inmobiliario y te sientes capaz de liderar operaciones complejas, pero valoras demasiado la infraestructura compartida. La ciencia organizacional sugiere que eres un 'intraemprendedor': alguien que quiere proponer y crecer, pero bajo un paraguas de marca que ya haya hecho el trabajo sucio. Te sientes cómodo en entornos donde el soporte administrativo es el motor de tu productividad. Tu bienestar emocional está muy ligado a la estabilidad, y eso es inteligente; no todo el mundo tiene por qué disfrutar de la 'montaña rusa' del autónomo. Tu modelo ideal es una agencia consolidada que te ofrezca incentivos por objetivos pero mantenga tu red de seguridad intacta. Eso sí, asegúrate de que tu empresa no sea demasiado rígida, porque tienes un punto de autonomía que podría asfixiarse.",
+        bro_low: "Tus resultados indican una transición clara hacia la independencia, pero con un anclaje fuerte en la necesidad de afiliación. Posees la disciplina para ser autónomo, pero el 'lobo solitario' no es tu animal espiritual. Necesitas el contacto social diario y el refuerzo de un equipo presencial. El modelo de broker tradicional te ofrece lo que buscas: una oficina donde tomar café y comentar las jugadas, un líder que marque dirección estratégica y una estructura física que separe tu casa de tu trabajo. Operas mejor cuando sientes que formas parte de una comunidad local con una marca que tus vecinos reconozcan. Tu resiliencia se apoya en el grupo; los meses flojos se pasan mejor compartiendo la frustración en el office. Es un modelo honesto y equilibrado, siempre y cuando el porcentaje que cedes te parezca un precio justo por evitar la soledad del corredor de fondo.",
+        bro_high: "Estás en un punto de inflexión psicológico interesante. Tu anclaje de carrera se ha desplazado hacia la independencia, pero tu necesidad de estructura aún te mantiene ligado a modelos tradicionales. Eres un agente con gran capacidad de autogestión que, sin embargo, teme el vacío de gestionar la tecnología, el marketing y el soporte legal por cuenta propia. Por eso buscas el refugio de un broker: seguridad jurídica a cambio de una parte sustancial de tu beneficio. Sin embargo, podrías estar 'pagando de más'. Deberías vigilar si el soporte justifica el reparto de comisiones. En un mercado tecnológico, perfiles como el tuyo a menudo descubren que el modelo de plataforma de servicios es el paso lógico: misma infraestructura pero con mucha más libertad y retorno mayor. No dejes que la costumbre te impida optimizar tu margen neto. En un mercado complejo, este modelo híbrido será tu mejor aliado.",
+        pla_1: "Tu perfil es el del pragmático por excelencia. Tienes un protagonismo sobre tus resultados muy fuerte: sabes que tus éxitos dependen de ti y no tienes miedo a volar sin motor. Pero tu autoeficacia está unida a un sentido práctico: ¿por qué perder tres horas en contratos o edición de vídeo si una plataforma lo hace profesionalmente? Entiendes que tu tiempo vale dinero y tu zona de genialidad es el cierre, no el back-office. El modelo de plataforma es la simbiosis perfecta. Eres un empresario de ti mismo que utiliza servicios compartidos como 'apalancamiento operativo'. No necesitas oficina llena de gente para motivarte, pero eres inteligente para no querer estar solo ante el peligro. Valoras la marca personal pero entiendes que un respaldo de prestigio abre puertas más rápido. Has hackeado el sistema: tienes la libertad del autónomo y la potencia de fuego de una multinacional.",
+        pla_2: "Tus respuestas demuestran una alta capacidad de adaptación al mercado. Eres consciente de que la IA, los cambios normativos y la escasez de oferta exigen un agente más sofisticado y menos 'artesanal'. Tu perfil puntúa alto en curiosidad tecnológica y resiliencia. No buscas una agencia que te diga qué hacer, sino una plataforma que te dé las armas más avanzadas. Te sientes cómodo en la liquidez actual. No te asusta el final de ciclo porque confías en tu capacidad para ajustar costes. El modelo de plataforma te encaja como un guante: respeta tu independencia total mientras te mantiene actualizado. Eres el profesional que prefiere invertir en su propio crecimiento que en el alquiler de la oficina de un broker. Tu mentalidad es 100% digital y tu operativa, pura eficiencia.",
+        pla_3: "Tu prioridad absoluta es la gestión de límites. Has alcanzado un nivel de madurez donde entiendes que el éxito no es solo facturar, sino ser dueño de tu tiempo. Tu puntuación en autonomía y volición es altísima; no necesitas vigilancia porque tu propia disciplina es más exigente que cualquier jefe. Buscas un ecosistema que elimine las fricciones diarias. El modelo de plataforma te permite integrar vida personal y profesional sin ataduras presenciales ni pesadillas administrativas. Eres un agente de alto rendimiento que ha decidido no ser 'esclavo' de su propia estructura. Al delegar lo rutinario en una plataforma de servicios, aseguras que tu negocio trabaje para ti, y no al revés. Tienes el control total, el máximo beneficio y el silencio administrativo necesario para enfocarte en tu pasión.",
+        pla_4: "Estás rozando el límite superior de la independencia, pero tu realismo económico te mantiene en el modelo de plataforma. Tu análisis de coste de oportunidad te dice que, aunque podrías hacerlo todo solo, no sería rentable. Posees una resiliencia envidiable y una visión de mercado aguda. Sabes que el prestigio de una plataforma sólida y el soporte experto multiplican tu valor ante clientes de alto nivel. Eres un perfil atractivo para cualquier modelo, pero ya has decidido que no quieres techos. La plataforma es un socio silencioso: no interfiere en tus decisiones pero asegura una infraestructura impecable. Tu ambición es alta y tu necesidad de supervisión nula. Probablemente seas el referente de tu zona y tus clientes te busquen a ti, no a las siglas de tu tarjeta. Estás en el punto óptimo de la cadena trófica inmobiliaria.",
+        solo: "Eres el 'Lobo Estepario' del sector. Tu autoeficacia es máxima y tu tolerancia al riesgo, absoluta. Tienes una necesidad de autonomía radical: cualquier estructura externa te genera fricción. Estás dispuesto a asumir la carga total del back-office con tal de no rendir cuentas ni compartir honorarios. Eres una inmobiliaria unipersonal. Disfrutas el control total del proceso. Pero cuidado: en un escenario de hiper-especialización tecnológica o cambios legales complejos, la carga de gestionar la estructura solo puede canibalizar tu tiempo de venta. Si el papeleo empieza a quitarte más de lo que te da, considera que una plataforma de servicios no es perder independencia, sino externalizar el mantenimiento para seguir siendo el arquitecto jefe. Disfruta de tu reino; es 100% tuyo."
     };
 
     let currentIndex = 0;
@@ -291,11 +289,11 @@
             alert("Debes aceptar la política de privacidad.");
             return;
         }
-        document.getElementById('lead-screen').classList.remove('active');
         showResult();
     }
 
     function showResult() {
+        document.getElementById('lead-screen').classList.remove('active');
         document.getElementById('result-screen').classList.add('active');
         let title = "";
         let text = "";
@@ -328,7 +326,13 @@
             document.getElementById('needle').style.transform = `rotate(${angle}deg)`;
         }, 300);
     }
-</script>
 
+    function sendResult() {
+        const email = document.getElementById('u-email').value;
+        const title = document.getElementById('res-title').innerText;
+        const body = `Hola, este es el resultado de tu test Monapart:\n\nTu modelo ideal: ${title}\n\n${document.getElementById('res-text').innerText}`;
+        window.location.href = `mailto:${email}?subject=Resultado Test Monapart&body=${encodeURIComponent(body)}`;
+    }
+</script>
 </body>
 </html>
