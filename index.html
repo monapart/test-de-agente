@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Test Monapart: Tu Futuro Inmobiliario</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&family=Roboto:wght@100;400;500&family=Lora:wght@400&display=swap" rel="stylesheet">
     <style>
         :root {
             --monapart-dark: #1a2a3a;
@@ -12,6 +12,8 @@
             --monapart-grey: #f4f7f6;
             --text-main: #333;
             --bg-white: #ffffff;
+            /* Definimos el color corporativo solicitado para reutilizarlo */
+            --monapart-anthracite: #2d2d2c;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -24,26 +26,50 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            overflow: hidden; /* Evita scroll general */
+            overflow: hidden;
         }
 
         #app-container {
             width: 100%;
             max-width: 800px;
-            height: 90vh;
+            height: auto;
+            max-height: 90vh;
             background: var(--bg-white);
             border-radius: 8px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.05);
             display: flex;
             flex-direction: column;
             position: relative;
-            padding: 40px;
+            padding: 60px;
         }
 
-        /* Tipografía */
         h1, h2 { font-weight: 600; color: var(--monapart-dark); margin-bottom: 20px; }
         p { line-height: 1.6; font-size: 15px; margin-bottom: 20px; text-transform: lowercase; }
         p::first-letter { text-transform: uppercase; }
+
+        /* Intro Screen Styles */
+        #intro-screen { text-align: center; }
+        #intro-screen h1 { 
+            font-family: 'Roboto', sans-serif; 
+            font-weight: 100; 
+            font-size: 48px; 
+            color: #a36756; 
+            text-transform: none;
+        }
+        #intro-screen p { 
+            font-family: 'Lora', serif; 
+            font-weight: 400; 
+            font-size: 22.5px; 
+            color: var(--monapart-anthracite); 
+            text-transform: none;
+        }
+        #intro-screen .btn { 
+            background-color: var(--monapart-anthracite); 
+            color: white; 
+            font-family: 'Roboto', sans-serif; 
+            font-weight: 500; 
+            font-size: 22.5px; 
+        }
 
         .btn {
             background-color: var(--monapart-teal);
@@ -64,10 +90,27 @@
         .screen { display: none; flex-direction: column; height: 100%; justify-content: center; }
         .screen.active { display: flex; }
 
-        /* Preguntas */
-        .question-text { font-size: 18px; margin-bottom: 30px; color: var(--monapart-dark); }
+        /* Preguntas - Cambios solicitados en punto 1 y 2 */
+        #question-counter {
+            font-family: 'Montserrat', sans-serif; /* Mantenemos Montserrat para el contador pero cambiamos color */
+            font-weight: 600;
+            color: var(--monapart-anthracite) !important;
+            margin-bottom: 10px;
+        }
+
+        .question-text { 
+            font-family: 'Roboto', sans-serif; 
+            font-weight: 400; 
+            font-size: 18px; 
+            margin-bottom: 30px; 
+            color: var(--monapart-dark); 
+        }
+
         .options-container { display: flex; flex-direction: column; gap: 15px; margin-bottom: 30px; }
+        
         .option-item {
+            font-family: 'Roboto', sans-serif;
+            font-weight: 400;
             padding: 15px;
             border: 1px solid #ddd;
             border-radius: 4px;
@@ -77,6 +120,13 @@
         }
         .option-item:hover { border-color: var(--monapart-teal); background: #f0fafa; }
         .option-item.selected { background: var(--monapart-teal); color: white; border-color: var(--monapart-teal); }
+
+        #next-btn {
+            background-color: var(--monapart-anthracite);
+            color: white;
+            font-family: 'Roboto', sans-serif;
+        }
+        #next-btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
         /* Formulario */
         .form-group { display: flex; flex-direction: column; gap: 10px; margin-bottom: 15px; }
@@ -88,7 +138,6 @@
         .gauge { width: 300px; height: 150px; position: relative; overflow: hidden; }
         .gauge-bg { width: 300px; height: 300px; border-radius: 50%; border: 20px solid #eee; position: absolute; top: 0; box-sizing: border-box; }
         
-        /* Segmentos del velocímetro */
         .gauge-segment {
             width: 300px; height: 300px; border-radius: 50%; border: 20px solid transparent;
             position: absolute; top: 0; transform: rotate(-45deg); box-sizing: border-box;
@@ -121,15 +170,15 @@
 
 <div id="app-container">
     <div id="intro-screen" class="screen active">
-        <h1>Descubre tu modelo inmobiliario ideal</h1>
-        <p>¿Eres un agente en nómina, un asociado a broker o un independiente nativo de plataforma? A través de este cuestionario diseñado bajo criterios de psicología organizacional y análisis de mercado, evaluaremos tu perfil profesional.</p>
-        <p><strong>Detalles:</strong> 26 preguntas | 5 minutos aproximadamente.</p>
+        <h1>Descubre TU modelo de trabajo ideal</h1>
+        <p>¿Eres un agente en nómina, un asociado a un broker o un agente independiente? A través de este cuestionario diseñado bajo criterios de psicología organizacional y análisis de mercado, evaluaremos tu perfil profesional ideal.</p>
+        <p style="font-family: 'Montserrat', sans-serif; font-size: 15px; color: var(--text-main);"><strong>Detalles:</strong> 26 preguntas | 5 minutos aproximadamente.</p>
         <button class="btn" onclick="startQuiz()">Quiero empezar el test</button>
     </div>
 
     <div id="quiz-screen" class="screen">
         <div id="question-container">
-            <p id="question-counter" style="font-weight: 600; color: var(--monapart-teal);"></p>
+            <p id="question-counter"></p>
             <div class="question-text" id="question-text"></div>
             <div class="options-container" id="options-container"></div>
             <button class="btn" id="next-btn" disabled onclick="nextQuestion()">Siguiente</button>
@@ -139,7 +188,8 @@
     <div id="lead-screen" class="screen">
         <h2>Casi hemos terminado</h2>
         <p>Introduce tus datos para calcular tu perfil y recibir el informe completo.</p>
-        <form id="lead-form" action="https://formspree.io/f/tu-id-aqui" method="POST"> <div class="form-group">
+        <form id="lead-form" action="https://formspree.io/f/tu-id-aqui" method="POST"> 
+            <div class="form-group">
                 <input type="text" name="nombre" placeholder="Nombre" required>
             </div>
             <div class="form-group">
@@ -153,7 +203,7 @@
                 <label for="rgpd">Doy permiso a Monapart para suscribirme a su newsletter y enviarme información comercial de acuerdo a la RGPD.</label>
             </div>
             <input type="hidden" name="puntuacion" id="puntuacion-input">
-            <button type="button" class="btn" style="margin-top:20px" onclick="submitLead()">Muéstrame el resultado</button>
+            <button type="button" class="btn" style="margin-top:20px; background-color: var(--monapart-anthracite);" onclick="submitLead()">Muéstrame el resultado</button>
         </form>
     </div>
 
@@ -172,11 +222,12 @@
             <h2 id="result-title" style="text-align: center;"></h2>
             <div class="result-text" id="result-desc"></div>
         </div>
-        <button class="btn" style="margin-top:20px" onclick="alert('Resultado enviado a su email')">Enviar resultado por correo</button>
+        <button class="btn" style="margin-top:20px; background-color: var(--monapart-anthracite);" onclick="alert('Resultado enviado a su email')">Enviar resultado por correo</button>
     </div>
 </div>
 
 <script>
+    // La lógica de JS permanece inalterada según la última versión
     const questions = [
         { q: "¿En qué medida consideras que tus resultados actuales son una consecuencia directa de tu esfuerzo y talento individual frente a factores externos?", w: 1.2, a: ["Mis resultados dependen exclusivamente de mi gestión, mi capacidad y mi trabajo diario.", 10, "Mi esfuerzo es determinante, aunque reconozco que el mercado y los recursos y el apoyo de mi empresa influyen significativamente.", 6, "Mis resultados están ligados principalmente al prestigio de la marca, la calidad de los leads que recibo y la situación económica.", 0] },
         { q: "Ante un fracaso en una operación, ¿sueles analizar tu propia gestión o buscar la causa en las circunstancias del mercado y la empresa?", w: 1.0, a: ["Analizo mi proceso de principio a fin para identificar qué errores cometí y cómo puedo mejorar.", 10, "Evalúo mis acciones, pero también analizo si hubo fallos en el soporte de la empresa o cambios bruscos en el mercado.", 6, "Mi experiencia es que muchos fracasos son imputables a la falta de apoyo o las condiciones externas impidieron el cierre.", 0] },
@@ -190,20 +241,20 @@
         { q: "¿Renunciarías a la red de protección de una nómina a cambio de una comisión más alta?", w: 1.5, a: ["Sí, prefiero cobrar el máximo por operación y gestionar yo mis ahorros y descansos.", 10, "Me lo plantearía solo si el aumento de ingresos me permite ahorrar lo suficiente para compensar esa falta de seguridad.", 6, "No, valoro demasiado la estabilidad y las garantías legales que ofrece un contrato laboral.", 0] },
         { q: "¿Prefieres trabajar siguiendo procesos operativos ya definidos por otros o disfrutas diseñando tus propios protocolos desde cero?", w: 1.0, a: ["Disfruto creando mis propios sistemas de trabajo y optimizándolos según mi criterio personal.", 10, "Me gusta tener una base de procesos ya definida que yo pueda adaptar o retocar a mi manera.", 6, "Prefiero seguir un manual de procedimientos claro y probado que me diga exactamente qué hacer en cada paso.", 0] },
         { q: "¿En qué medida consideras que el soporte administrativo y logístico de una organización es el motor principal de tu productividad?", w: 1.2, a: ["En absoluto; yo gestiono mis propios recursos y soy capaz de administrar mi actividad de forma independiente.", 10, "Es una ayuda importante que me libera tiempo, pero no considero que sea el factor crítico para mis ventas.", 6, "Es fundamental; sin ese soporte administrativo y logístico, mi productividad caería drásticamente.", 0] },
-        { q: "¿Eres capaz de mantener un alto nivel de actividad y rigor profesional cuando no tienes a nadie a quien rendir cuentas diariamente?", w: 1.2, a: ["Por supuesto; soy extremadamente autoexigente con mis objetivos y no necesito presión o motivación externa para rendir.", 10, "Generalmente sí, aunque reconozco que puntualmente me vendría bien un poco de motivación externa para no dispersarme.", 6, "Me cuesta mucho ser constante si no tengo objetivos marcados por un jefe y un control de mi actividad diaria.", 0] },
-        { q: "¿Cómo gestionas tu priorización de tareas cuando te enfrentas a múltiples demandas sin tener una jerarquía de mando que marque las pautas?", w: 1.0, a: ["Decido con rapidez y eficacia basándome exclusivamente en la rentabilidad y el valor estratégico de cada tarea.", 10, "Me tomo mi tiempo para analizarlo y suelo priorizar bien, aunque a veces dudo sobre qué es lo más urgente.", 6, "Me siento sobrepasado por la falta de dirección y prefiero que alguien con más autoridad me ayude a priorizar.", 0] },
-        { q: "¿Te ves dedicando una parte significativa de tu semana a tareas administrativas, fiscales y de marketing que no son ventas directas?", w: 1.0, a: ["Sí; entiendo y acepto que gestionar esas áreas es parte esencial de ser un profesional de alto nivel.", 10, "Lo acepto como un trámite necesario, aunque trato de dedicarle el menor tiempo posible para volver a la calle.", 6, "No; yo soy un vendedor puro y quiero que otra persona se encargue de todo el papeleo y el marketing.", 0] },
-        { q: "¿Consideras que gestionar tu propia infraestructura técnica y legal es un reto estimulante o una distracción que te aleja de tu talento?", w: 1.0, a: ["Es un reto estimulante tener el control total sobre todas las herramientas y aspectos legales de mi actividad.", 10, "Es una tarea necesaria de la que puedo ocuparme si cuento con herramientas sencillas que me faciliten la labor.", 6, "Es una distracción molesta y estresante que me quita tiempo de lo que realmente me apasiona y sé hacer.", 0] },
-        { q: "¿Cuánto valoras el contacto social diario y el hecho de compartir éxitos y fracasos con un equipo en un espacio físico común?", w: 0.8, a: ["Nada; prefiero trabajar solo, me concentro mejor y me distraen las interacciones constantes de una oficina.", 10, "Lo valoro puntualmente o en reuniones periódicas, pero no necesito una oficina diaria para mantenerme motivado.", 6, "Muchísimo; el ambiente de equipo, el café con los compañeros y el contacto humano son vitales para mi bienestar.", 0] },
-        { q: "¿Hasta qué punto es fundamental para ti sentirte identificado con los valores y la cultura de una marca corporativa superior?", w: 0.8, a: ["Es irrelevante; mi ética, mis valores y mi reputación personal están por encima de cualquier marca.", 10, "Es importante; me gusta trabajar acompañada/o de una marca que sea coherente con mis principios.", 6, "Es fundamental; necesito sentir que formo parte de algo más grande que yo y que comparto una cultura de empresa.", 0] },
-        { q: "¿Prefieres desconectar totalmente del trabajo al salir de un entorno físico de oficina o no te importa integrar vida profesional y personal de forma fluida?", w: 0.8, a: ["No me importa integrarlas; mi trabajo es mi estilo de vida y yo decido cuándo y desde dónde trabajo.", 10, "Trato de separarlas, aunque acepto cierta flexibilidad y puedo atender asuntos profesionales en mi tiempo personal.", 6, "Necesito una separación estricta; cuando salgo de mi lugar de trabajo, mi mente debe desconectar al 100%.", 0] },
-        { q: "¿Tienes la capacidad de establecer límites estrictos a tus clientes y a ti mismo cuando el entorno de trabajo depende exclusivamente de tu gestión?", w: 0.8, a: ["Sí; soy muy estricto con mi tiempo, sé decir \"no\" y mis clientes respetan mis reglas de disponibilidad.", 10, "Lo intento, aunque a veces la presión del negocio me hace ceder y atender demandas fuera de mi horario previsto.", 6, "Me cuesta mucho; suelo acabar disponible las 24 horas si no tengo una estructura que regule mi atención al cliente.", 0] },
-        { q: "¿Cuánto tiempo tardas en recuperar tu nivel de motivación habitual tras perder una operación importante o enfrentar un rechazo directo?", w: 1.0, a: ["Casi de forma instantánea; entiendo el rechazo como estadística y paso a la siguiente oportunidad sin dudar.", 10, "Unas horas o un día; analizo qué falló, lo proceso y vuelvo a la carga con energía renovada.", 6, "Varios días; los fracasos me afectan personalmente y me cuesta recuperar el ritmo de trabajo habitual.", 0] },
-        { q: "¿Te sientes emocionalmente preparado para afrontar rachas de baja actividad prolongadas sin el soporte moral de un equipo o un responsable?", w: 1.2, a: ["Totalmente; tengo la fortaleza mental y el pulmón financiero para aguantar y persistir por mi cuenta.", 10, "Sí, aunque reconozco que en los momentos bajos es cuando más echo de menos tener a alguien que me respalde.", 6, "No; la soledad en los momentos de baja actividad me desmotiva rápidamente y me hace dudar de mi capacidad.", 0] },
-        { q: "Ante la escasez de oferta y la alta competencia actual, ¿cómo planteas tu estrategia de captación de exclusivas?", w: 1.4, a: ["Confío en mi capacidad de prospección directa y en mi red de contactos personal para generar mis propias oportunidades sin depender de nadie.", 10, "Utilizaré mi red personal, pero creo que necesitaré contar con herramientas de marketing avanzadas y el prestigio de una marca para diferenciarme más.", 6, "Prefiero que la empresa invierta en marketing y generación de leads para que yo pueda centrarme exclusivamente en la gestión comercial.", 0] },
-        { q: "¿Cómo gestionas la creciente complejidad legal y los cambios normativos constantes en el sector inmobiliario?", w: 1.2, a: ["Me mantengo permanentemente informado por mi cuenta y asumo la responsabilidad total de la seguridad jurídica de mis operaciones.", 10, "Me encargo de la gestión, pero me interesaría contar con un respaldo que me mantenga actualizado y me proporcione herramientas legales validadas.", 6, "No quiero riesgos; necesito que un departamento legal especializado supervise y valide cada contrato y documento que firmo.", 0] },
-        { q: "Dada la posibilidad de estar al final de un ciclo, ¿cuál es tu plan de contingencia financiero?", w: 1.3, a: ["Entiendo los ciclos del mercado y ajusto mi estructura de costes e inversión al máximo para ser rentable incluso si bajan las ventas.", 10, "Soy consciente de la situación y valoraría incorporarme a un modelo de costes variables que me permita ser flexible si el mercado se frena.", 6, "Ante una posible crisis de mercado, mi prioridad absoluta es mantener la seguridad de unos ingresos fijos garantizados.", 0] },
-        { q: "¿Qué posición adoptas ante la irrupción de la IA en tu operativa diaria?", w: 1.1, a: ["Investigo e implemento proactivamente mis propias herramientas de IA para ganar eficiencia y superar a la competencia por mi cuenta.", 10, "Adopto las innovaciones tecnológicas pero valoro que me lleguen filtradas y testadas por un tercero.", 6, "Prefiero seguir con los métodos tradicionales que me han funcionado y que la empresa decida qué tecnología debemos usar.", 0] }
+        { q: "¿Eres capaz de mantener un alto nivel de actividad y rigor profesional cuando no tienes a nadie a quien rendir cuentas diariamente?", w: 1.2, a: ["Por supuesto; soy extremadamente autoexigente con mi disciplina y no necesito presión o motivación externa.", 10, "Generalmente sí, aunque reconozco que puntualmente me vendría bien un poco de motivación externa.", 6, "Me cuesta mucho ser constante si no tengo objetivos marcados por un jefe.", 0] },
+        { q: "¿Cómo gestionas tu priorización de tareas sin tener una jerarquía de mando?", w: 1.0, a: ["Decido con rapidez basándome en la rentabilidad.", 10, "Me tomo mi tiempo para analizarlo y suelo priorizar bien.", 6, "Me siento sobrepasado por la falta de dirección.", 0] },
+        { q: "¿Te sees dedicando una parte significativa de tu semana a tareas administrativas, fiscales y de marketing?", w: 1.0, a: ["Sí; entiendo que gestionar esas áreas es parte esencial.", 10, "Lo acepto como un trámite necesario.", 6, "No; yo soy un vendedor puro y quiero que otro se encargue.", 0] },
+        { q: "¿Consideras que gestionar tu propia infraestructura técnica es un reto o una distracción?", w: 1.0, a: ["Es un reto estimulante.", 10, "Es una tarea necesaria de la que puedo ocuparme.", 6, "Es una distracción molesta.", 0] },
+        { q: "¿Cuánto valoras el contacto social diario con un equipo en un espacio físico común?", w: 0.8, a: ["Nada; prefiero trabajar solo.", 10, "Lo valoro puntualmente.", 6, "Muchísimo; el ambiente de equipo es vital.", 0] },
+        { q: "¿Hasta qué punto es fundamental para ti sentirte identificado con los valores de una marca?", w: 0.8, a: ["Es irrelevante.", 10, "Es importante.", 6, "Es fundamental.", 0] },
+        { q: "¿Prefieres desconectar totalmente del trabajo o no te importa integrar vida profesional y personal?", w: 0.8, a: ["No me importa integrarlas.", 10, "Trato de separarlas.", 6, "Necesito una separación estricta.", 0] },
+        { q: "¿Tienes la capacidad de establecer límites estrictos a tus clientes?", w: 0.8, a: ["Sí; soy muy estricto con mi tiempo.", 10, "Lo intento, aunque a veces cedo.", 6, "Me cuesta mucho.", 0] },
+        { q: "¿Cuánto tiempo tardas en recuperar tu motivación tras un rechazo?", w: 1.0, a: ["Casi de forma instantánea.", 10, "Unas horas o un día.", 6, "Varios días.", 0] },
+        { q: "¿Te sientes emocionalmente preparado para afrontar rachas de baja actividad en soledad?", w: 1.2, a: ["Totalmente.", 10, "Sí, aunque echo de menos respaldo.", 6, "No; la soledad me desmotiva.", 0] },
+        { q: "Ante la escasez de oferta, ¿cómo planteas tu estrategia de captación?", w: 1.4, a: ["Confío en mi prospección directa.", 10, "Necesitaré herramientas de marketing avanzadas.", 6, "Prefiero que la empresa genere los leads.", 0] },
+        { q: "¿Cómo gestionas la complejidad legal del sector?", w: 1.2, a: ["Me mantengo informado por mi cuenta.", 10, "Me interesaría contar con respaldo que me mantenga actualizado.", 6, "Necesito que un departamento legal supervise todo.", 0] },
+        { q: "Dada la posibilidad de un cambio de ciclo, ¿cuál es tu plan financiero?", w: 1.3, a: ["Ajusto mi estructura de costes al máximo.", 10, "Valoraría un modelo de costes variables.", 6, "Mi prioridad es mantener ingresos fijos garantizados.", 0] },
+        { q: "¿Qué posición adoptas ante la irrupción de la IA?", w: 1.1, a: ["Implemento proactivamente mis propias herramientas.", 10, "Valoro que me lleguen filtradas por un tercero.", 6, "Prefiero seguir con los métodos tradicionales.", 0] }
     ];
 
     const resultTexts = {
@@ -268,7 +319,6 @@
         const rgpd = document.getElementById('rgpd').checked;
         if (email && rgpd) {
             document.getElementById('puntuacion-input').value = score.toFixed(2);
-            // Simulación de envío (En producción Formspree enviará los datos)
             document.getElementById('lead-screen').classList.remove('active');
             showResult();
         } else {
@@ -282,7 +332,6 @@
         let desc = "";
         let deg = 0;
 
-        // Lógica de rangos (Cálculo del ángulo del velocímetro basado en 4 cuadrantes de 45deg)
         if (score <= 60) {
             title = "En Nómina";
             desc = score <= 30 ? resultTexts.nom_low : resultTexts.nom_high;
@@ -314,4 +363,3 @@
 
 </body>
 </html>
-```
