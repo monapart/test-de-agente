@@ -150,26 +150,19 @@
 
         @media (max-width: 600px) {
             #app-container { 
-                padding: 25px 15px;
-                width: 95%;
+                padding: 30px 15px; 
+                width: 95%; 
+                margin: 10px auto;
             }
             .gauge-container { 
-                width: 100%; 
-                max-width: 280px; /* Se ajusta a teléfonos pequeños como iPhone SE */
-                margin: 0 auto 15px;
-            }
-            .gauge-svg { 
-                width: 100%; 
-                height: auto; 
+                max-width: 260px; /* Tamaño máximo para que no desborde en móviles estrechos */
             }
             .needle { 
-                width: 115px; /* Aguja proporcional al arco más pequeño */
-                bottom: 16px;
-                transform: translateX(-100%) rotate(0deg);
+                width: 110px; /* Aguja más corta para el arco de 260px */
+                bottom: 16px; /* Ajuste de altura para el nuevo tamaño */
             }
             #intro-screen h1 { font-size: 32px !important; }
             #intro-screen p { font-size: 18px !important; }
-            .result-text { font-size: 13px; }
         }
     </style>
 </head>
