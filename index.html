@@ -26,22 +26,41 @@
             align-items: center;
         }
 
-        #app-container {
-            width: 100%;
-            max-width: 800px;
-            height: 100vh;
-            padding: 40px 20px;
-            background: var(--color-white);
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-        }
+       /* Sustituir en la sección <style> */
+#app-container {
+    width: 100%;
+    max-width: 800px;
+    min-height: 100vh; /* Cambiado de height a min-height para evitar cortes */
+    padding: 40px 20px;
+    background: var(--color-white);
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto; /* Permite scroll si el contenido excede la pantalla */
+}
 
-        /* Tipografías específicas */
-        .font-lora { font-family: 'Lora', serif; }
-        .font-roboto-thin { font-family: 'Roboto', sans-serif; font-weight: 100; }
-        .font-roboto-medium { font-family: 'Roboto', sans-serif; font-weight: 500; }
-        .font-roboto-normal { font-family: 'Roboto', sans-serif; font-weight: 400; }
+.q-text { 
+    font-family: 'Roboto', sans-serif; 
+    font-weight: 400; 
+    font-size: 22px; 
+    margin-bottom: 30px; 
+    line-height: 1.4; 
+    color: #2d2d2c !important; /* Color explícito #2d2d2c */
+    display: block !important;
+}
+
+.option-item {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    font-size: 15.4px; /* Un 30% más pequeño que 22px */
+    padding: 16px;
+    border: 1px solid #ddd;
+    margin-bottom: 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s;
+    color: #2d2d2c !important; /* Color explícito #2d2d2c */
+    background-color: #ffffff;
+}
 
         /* Pantallas */
         .screen { display: none; flex-direction: column; height: 100%; }
@@ -219,22 +238,29 @@
         document.getElementById(`step-${step}`).classList.add('active');
     }
 
-    function loadQuestion() {
-        const q = questions[currentQ];
-        document.getElementById('q-counter').innerText = `Pregunta ${currentQ + 1} de ${questions.length}`;
-        document.getElementById('q-text').innerText = q.q;
-        const container = document.getElementById('options-container');
-        container.innerHTML = '';
-        
-        q.a.forEach((ans, i) => {
-            const div = document.createElement('div');
-            div.className = 'option-item font-roboto-normal';
-            div.innerText = ans[0];
-            div.onclick = () => selectOption(div, ans[1]);
-            container.appendChild(div);
-        });
-        document.getElementById('next-btn').disabled = true;
-    }
+    /* Sustituir la función loadQuestion por esta */
+function loadQuestion() {
+    const q = questions[currentQ];
+    const counterEl = document.getElementById('q-counter');
+    const textEl = document.getElementById('q-text');
+    const container = document.getElementById('options-container');
+
+    // Actualizamos el contador y el texto de la pregunta
+    counterEl.textContent = `Pregunta ${currentQ + 1} de ${questions.length}`;
+    textEl.textContent = q.q;
+    
+    container.innerHTML = '';
+    
+    // Generamos las respuestas
+    q.a.forEach((ans) => {
+        const div = document.createElement('div');
+        div.className = 'option-item font-roboto-normal';
+        div.textContent = ans[0]; // Inyectamos el texto de la respuesta
+        div.onclick = () => selectOption(div, ans[1]);
+        container.appendChild(div);
+    });
+    document.getElementById('next-btn').disabled = true;
+}
 
     function selectOption(el, val) {
         document.querySelectorAll('.option-item').forEach(opt => opt.classList.remove('selected'));
