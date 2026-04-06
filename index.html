@@ -27,7 +27,7 @@
 
         #app-container {
             width: 100%;
-            max-width: 800px;
+            max-width: 850px;
             height: 95vh;
             padding: 40px;
             background: var(--color-white);
@@ -35,11 +35,13 @@
             flex-direction: column;
         }
 
+        /* Tipografías específicas */
         .font-lora { font-family: 'Lora', serif; }
         .font-roboto-thin { font-family: 'Roboto', sans-serif; font-weight: 100; }
         .font-roboto-medium { font-family: 'Roboto', sans-serif; font-weight: 500; }
         .font-roboto-normal { font-family: 'Roboto', sans-serif; font-weight: 400; }
 
+        /* Pantallas */
         .screen { display: none; flex-direction: column; height: 100%; }
         .screen.active { display: flex; }
 
@@ -141,64 +143,95 @@
 
 <script>
     const questions = [
-        { q: "¿En qué medida consideras que tus resultados actuales son una consecuencia directa de tu esfuerzo y talento individual frente a factores externos? (Peso: 1.2)", w: 1.2, a: [["Mis resultados dependen exclusivamente de mi gestión, mi capacidad y mi trabajo diario.", 10], ["Mi esfuerzo es determinante, aunque reconozco que el mercado y el apoyo de mi empresa influyen significativamente.", 6], ["Mis resultados están ligados principalmente al prestigio de la marca y la situación económica.", 0]] },
-        { q: "¿Qué nivel de variabilidad en tus ingresos mensuales estás dispuesto a tolerar antes de que afecte negativamente a tu bienestar emocional? (Peso: 1.5)", w: 1.5, a: [["Tolero cualquier variabilidad; entiendo que los picos y valles son parte del negocio.", 10], ["Puedo gestionar emocionalmente variaciones moderadas con una seguridad mínima.", 6], ["Necesito una alta estabilidad; me genera mucha ansiedad la incertidumbre mensual.", 0]] },
-        { q: "¿Qué valor le das a tener libertad total para decidir tus propios métodos de trabajo, horarios y procesos sin supervisión externa? (Peso: 1.2)", w: 1.2, a: [["Es mi máxima prioridad; no acepto que nadie supervise mi agenda.", 10], ["Valoro mucho la autonomía, aunque me gusta tener un marco de referencia.", 6], ["Prefiero que me marquen las pautas, los horarios y los procesos.", 0]] },
-        { q: "¿Te sientes capaz de generar el mismo volumen de negocio si dejaras de contar con el respaldo de tu marca o estructura actual hoy mismo? (Peso: 1.5)", w: 1.5, a: [["Sin ninguna duda; mis clientes confían en mi marca personal.", 10], ["Probablemente sí, aunque al inicio me costaría más generar la misma confianza.", 6], ["No; gran parte de mi volumen se debe al prestigio y recursos de la empresa.", 0]] },
-        { q: "¿Qué pesa más en tu balanza de satisfacción laboral: la estabilidad de un entorno predecible o la libertad de ser tu propio jefe? (Peso: 1.5)", w: 1.5, a: [["La libertad absoluta de ser dueño de mi destino profesional es innegociable.", 10], ["Busco un equilibrio donde pueda tener independencia pero con respaldo sólido.", 6], ["La estabilidad y la seguridad de una organización consolidada son mi prioridad.", 0]] },
-        { q: "¿Renunciarías a la red de protección de una nómina (paro, vacaciones pagadas, indemnización) a cambio de una comisión más alta? (Peso: 1.5)", w: 1.5, a: [["Sí, prefiero cobrar el máximo por operación y gestionar yo mis ahorros.", 10], ["Me lo plantearía solo si el aumento de ingresos permite ahorrar lo suficiente.", 6], ["No, valoro demasiado la estabilidad y las garantías legales de un contrato.", 0]] },
-        { q: "¿En qué medida consideras que el soporte administrativo y logístico de una organización es el motor principal de tu productividad? (Peso: 1.2)", w: 1.2, a: [["En absoluto; yo gestiono mis propios recursos de forma independiente.", 10], ["Es una ayuda importante que me libera tiempo, pero no es el factor crítico.", 6], ["Es fundamental; sin ese soporte administrativo mi productividad caería.", 0]] },
-        { q: "¿Eres capaz de mantener un alto nivel de actividad y rigor profesional cuando no tienes a nadie a quien rendir cuentas diariamente? (Peso: 1.2)", w: 1.2, a: [["Por supuesto; soy extremadamente autoexigente y no necesito presión externa.", 10], ["Generalmente sí, aunque puntualmente me vendría bien motivación externa.", 6], ["Me cuesta ser constante si no tengo objetivos marcados por un jefe.", 0]] },
-        { q: "¿Te ves dedicando una parte significativa de tu semana a tareas administrativas, fiscales y de marketing que no son ventas directas? (Peso: 1.0)", w: 1.0, a: [["Sí; entiendo que gestionar esas áreas es parte esencial de ser profesional.", 10], ["Lo acepto como un trámite necesario, aunque trato de dedicarle poco tiempo.", 6], ["No; soy un vendedor puro y quiero que otro se encargue del papeleo.", 0]] },
-        { q: "¿Cuánto valoras el contacto social diario y el hecho de compartir éxitos y fracasos con un equipo en un espacio físico común? (Peso: 0.8)", w: 0.8, a: [["Nada; prefiero trabajar solo, me concentro mejor sin interacciones.", 10], ["Lo valoro puntualmente, pero no necesito una oficina diaria.", 6], ["Muchísimo; el ambiente de equipo y el contacto humano son vitales.", 0]] },
-        { q: "¿Te sientes emocionalmente preparado para afrontar rachas de baja actividad prolongadas sin el soporte moral de un equipo o un responsable? (Peso: 1.2)", w: 1.2, a: [["Totalmente; tengo la fortaleza mental y el pulmón financiero para aguantar.", 10], ["Sí, aunque reconozco que en los momentos bajos echo de menos el respaldo.", 6], ["No; la soledad en los momentos de baja actividad me desmotiva.", 0]] },
-        { q: "Ante la escasez de oferta y la alta competencia actual, ¿cómo planteas tu estrategia de captación de exclusivas? (Peso: 1.4)", w: 1.4, a: [["Confío en mi capacidad de prospección directa y en mi red de contactos.", 10], ["Utilizaré mi red, pero creo que necesitaré herramientas de marca avanzado.", 6], ["Prefiero que la empresa invierta en marketing para que yo gestione ventas.", 0]] }
+        { q: "¿En qué medida consideras que tus resultados actuales son una consecuencia directa de tu esfuerzo y talento individual frente a factores externos?", w: 1.2, a: [["Mis resultados dependen exclusivamente de mi gestión, mi capacidad y mi trabajo diario.", 10], ["Mi esfuerzo es determinante, aunque reconozco que el mercado y el apoyo de mi empresa influyen significativamente.", 6], ["Mis resultados están ligados principalmente al prestigio de la marca y la situación económica.", 0]] },
+        { q: "¿Qué nivel de variabilidad en tus ingresos mensuales estás dispuesto a tolerar antes de que afecte negativamente a tu bienestar emocional?", w: 1.5, a: [["Tolero cualquier variabilidad; entiendo que los picos y valles son parte intrínseca del negocio.", 10], ["Puedo gestionar emocionalmente variaciones moderadas de ingresos siempre que tenga una seguridad mínima a medio plazo.", 6], ["Necesito una alta estabilidad; me genera mucha ansiedad no saber con exactitud cuánto dinero entrará cada mes.", 0]] },
+        { q: "¿Qué valor le das a tener libertad total para decidir tus propios métodos de trabajo, horarios y procesos sin supervisión externa?", w: 1.2, a: [["Es mi máxima prioridad; no acepto que nadie supervise mi agenda ni cuestione mi metodología.", 10], ["Valoro mucho la autonomía, aunque me gusta tener un marco de referencia o procesos generales en los que apoyarme.", 6], ["Prefiero que me marquen las pautas, los horarios y los procesos para sentir que voy por el camino correcto.", 0]] },
+        { q: "¿Te sientes capaz de generar el mismo volumen de negocio si dejaras de contar con el respaldo de tu marca o estructura actual hoy mismo?", w: 1.5, a: [["Sin ninguna duda; mis clientes confían en mi marca personal y me seguirían a cualquier lugar.", 10], ["Probablemente sí, aunque reconozco que al principio me costaría más esfuerzo generar la misma confianza.", 6], ["No; creo que gran parte de mi volumen actual se debe al prestigio, los compañeros y los recursos de la empresa actual.", 0]] },
+        { q: "¿Qué pesa más en tu balanza de satisfacción laboral: la estabilidad de un entorno predecible o la libertad de ser tu propio jefe?", w: 1.5, a: [["La libertad absoluta de ser dueño de mi destino profesional es innegociable para mí.", 10], ["Busco un equilibrio donde pueda tener independencia pero con el respaldo de una estructura sólida.", 6], ["La estabilidad y la seguridad que me ofrece pertenecer a una organización consolidada son mi prioridad.", 0]] },
+        { q: "¿Renunciarías a la red de protección de una nómina (paro, vacaciones pagadas, indemnización) a cambio de una comisión más alta?", w: 1.5, a: [["Sí, prefiero cobrar el máximo por operación y gestionar yo mis ahorros y descansos.", 10], ["Me lo plantearía solo si el aumento de ingresos me permite ahorrar lo suficiente para compensar esa falta de seguridad.", 6], ["No, valoro demasiado la estabilidad y las garantías legales que ofrece un contrato laboral.", 0]] },
+        { q: "¿En qué medida consideras que el soporte administrativo y logístico de una organización es el motor principal de tu productividad?", w: 1.2, a: [["En absoluto; yo gestiono mis propios recursos y soy capaz de administrar mi actividad de forma independiente.", 10], ["Es una ayuda importante que me libera tiempo, pero no considero que sea el factor crítico para mis ventas.", 6], ["Es fundamental; sin ese soporte administrativo y logístico, mi productividad caería drásticamente.", 0]] },
+        { q: "¿Eres capaz de mantener un alto nivel de actividad y rigor profesional cuando no tienes a nadie a quien rendir cuentas diariamente?", w: 1.2, a: [["Por supuesto; soy extremadamente autoexigente con mis objetivos y no necesito presión o motivación externa para rendir.", 10], ["Generalmente sí, aunque reconozco que puntualmente me vendría bien un poco de motivación externa para no dispersarme.", 6], ["Me cuesta mucho ser constante si no tengo objetivos marcados por un jefe y un control de mi actividad diaria.", 0]] },
+        { q: "¿Te ves dedicando una parte significativa de tu semana a tareas administrativas, fiscales y de marketing que no son ventas directas?", w: 1.0, a: [["Sí; entiendo y acepto que gestionar esas áreas es parte esencial de ser un profesional de alto nivel.", 10], ["Lo acepto como un trámite necesario, aunque trato de dedicarle el menor tiempo posible para volver a la calle.", 6], ["No; yo soy un vendedor puro y quiero que otra persona se encargue de todo el papeleo y el marketing.", 0]] },
+        { q: "¿Cuánto valoras el contacto social diario y el hecho de compartir éxitos y fracasos con un equipo en un espacio físico común?", w: 0.8, a: [["Nada; prefiero trabajar solo, me concentro mejor y me distraen las interacciones constantes de una oficina.", 10], ["Lo valoro puntualmente o en reuniones periódicas, pero no necesito una oficina diaria para mantenerme motivado.", 6], ["Muchísimo; el ambiente de equipo, el café con los compañeros y el contacto humano son vitales para mi bienestar.", 0]] },
+        { q: "¿Te sientes emocionalmente preparado para afrontar rachas de baja actividad prolongadas sin el soporte moral de un equipo o un responsable?", w: 1.2, a: [["Totalmente; tengo la fortaleza mental y el pulmón financiero para aguantar y persistir por mi cuenta.", 10], ["Sí, aunque reconozco que en los momentos bajos echo de menos tener a alguien que me respalde.", 6], ["No; la soledad en los momentos de baja actividad me desmotiva rápidamente y me hace dudar de mi capacidad.", 0]] },
+        { q: "Ante la escasez de oferta y la alta competencia actual, ¿cómo planteas tu estrategia de captación de exclusivas?", w: 1.4, a: [["Confío en mi capacidad de prospección directa y en mi red de contactos personal para generar mis propias oportunidades sin depender de nadie.", 10], ["Utilizaré mi red personal, pero creo que necesitaré contar con herramientas de marketing avanzadas y el prestigio de una marca.", 6], ["Prefiero que la empresa invierta en marketing y generación de leads para que yo pueda centrarme exclusivamente en la gestión.", 0]] }
     ];
 
     const resultsTexts = {
-        nom_low: { p: "El Especialista Protegido", m: "En nómina", t: "Tus respuestas dibujan un perfil con un protagonismo sobre tus resultados externo dominante y una alta necesidad de seguridad psicológica. Científicamente, esto indica que tu productividad florece cuando los factores de estrés ambiental están bajo el control de una organización. No es falta de ambición, es optimización de energía: prefieres canalizar todo tu talento hacia el cliente en lugar de malgastarlo peleando con Hacienda o configurando un CRM. Para ti, la red de protección de un contrato laboral no es una jaula, sino el andamio que te permite subir más alto." },
-        nom_high: { p: "El Intraemprendedor Cauto", m: "En nómina", t: "Tu perfil muestra una autoeficacia performativa latente, pero frenada por una baja tolerancia a la incertidumbre. Te gusta el juego inmobiliario y te sientes capaz de liderar operaciones complejas, pero valoras demasiado la infraestructura compartida. La ciencia organizacional sugiere que eres un intraemprendedor: alguien que quiere proponer y crecer, pero bajo un paraguas de marca que ya haya hecho el trabajo sucio de posicionamiento." },
-        bro_low: { p: "El Asociado de Proximidad", m: "Con broker", t: "Tus resultados indican una transición clara hacia la independencia, pero con un anclaje fuerte en la necesidad de afiliación. Posees la disciplina para ser autónomo, pero el lobo solitario no es tu animal espiritual. Necesitas el contacto social diario y el refuerzo de un equipo presencial. El modelo de broker tradicional te ofrece lo que buscas: una oficina donde tomar café, un líder que marque dirección y una estructura que separe tu casa de tu trabajo." },
-        bro_high: { p: "El Profesional en Transición", m: "Con broker", t: "Estás en un punto de inflexión psicológico interesante. Tu anclaje de carrera se ha desplazado hacia la independencia, pero tu necesidad de estructura aún te mantiene ligado a modelos tradicionales. Eres un agente con gran capacidad de autogestión que, sin embargo, teme el vacío que supone gestionar la tecnología y el soporte legal por cuenta propia. En un mercado tecnológico y cambiante, los perfiles como el tuyo a menudo descubren que el modelo de plataforma de servicios es el siguiente paso lógico." },
-        pla_1: { p: "El Emprendedor Eficiente", m: "Autónomo en plataforma", t: "Tu perfil es el del pragmático por excelencia. Tienes un protagonismo sobre tus resultados muy fuerte: sabes que tus éxitos dependen de ti y no tienes miedo a volar sin motor. Sin embargo, tu autoeficacia está unida a un sentido práctico de la economía: entiendes que tu tiempo vale dinero y que tu zona de genialidad es el cierre, no el back-office. Para ti, el modelo de plataforma es la simbiosis perfecta: tienes la libertad del autónomo y la potencia de fuego de una multinacional." },
-        pla_2: { p: "El Visionario Tecnológico", m: "Autónomo en plataforma", t: "Tus respuestas demuestran una alta capacidad de adaptación al mercado. Eres consciente de que la IA y los cambios normativos exigen un agente más sofisticado. No buscas una agencia que te diga qué hacer, sino una plataforma que te dé las armas más avanzadas para que tú ejecutes tu propia estrategia. Te sientes cómodo en la liquidez del mercado actual y tu operativa es pura eficiencia." },
-        pla_3: { p: "El Gestor de Estilo de Vida", m: "Autónomo en plataforma", t: "Tu prioridad absoluta es la gestión de límites. Has alcanzado un nivel de madurez profesional donde entiendes que el éxito no es solo facturar, sino ser dueño de tu tiempo. Tu puntuación en autonomía y volición es altísima; no necesitas vigilancia porque tu propia disciplina es exigente. Buscas un ecosistema que elimine las fricciones diarias para que tu negocio trabaje para ti, y no al revés." },
-        pla_4: { p: "El Estratega del Rendimiento", m: "Autónomo en plataforma", t: "Estás rozando el límite superior de la independencia, pero tu realismo económico te mantiene dentro del modelo de plataforma. Tu análisis de coste de oportunidad te dice que, aunque podrías hacerlo todo tú solo, no sería rentable. Sabes que el prestigio de una plataforma sólida y una red de soporte experto son activos que multiplican tu valor ante clientes de alto nivel. Estás en el punto óptimo de la cadena trófica inmobiliaria." },
-        solo: { p: "El Arquitecto Independiente", m: "Autónomo en solitario", t: "Eres el Lobo Estepario del sector. Tu autoeficacia performativa es máxima y tu tolerancia al riesgo, absoluta. Tienes una necesidad de autonomía radical: cualquier estructura externa te genera una sensación de fricción. Estás dispuesto a asumirlo todo con tal de no rendir cuentas a nadie. Sin embargo, recuerda que en un escenario de hiper-especialización, pasar a una plataforma de servicios no es perder independencia, sino externalizar el mantenimiento para seguir siendo el arquitecto jefe." }
+        nom_low: { p: "El Especialista Protegido", m: "En nómina", t: "Tus respuestas dibujan un perfil con un Responsabilidad sobre tus resultados externo dominante y una alta necesidad de seguridad psicológica. Científicamente, esto indica que tu productividad florece cuando los factores de estrés ambiental (incertidumbre de ingresos, cambios legales, gestión de marca) están bajo el control de una organización. No es falta de ambición, es optimización de energía: prefieres canalizar todo tu talento hacia el cliente en lugar de malgastarlo peleando con Hacienda o configurando un CRM. Para ti, la red de protección de un contrato laboral no es una jaula, sino el andamio que te permite subir más alto. Eres el activo ideal para estructuras corporativas que necesitan \"vendedores puros\". Disfrutas del ritual de la oficina y de saber que, pase lo que pase en el mercado, el día 30 tu cuenta bancaria emitirá un sonido reconfortante. Si alguna vez te sientes tentado por la aventura solitaria, recuerda que ser tu propio jefe también implica ser tu propio administrativo, y esa es una relación que, por ahora, prefieres evitar." },
+        nom_high: { p: "El Intraemprendedor Cauto", m: "En nómina", t: "Tu perfil muestra una autoeficacia performativa latente, pero frenada por una baja tolerancia a la incertidumbre. Te gusta el juego inmobiliario y te sientes capaz de liderar operaciones complejas, pero valoras demasiado la infraestructura compartida. La ciencia organizacional sugiere que eres un \"intraemprendedor\": alguien que quiere proponer y crecer, pero bajo un paraguas de marca que ya haya hecho el trabajo sucio de posicionamiento. Te sientes cómodo en entornos donde el soporte administrativo es el motor de tu productividad. Tu bienestar emocional está muy ligado a la estabilidad, y eso es inteligente; no todo el mundo tiene por qué disfrutar de la \"montaña rusa\" del autónomo. Tu modelo ideal es una agencia consolidada que te ofrezca incentivos por objetivos pero mantenga tu red de seguridad intacta. Eso sí, asegúrate de que tu empresa no sea demasiado rígida, porque tienes un punto de autonomía que podría asfixiarse si te obligan a pedir permiso hasta para cambiar el color de una tarjeta de visita." },
+        bro_low: { p: "El Asociado de Proximidad", m: "Con broker", t: "Tus resultados indican una transición clara hacia la independencia, pero con un anclaje fuerte en la necesidad de afiliación. Posees la disciplina para ser autónomo, pero el \"lobo solitario\" no es tu animal espiritual. Necesitas el contacto social diario y el refuerzo de un equipo presencial. El modelo de broker tradicional te ofrece lo que buscas: una oficina donde tomar café y comentar las jugadas, un líder que marque cierta dirección estratégica y una estructura física que separe tu casa de tu trabajo. Operas mejor cuando sientes que formas parte de una comunidad local con una marca que tus vecinos reconozcan. Tu resiliencia se apoya en el grupo; los meses flojos se pasan mejor cuando puedes compartir la frustración en el office. Eres un agente de relaciones, y mientras el broker se encargue de que la impresora funcione y de que haya leads en el sistema, tú serás feliz. Es un modelo honesto y equilibrado, siempre y cuando el porcentaje que cedes de tus comisiones te siga pareciendo un precio justo por no sentir la soledad del corredor de fondo." },
+        bro_high: { p: "El Profesional en Transición", m: "Con broker", t: "Estás en un punto de inflexión psicológico interesante. Tu anclaje de carrera se ha desplazado hacia la independencia, pero tu necesidad de estructura aún te mantiene ligado a modelos tradicionales. Eres un agente con gran capacidad de autogestión que, sin embargo, teme el vacío que supone gestionar la tecnología, el marketing y el soporte legal por cuenta propia. Por eso buscas el refugio de un broker: te da seguridad jurídica y operativa a cambio de una parte sustancial de tu beneficio. Sin embargo, tu puntuación sugiere que podrías estar \"pagando de más\" por servicios que ya no necesitas tanto. Deberías vigilar si el soporte que te da tu broker actual realmente justifica la cuota o el reparto de comisiones. En un mercado tan tecnológico y cambiante, los perfiles como el tuyo a menudo descubren que el modelo de plataforma de servicios es el siguiente paso lógico: te daría la misma (o mejor) infraestructura legal y técnica, pero con mucha más libertad y un retorno económico significativamente mayor. No dejes que la costumbre te impida optimizar tu margen neto." },
+        pla_1: { p: "El Emprendedor Eficiente", m: "Autónomo en plataforma", t: "Tu perfil es el del pragmático por excelencia. Tienes un Responsabilidad sobre tus resultados muy fuerte: sabes que tus éxitos dependen de ti y no tienes miedo a volar sin motor. Sin embargo, tu autoeficacia está unida a un sentido práctico de la economía: ¿por qué iba a perder tres horas resolviendo un contrato legal o editando un vídeo si hay una plataforma que lo hace por mí de forma profesional? Entiendes que tu tiempo vale dinero y que tu zona de genialidad es el cierre, no el back-office. Para ti, el modelo de plataforma es la simbiosis perfecta. Eres un empresario de ti mismo que utiliza la tecnología y los servicios compartidos como \"apalancamiento operativo\". No necesitas una oficina llena de gente para motivarte, pero eres lo suficientemente inteligente como para no querer estar solo ante el peligro. Valoras la marca personal pero entiendes que un respaldo de prestigio te abre puertas más rápido. En definitiva, has hackeado el sistema: tienes la libertad del autónomo y la potencia de fuego de una multinacional." },
+        pla_2: { p: "El Visionario Tecnológico", m: "Autónomo en plataforma", t: "Tus respuestas demuestran una alta capacidad de adaptación al mercado. Eres consciente de que la IA, los cambios normativos y la escasez de oferta exigen un agente más sofisticado y menos \"artesanal\". Tu perfil puntúa alto en curiosidad tecnológica y resiliencia. No buscas una agencia que te diga qué hacer, sino una plataforma que te dé las armas más avanzadas para que tú ejecutes tu propia estrategia. Te sientes cómodo en la liquidez del mercado actual. No te asusta el final de ciclo porque confías en tu capacidad para ajustar costes. El modelo de plataforma te encaja como un guante porque es el único que respeta tu necesidad de independencia total mientras te mantiene actualizado en lo que de verdad importa. Eres el tipo de profesional que prefiere invertir en su propio crecimiento que en pagar el alquiler de la oficina de un broker. Tu mentalidad es 100% digital y tu operativa, pura eficiencia." },
+        pla_3: { p: "El Gestor de Estilo de Vida", m: "Autónomo en plataforma", t: "Tu prioridad absoluta es la gestión de límites. Has alcanzado un nivel de madurez profesional donde entiendes que el éxito no es solo facturar, sino ser dueño de tu tiempo. Tu puntuación en autonomía y volición es altísima; no necesitas a nadie que te vigile porque tu propia disciplina es más exigente que cualquier jefe. Lo que buscas es un ecosistema que elimine las fricciones de tu día a día. El modelo de plataforma te permite integrar tu vida personal y profesional sin las ataduras de un modelo presencial ni las pesadillas administrativas del que va por libre. Eres un agente de alto rendimiento que ha decidido que no quiere ser \"esclavo\" de su propia estructura. Al delegar lo rutinario en una plataforma de servicios, te aseguras de que tu negocio trabaje para ti, y no al revés. Tienes el control total, el máximo beneficio y, lo más importante, el silencio administrativo necesario para enfocarte en lo que de verdad te apasiona." },
+        pla_4: { p: "El Estratega del Rendimiento", m: "Autónomo en plataforma", t: "Estás rozando el límite superior de la independencia, pero tu realismo económico te mantiene dentro del modelo de plataforma. Tu análisis de coste de oportunidad te dice que, aunque podrías hacerlo todo tú solo, no sería rentable. Posees una resiliencia envidiable y una visión de mercado muy aguda. Sabes que el prestigio de una plataforma sólida y una red de soporte experto son activos que multiplican tu valor ante clientes de alto nivel. Eres un perfil muy atractivo para cualquier modelo laboral, pero tú ya has decidido que no quieres techos. La plataforma es para ti un socio silencioso: no interfiere en tus decisiones pero está ahí para asegurar que tu infraestructura legal y técnica sea impecable. Tu ambición es alta y tu necesidad de supervisión es nula. Probablemente seas el referente de tu zona y tus clientes te busquen a ti, no a las siglas de tu tarjeta. Estás en el punto óptimo de la cadena trófica inmobiliaria." },
+        solo: { p: "El Arquitecto Independiente", m: "Autónomo en solitario", t: "Eres el \"Lobo Estepario\" del sector inmobiliario. Tu autoeficacia performativa es máxima y tu tolerancia al riesgo, absoluta. La ciencia de la personalidad dice de ti que tienes una necesidad de autonomía radical: cualquier estructura externa te genera una sensación de fricción o pérdida de control. Estás dispuesto a asumir la carga total del back-office, el marketing y la asesoría legal con tal de no rendir cuentas a nadie y de no compartir ni un céntimo de tus honorarios. Eres, en esencia, una inmobiliaria unipersonal. Disfrutas teniendo el control total del proceso, desde el diseño de los contratos hasta el color del logo. Sin embargo, un profesional de tu inteligencia debe estar atento a las señales: en un escenario de hiper-especialización tecnológica, cambios legales complejos o enfriamiento del mercado, la carga de gestionar la estructura por ti solo puede empezar a canibalizar tu tiempo de venta. Si algún día sientes que el papeleo te quita más de lo que te da, considera que pasar a una plataforma de servicios no es perder independencia, sino externalizar tu departamento de mantenimiento para que tú puedas seguir siendo el arquitecto jefe. Por ahora, disfruta de tu reino; es pequeño, pero es 100% tuyo." }
     };
 
     let curQ = 0, score = 0, selVal = null;
-    function startQuiz() { curQ = 0; score = 0; showStep(2); loadQuestion(); }
-    function showStep(s) { document.querySelectorAll('.screen').forEach(el => el.classList.remove('active')); document.getElementById(`step-${s}`).classList.add('active'); }
+
+    function nextStep(step) {
+        document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+        document.getElementById(`step-${step}`).classList.add('active');
+    }
+
+    function startQuiz() {
+        curQ = 0; score = 0;
+        nextStep(2);
+        loadQuestion();
+    }
+
     function loadQuestion() {
         const q = questions[curQ];
-        document.getElementById('q-counter').innerText = `Pregunta ${curQ + 1} de 12`;
+        document.getElementById('q-counter').innerText = `Pregunta ${curQ + 1} de ${questions.length}`;
         document.getElementById('q-text').innerText = q.q;
-        const cont = document.getElementById('options-container'); cont.innerHTML = '';
-        q.a.forEach(ans => {
-            const div = document.createElement('div'); div.className = 'option-item font-roboto-normal'; div.innerText = ans[0];
-            div.onclick = () => { document.querySelectorAll('.option-item').forEach(o => o.classList.remove('selected')); div.classList.add('selected'); selVal = ans[1]; document.getElementById('next-btn').disabled = false; };
-            cont.appendChild(div);
+        const container = document.getElementById('options-container');
+        container.innerHTML = '';
+        
+        q.a.forEach((ans) => {
+            const div = document.createElement('div');
+            div.className = 'option-item font-roboto-normal';
+            div.innerText = ans[0];
+            div.onclick = () => {
+                document.querySelectorAll('.option-item').forEach(opt => opt.classList.remove('selected'));
+                div.classList.add('selected');
+                selVal = ans[1];
+                document.getElementById('next-btn').disabled = false;
+            };
+            container.appendChild(div);
         });
         document.getElementById('next-btn').disabled = true;
     }
-    function handleNextQuestion() { score += selVal * questions[curQ].w; curQ++; if (curQ < 12) loadQuestion(); else showStep(3); }
+
+    function handleNextQuestion() {
+        score += selVal * questions[curQ].w;
+        curQ++;
+        if (curQ < questions.length) {
+            loadQuestion();
+        } else {
+            nextStep(3);
+        }
+    }
+
     function calculateResult() {
-        if (!document.getElementById('legal').checked) { alert("Acepta las condiciones."); return; }
+        if (!document.getElementById('legal').checked) { alert("Debes aceptar las condiciones."); return; }
         let res;
-        if (score <= 35) res = resultsTexts.nom_low;
-        else if (score <= 70) res = resultsTexts.nom_high;
-        else if (score <= 85) res = resultsTexts.bro_low;
-        else if (score <= 110) res = resultsTexts.bro_high;
-        else if (score <= 125) res = resultsTexts.pla_1;
-        else if (score <= 135) res = resultsTexts.pla_2;
-        else if (score <= 143) res = resultsTexts.pla_3;
-        else if (score <= 149) res = resultsTexts.pla_4;
+        // Rangos según Perfiles.docx [cite: 278-338]
+        if (score <= 16) res = resultsTexts.nom_low;
+        else if (score <= 32) res = resultsTexts.nom_high;
+        else if (score <= 51) res = resultsTexts.bro_low;
+        else if (score <= 70) res = resultsTexts.bro_high;
+        else if (score <= 86) res = resultsTexts.pla_1;
+        else if (score <= 103) res = resultsTexts.pla_2;
+        else if (score <= 122) res = resultsTexts.pla_3;
+        else if (score <= 138) res = resultsTexts.pla_4;
         else res = resultsTexts.solo;
+
         document.getElementById('res-profile').innerText = res.p;
         document.getElementById('res-model').innerText = res.m;
         document.getElementById('res-body').innerText = res.t;
-        showStep(4);
+        nextStep(4);
     }
 </script>
 </body>
