@@ -35,7 +35,6 @@
             flex-direction: column;
         }
 
-        /* Tipografías */
         .font-lora { font-family: 'Lora', serif; }
         .font-roboto-thin { font-family: 'Roboto', sans-serif; font-weight: 100; }
         .font-roboto-medium { font-family: 'Roboto', sans-serif; font-weight: 500; }
@@ -44,7 +43,6 @@
         .screen { display: none; flex-direction: column; height: 100%; }
         .screen.active { display: flex; }
 
-        /* Paso 1: Bienvenida */
         .welcome-title { font-size: 32px; color: var(--color-dark); margin-bottom: 20px; line-height: 1.2; }
         .welcome-desc { font-size: 18px; color: var(--color-dark); margin-bottom: 30px; line-height: 1.5; }
         .details-box { margin-bottom: 30px; }
@@ -61,7 +59,6 @@
             transition: opacity 0.3s;
         }
 
-        /* Paso 2: Cuestionario */
         .q-counter { font-size: 14px; color: var(--color-terracotta); margin-bottom: 15px; }
         .q-text { font-size: 20px; margin-bottom: 25px; line-height: 1.4; color: var(--color-dark); }
         .option-item {
@@ -70,22 +67,20 @@
             margin-bottom: 10px;
             border-radius: 4px;
             cursor: pointer;
-            font-size: 14px; /* ~30% menor que 20px */
+            font-size: 14px;
             color: var(--color-dark);
         }
         .option-item.selected { background-color: var(--color-terracotta); color: var(--color-white); border-color: var(--color-terracotta); }
         .btn-next { align-self: flex-end; margin-top: 10px; }
 
-        /* Paso 3: Lead */
         .input-field { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 4px; margin-bottom: 12px; font-size: 16px; }
         .checkbox-container { display: flex; align-items: flex-start; gap: 10px; font-size: 13px; margin-bottom: 20px; }
 
-        /* Paso 4: Resultados (Corrección de Texto) */
         .res-label { font-size: 15px; margin-bottom: 5px; }
         .res-value { font-size: 24px; margin-bottom: 15px; }
         .divider { height: 1px; background-color: #eee; border: none; margin: 15px 0; }
-        .scroll-area { flex-grow: 1; overflow-y: auto; padding-right: 10px; margin-bottom: 20px; }
-        .full-desc { font-size: 15px; line-height: 1.6; text-align: justify; }
+        .scroll-area { flex-grow: 1; overflow-y: auto; padding-right: 15px; margin-bottom: 20px; }
+        .full-desc { font-size: 16px; line-height: 1.6; text-align: justify; }
 
         @media (max-width: 600px) { #app-container { padding: 20px; } .welcome-title { font-size: 26px; } .btn-main { width: 100%; } }
     </style>
@@ -137,7 +132,6 @@
 </div>
 
 <script>
-    // Selección de 12 preguntas críticas del corpus original 
     const questions = [
         { q: "¿En qué medida tus resultados dependen de tu esfuerzo individual frente a factores externos?", w: 1.2, a: [["Dependen exclusivamente de mi gestión.", 10], ["Dependen de mi esfuerzo y el apoyo de la empresa.", 6], ["Dependen del prestigio de la marca y el mercado.", 0]] },
         { q: "¿Qué nivel de variabilidad en ingresos mensuales estás dispuesto a tolerar?", w: 1.5, a: [["Tolero cualquier variabilidad; es parte del negocio.", 10], ["Gestiono variaciones si hay seguridad a medio plazo.", 6], ["Necesito estabilidad absoluta; la duda me genera ansiedad.", 0]] },
@@ -154,15 +148,15 @@
     ];
 
     const resultsTexts = {
-        nom_low: { p: "El Especialista Protegido", m: "En nómina", t: "Tus respuestas dibujan un perfil con alta necesidad de seguridad. Tu productividad florece bajo el control de una organización [cite: 196-198]. Prefieres canalizar tu talento hacia el cliente en lugar de malgastarlo en gestiones administrativas[cite: 199]. La nómina es tu andamio para subir más alto[cite: 200]." },
-        nom_high: { p: "El Intraemprendedor Cauto", m: "En nómina", t: "Muestras autoeficacia pero frenada por la incertidumbre[cite: 205]. Quieres crecer bajo un paraguas de marca sólido[cite: 207]. Tu modelo ideal es una agencia consolidada con incentivos pero red de seguridad[cite: 211]." },
-        bro_low: { p: "El Asociado de Proximidad", m: "Con broker", t: "Transición a la independencia con fuerte necesidad de afiliación[cite: 215]. Necesitas el refuerzo de un equipo presencial[cite: 217]. El broker te ofrece la estructura física y social que separa tu casa del trabajo[cite: 218]." },
-        bro_high: { p: "El Profesional en Transición", m: "Con broker", t: "Punto de inflexión psicológico: anclaje de carrera independiente pero con miedo al vacío tecnológico y legal [cite: 224-225]. El modelo de plataforma será tu próximo movimiento lógico para optimizar margen[cite: 229]." },
-        pla_1: { p: "El Emprendedor Eficiente", m: "Autónomo en plataforma", t: "Perfil pragmático[cite: 232]. Sabes que tus éxitos dependen de ti[cite: 233]. No pierdes tiempo en back-office porque valoras tu tiempo de cierre[cite: 235]. Has hackeado el sistema: libertad con potencia de fuego[cite: 241]." },
-        pla_2: { p: "El Visionario Tecnológico", m: "Autónomo en plataforma", t: "Alta capacidad de adaptación al mercado[cite: 243]. Sabes que la IA exige un agente sofisticado[cite: 244]. No buscas jefes, sino armas avanzadas para tu propia estrategia[cite: 245]. Operativa pura de eficiencia digital[cite: 249]." },
-        pla_3: { p: "El Gestor de Estilo de Vida", m: "Autónomo en plataforma", t: "Tu prioridad es la gestión de límites y el tiempo[cite: 251]. Tu disciplina es más exigente que cualquier jefe[cite: 252]. La plataforma elimina fricciones para que el negocio trabaje para ti[cite: 256]." },
-        pla_4: { p: "El Estratega del Rendimiento", m: "Autónomo en plataforma", t: "Rozas la independencia total pero tu realismo económico te mantiene en plataforma [cite: 259-260]. Sabes que el soporte experto multiplica tu valor ante clientes de alto nivel[cite: 262]. Punto óptimo del sector[cite: 267]." },
-        solo: { p: "El Arquitecto Independiente", m: "Autónomo en solitario", t: "Eres el Lobo Estepario[cite: 270]. Necesidad radical de autonomía[cite: 271]. Estás dispuesto a asumirlo todo solo por no compartir honorarios[cite: 272]. Vigila que la gestión no canibalice tu tiempo de venta[cite: 274]." }
+        nom_low: { p: "El Especialista Protegido", m: "En nómina", t: "Tus respuestas dibujan un perfil con alta necesidad de seguridad. Tu productividad florece bajo el control de una organización. Prefieres canalizar tu talento hacia el cliente en lugar de malgastarlo en gestiones administrativas. La nómina es tu andamio para subir más alto." },
+        nom_high: { p: "El Intraemprendedor Cauto", m: "En nómina", t: "Muestras autoeficacia pero frenada por la incertidumbre. Quieres crecer bajo un paraguas de marca sólido. Tu modelo ideal es una agencia consolidada con incentivos pero red de seguridad." },
+        bro_low: { p: "El Asociado de Proximidad", m: "Con broker", t: "Transición a la independencia con fuerte necesidad de afiliación. Necesitas el refuerzo de un equipo presencial. El broker te ofrece la estructura física y social que separa tu casa del trabajo." },
+        bro_high: { p: "El Profesional en Transición", m: "Con broker", t: "Punto de inflexión psicológico: anclaje de carrera independiente pero con miedo al vacío tecnológico y legal. El modelo de plataforma será tu próximo movimiento lógico para optimizar margen." },
+        pla_1: { p: "El Emprendedor Eficiente", m: "Autónomo en plataforma", t: "Perfil pragmático. Sabes que tus éxitos dependen de ti. No pierdes tiempo en back-office porque valoras tu tiempo de cierre. Has hackeado el sistema: libertad con potencia de fuego." },
+        pla_2: { p: "El Visionario Tecnológico", m: "Autónomo en plataforma", t: "Alta capacidad de adaptación al mercado. Sabes que la IA exige un agente sofisticado. No buscas jefes, sino armas avanzadas para tu propia estrategia. Operativa pura de eficiencia digital." },
+        pla_3: { p: "El Gestor de Estilo de Vida", m: "Autónomo en plataforma", t: "Tu prioridad es la gestión de límites y el tiempo. Tu disciplina es más exigente que cualquier jefe. La plataforma elimina fricciones para que el negocio trabaje para ti." },
+        pla_4: { p: "El Estratega del Rendimiento", m: "Autónomo en plataforma", t: "Rozas la independencia total pero tu realismo económico te mantiene en plataforma. Sabes que el soporte experto multiplica tu valor ante clientes de alto nivel. Punto óptimo del sector." },
+        solo: { p: "El Arquitecto Independiente", m: "Autónomo en solitario", t: "Eres el Lobo Estepario. Necesidad radical de autonomía. Estás dispuesto a asumirlo todo solo por no compartir honorarios. Vigila que la gestión no canibalice tu tiempo de venta." }
     };
 
     let curQ = 0, score = 0, selVal = null;
@@ -185,7 +179,6 @@
     function calculateResult() {
         if (!document.getElementById('legal').checked) { alert("Debes aceptar las condiciones."); return; }
         let res;
-        // Rangos ponderados para 12 preguntas (Máx aprox 145) [cite: 165-171]
         if (score <= 30) res = resultsTexts.nom_low;
         else if (score <= 65) res = resultsTexts.nom_high;
         else if (score <= 85) res = resultsTexts.bro_low;
