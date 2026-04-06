@@ -24,43 +24,24 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            overflow: hidden;
         }
 
-       /* Sustituir en la sección <style> */
-#app-container {
-    width: 100%;
-    max-width: 800px;
-    min-height: 100vh; /* Cambiado de height a min-height para evitar cortes */
-    padding: 40px 20px;
-    background: var(--color-white);
-    display: flex;
-    flex-direction: column;
-    overflow-y: auto; /* Permite scroll si el contenido excede la pantalla */
-}
+        #app-container {
+            width: 100%;
+            max-width: 800px;
+            height: 100vh;
+            padding: 40px 20px;
+            background: var(--color-white);
+            display: flex;
+            flex-direction: column;
+        }
 
-.q-text { 
-    font-family: 'Roboto', sans-serif; 
-    font-weight: 400; 
-    font-size: 22px; 
-    margin-bottom: 30px; 
-    line-height: 1.4; 
-    color: #2d2d2c !important; /* Color explícito #2d2d2c */
-    display: block !important;
-}
-
-.option-item {
-    font-family: 'Roboto', sans-serif;
-    font-weight: 400;
-    font-size: 15.4px; /* Un 30% más pequeño que 22px */
-    padding: 16px;
-    border: 1px solid #ddd;
-    margin-bottom: 12px;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: all 0.2s;
-    color: #2d2d2c !important; /* Color explícito #2d2d2c */
-    background-color: #ffffff;
-}
+        /* Tipografías específicas */
+        .font-lora { font-family: 'Lora', serif; }
+        .font-roboto-thin { font-family: 'Roboto', sans-serif; font-weight: 100; }
+        .font-roboto-medium { font-family: 'Roboto', sans-serif; font-weight: 500; }
+        .font-roboto-normal { font-family: 'Roboto', sans-serif; font-weight: 400; }
 
         /* Pantallas */
         .screen { display: none; flex-direction: column; height: 100%; }
@@ -85,18 +66,19 @@
         .btn-main:hover { opacity: 0.9; }
 
         /* Paso 2: Cuestionario */
-        .q-counter { font-size: 14px; color: var(--color-terracotta); margin-bottom: 20px; text-transform: uppercase; }
-        .q-text { font-size: 22px; margin-bottom: 30px; line-height: 1.4; color: var(--color-dark); }
-        .options-list { flex-grow: 1; }
+        .q-counter { font-size: 14px; color: var(--color-terracotta); margin-bottom: 20px; font-weight: 100; }
+        .q-text { font-size: 22px; margin-bottom: 30px; line-height: 1.4; color: var(--color-dark); font-weight: 400; }
+        .options-list { flex-grow: 1; overflow-y: auto; }
         .option-item {
             padding: 16px;
             border: 1px solid #ddd;
             margin-bottom: 12px;
             border-radius: 4px;
             cursor: pointer;
-            font-size: 15.4px; /* ~30% menor que 22px */
+            font-size: 15.4px; /* 30% menor que 22px */
             transition: all 0.2s;
             color: var(--color-dark);
+            font-weight: 400;
         }
         .option-item:hover { background-color: #f9f9f9; }
         .option-item.selected {
@@ -120,13 +102,11 @@
 
         /* Paso 4: Resultados */
         .res-label-small { font-size: 16px; margin-bottom: 8px; text-transform: lowercase; }
-        .res-label-accent { font-size: 16px; margin-bottom: 8px; text-transform: lowercase; }
         .res-value-title { font-size: 28px; margin-bottom: 24px; }
         .divider { height: 1px; background-color: #eee; border: none; margin: 20px 0; }
         .scroll-area { flex-grow: 1; overflow-y: auto; padding-right: 15px; margin-bottom: 30px; }
         .full-desc { font-size: 16px; line-height: 1.7; text-align: justify; }
 
-        /* Mobile Adjustments */
         @media (max-width: 600px) {
             #app-container { padding: 20px; }
             .welcome-title { font-size: 28px; }
@@ -145,7 +125,7 @@
             <span class="font-roboto-medium">Detalles:</span>
             <span class="font-roboto-thin">12 preguntas | 2 minutos aproximadamente.</span>
         </div>
-        <button class="btn-main font-roboto-normal" onclick="nextStep(2)">Quiero empezar el test</button>
+        <button class="btn-main font-roboto-normal" onclick="startQuiz()">Quiero empezar el test</button>
     </div>
 
     <div id="step-2" class="screen">
@@ -171,62 +151,56 @@
     <div id="step-4" class="screen">
         <p class="res-label-small font-roboto-thin">Tu perfil de agente es:</p>
         <h2 id="res-profile" class="res-value-title font-lora"></h2>
-        
-        <p class="res-label-accent font-roboto-thin" style="color: var(--color-terracotta);">Tu modelo ideal es:</p>
+        <p class="res-label-small font-roboto-thin" style="color: var(--color-terracotta);">Tu modelo ideal es:</p>
         <h2 id="res-model" class="res-value-title font-roboto-medium" style="color: var(--color-terracotta);"></h2>
-        
         <hr class="divider">
-        
         <div class="scroll-area">
             <p id="res-body" class="full-desc font-roboto-normal"></p>
         </div>
-        
         <button class="btn-main font-roboto-normal" style="width: 100%;" onclick="sendEmail()">Envíame el resultado</button>
     </div>
 </div>
 
 <script>
-    // Configuración de preguntas basada en el documento técnico validado 
     const questions = [
-        { q: "¿En qué medida consideras que tus resultados actuales son una consecuencia directa de tu esfuerzo y talento individual frente a factores externos?", w: 1.2, a: [["Mis resultados dependen exclusivamente de mi gestión, mi capacidad y mi trabajo diario.", 10], ["Mi esfuerzo es determinante, aunque reconozco que el mercado y los recursos y el apoyo de mi empresa influyen significativamente.", 6], ["Mis resultados están ligados principalmente al prestigio de la marca, la calidad de los leads que recibo y la situación económica.", 0]] },
-        { q: "Ante un fracaso en una operación, ¿sueles analizar tu propia gestión o buscar la causa en las circunstancias del mercado y la empresa?", w: 1.0, a: [["Analizo mi proceso de principio a fin para identificar qué errores cometí y cómo puedo mejorar.", 10], ["Evalúo mis acciones, pero también analizo si hubo fallos en el soporte de la empresa o cambios bruscos en el mercado.", 6], ["Mi experiencia es que muchos fracasos son imputables a la falta de apoyo o las condiciones externas impidieron el cierre.", 0]] },
-        { q: "¿Qué nivel de variabilidad en tus ingresos mensuales estás dispuesto a tolerar antes de que afecte negativamente a tu bienestar emocional?", w: 1.5, a: [["Tolero cualquier variabilidad; entiendo que los picos y valles son parte intrínseca del negocio de alto rendimiento.", 10], ["Puedo gestionar emocionalmente variaciones moderadas de ingresos siempre que tenga una seguridad mínima a medio plazo.", 6], ["Necesito una alta estabilidad; me genera mucha ansiedad no saber con exactitud cuánto dinero entrará cada mes.", 0]] },
-        { q: "¿Cómo de cómodo te sientes tomando decisiones de inversión o estrategia sin tener garantías absolutas sobre el retorno?", w: 1.2, a: [["Me siento cómodo; asumo que el riesgo es necesario para obtener beneficios superiores.", 10], ["Actúo con cautela, asumiendo riesgos solo si están muy calculados y tengo un plan de contingencia.", 6], ["Nada cómodo; prefiero no tomar ninguna iniciativa que no tenga un éxito prácticamente garantizado, aunque el beneficio sea menor.", 0]] },
-        { q: "¿Qué valor le das a tener libertad total para decidir tus propios métodos de trabajo, horarios y procesos sin supervisión externa?", w: 1.2, a: [["Es mi máxima prioridad; no acepto que nadie supervise mi agenda ni cuestione mi metodología.", 10], ["Valoro mucho la autonomía, aunque me gusta tener un marco de referencia o procesos generales en los que apoyarme.", 6], ["Prefiero que me marquen las pautas, los horarios y los procesos para sentir que voy por el camino correcto.", 0]] },
-        { q: "¿Hasta qué punto te genera frustración tener que solicitar aprobación para implementar cambios o nuevas ideas en tu operativa diaria?", w: 1.0, a: [["Me frustra profundamente; siento que los procesos de aprobación frenan mi agilidad y mi capacidad de innovar. Sé mejor que nadie qué necesito.", 10], ["No me supone un problema e incluso me gusta contar con las opiniones de otros, pero preferiría tener la última palabra.", 6], ["No me molesta en absoluto; me da seguridad que un superior valide mis decisiones antes de ejecutarlas.", 0]] },
-        { q: "¿Te sientes capaz de generar el mismo volumen de negocio si dejaras de contar con el respaldo de tu marca o estructura actual hoy mismo?", w: 1.5, a: [["Sin ninguna duda; mis clientes confían en mi marca personal y me seguirían a cualquier lugar.", 10], ["Probablemente sí, aunque reconozco que al principio me costaría más esfuerzo generar la misma confianza.", 6], ["No; creo que gran parte de mi volumen actual se debe al prestigio, los compañeros, los recursos y el nombre de la empresa actual.", 0]] },
-        { q: "¿Confías plenamente en tu habilidad para resolver problemas técnicos o comerciales complejos de forma solitaria y sin apoyo técnico inmediato?", w: 1.0, a: [["Sí; tengo los conocimientos necesarios o la capacidad de resolución para encontrar la salida por mi cuenta.", 10], ["En la mayoría de los casos sí, aunque puntualmente agradezco tener un departamento experto a quien consultar.", 6], ["Prefiero delegar o consultar esos problemas a especialistas para evitar cometer errores legales o técnicos graves.", 0]] },
-        { q: "¿Qué pesa más en tu balanza de satisfacción laboral: la estabilidad de un entorno predecible o la libertad de ser tu propio jefe?", w: 1.5, a: [["La libertad absoluta de ser dueño de mi destino profesional es innegociable para mí.", 10], ["Busco un equilibrio donde pueda tener independencia pero con el respaldo de una estructura sólida.", 6], ["La estabilidad y la seguridad que me ofrece pertenecer a una organización consolidada son mi prioridad.", 0]] },
-        { q: "¿Renunciarías a la red de protección de una nómina (paro, vacaciones pagadas, indemnización) a cambio de una comisión más alta?", w: 1.5, a: [["Sí, prefiero cobrar el máximo por operación y gestionar yo mis ahorros y descansos.", 10], ["Me lo plantearía solo si el aumento de ingresos me permite ahorrar lo suficiente para compensar esa falta de seguridad.", 6], ["No, valoro demasiado la estabilidad y las garantías legales que ofrece un contrato laboral.", 0]] },
-        { q: "¿Prefieres trabajar siguiendo procesos operativos ya definidos por otros o disfrutas diseñando tus propios protocolos desde cero?", w: 1.0, a: [["Disfruto creando mis propios sistemas de trabajo y optimizándolos según mi criterio personal.", 10], ["Me gusta tener una base de procesos ya definida que yo pueda adaptar o retocar a mi manera.", 6], ["Prefiero seguir un manual de procedimientos claro y probado que me diga exactamente qué hacer en cada paso.", 0]] },
-        { q: "¿En qué medida consideras que el soporte administrativo y logístico de una organización es el motor principal de tu productividad?", w: 1.2, a: [["En absoluto; yo gestiono mis propios recursos y soy capaz de administrar mi actividad de forma independiente.", 10], ["Es una ayuda importante que me libera tiempo, pero no considero que sea el factor crítico para mis ventas.", 6], ["Es fundamental; sin ese soporte administrativo y logístico, mi productividad caería drásticamente.", 0]] },
-        { q: "¿Eres capaz de mantener un alto nivel de actividad y rigor profesional cuando no tienes a nadie a quien rendir cuentas diariamente?", w: 1.2, a: [["Por supuesto; soy extremadamente autoexigente con mis objetivos y no necesito presión o motivación externa para rendir.", 10], ["Generalmente sí, aunque reconozco que puntualmente me vendría bien un poco de motivación externa para no dispersarme.", 6], ["Me cuesta mucho ser constante si no tengo objetivos marcados por un jefe y un control de mi actividad diaria.", 0]] },
-        { q: "¿Cómo gestionas tu priorización de tareas cuando te enfrentas a múltiples demandas sin tener una jerarquía de mando que marque las pautas?", w: 1.0, a: [["Decido con rapidez y eficacia basándome exclusivamente en la rentabilidad y el valor estratégico de cada tarea.", 10], ["Me tomo mi tiempo para analizarlo y suelo priorizar bien, aunque a veces dudo sobre qué es lo más urgente.", 6], ["Me siento sobrepasado por la falta de dirección y prefiero que alguien con más autoridad me ayude a priorizar.", 0]] },
-        { q: "¿Te ves dedicando una parte significativa de tu semana a tareas administrativas, fiscales y de marketing que no son ventas directas?", w: 1.0, a: [["Sí; entiendo y acepto que gestionar esas áreas es parte esencial de ser un profesional de alto nivel.", 10], ["Lo acepto como un trámite necesario, aunque trato de dedicarle el menor tiempo posible para volver a la calle.", 6], ["No; yo soy un vendedor puro y quiero que otra persona se encargue de todo el papeleo y el marketing.", 0]] },
-        { q: "¿Consideras que gestionar tu propia infraestructura técnica y legal es un reto estimulante o una distracción que te aleja de tu talento?", w: 1.0, a: [["Es un reto estimulante tener el control total sobre todas las herramientas y aspectos legales de mi actividad.", 10], ["Es una tarea necesaria de la que puedo ocuparme si cuento con herramientas sencillas que me faciliten la labor.", 6], ["Es una distracción molesta y estresante que me quita tiempo de lo que realmente me apasiona y sé hacer.", 0]] },
-        { q: "¿Cuánto valoras el contacto social diario y el hecho de compartir éxitos y fracasos con un equipo en un espacio físico común?", w: 0.8, a: [["Nada; prefiero trabajar solo, me concentro mejor y me distraen las interacciones constantes de una oficina.", 10], ["Lo valoro puntualmente o en reuniones periódicas, pero no necesito una oficina diaria para mantenerme motivado.", 6], ["Muchísimo; el ambiente de equipo, el café con los compañeros y el contacto humano son vitales para mi bienestar.", 0]] },
-        { q: "¿Hasta qué punto es fundamental para ti sentirte identificado con los valores y la cultura de una marca corporativa superior?", w: 0.8, a: [["Es irrelevante; mi ética, mis valores y mi reputación personal están por encima de cualquier marca.", 10], ["Es importante; me gusta trabajar acompañada/o de una marca que sea coherente con mis principios.", 6], ["Es fundamental; necesito sentir que formo parte de algo más grande que yo y que comparto una cultura de empresa.", 0]] },
-        { q: "¿Prefieres desconectar totalmente del trabajo al salir de un entorno físico de oficina o no te importa integrar vida profesional y personal de forma fluida?", w: 0.8, a: [["No me importa integrarlas; mi trabajo es mi estilo de vida y yo decido cuándo y desde dónde trabajo.", 10], ["Trato de separarlas, aunque acepto cierta flexibilidad y puedo atender asuntos profesionales en mi tiempo personal.", 6], ["Necesito una separación estricta; cuando salgo de mi lugar de trabajo, mi mente debe desconectar al 100%.", 0]] },
-        { q: "¿Tienes la capacidad de establecer límites estrictos a tus clientes y a ti mismo cuando el entorno de trabajo depende exclusivamente de tu gestión?", w: 0.8, a: [["Sí; soy muy estricto con mi tiempo, sé decir \"no\" y mis clientes respetan mis reglas de disponibilidad.", 10], ["Lo intento, aunque a veces la presión del negocio me hace ceder y atender demandas fuera de mi horario previsto.", 6], ["Me cuesta mucho; suelo acabar disponible las 24 horas si no tengo una estructura que regule mi atención al cliente.", 0]] },
-        { q: "¿Cuánto tiempo tardas en recuperar tu nivel de motivación habitual tras perder una operación importante o enfrentar un rechazo directo?", w: 1.0, a: [["Casi de forma instantánea; entiendo el rechazo como estadística y paso a la siguiente oportunidad sin dudar.", 10], ["Unas horas o un día; analizo qué falló, lo proceso y vuelvo a la carga con energía renovada.", 6], ["Varios días; los fracasos me afectan personalmente y me cuesta recuperar el ritmo de trabajo habitual.", 0]] },
-        { q: "¿Te sientes emocionalmente preparado para afrontar rachas de baja actividad prolongadas sin el soporte moral de un equipo o un responsable?", w: 1.2, a: [["Totalmente; tengo la fortaleza mental y el pulmón financiero para aguantar y persistir por mi cuenta.", 10], ["Sí, aunque reconozco que en los momentos bajos es cuando más echo de menos tener a alguien que me respalde.", 6], ["No; la soledad en los momentos de baja actividad me desmotiva rápidamente y me hace dudar de mi capacidad.", 0]] },
-        { q: "Ante la escasez de oferta y la alta competencia actual, ¿cómo planteas tu estrategia de captación de exclusivas?", w: 1.4, a: [["Confío en mi capacidad de prospección directa y en mi red de contactos personal para generar mis propias oportunidades sin depender de nadie.", 10], ["Utilizaré mi red personal, pero creo que necesitaré contar con herramientas de marketing avanzadas y el prestigio de una marca para diferenciarme más.", 6], ["Prefiero que la empresa invierta en marketing y generación de leads para que yo pueda centrarme exclusivamente en la gestión comercial.", 0]] },
-        { q: "¿Cómo gestionas la creciente complejidad legal y los cambios normativos constantes en el sector inmobiliario?", w: 1.2, a: [["Me mantengo permanentemente informado por mi cuenta y asumo la responsabilidad total de la seguridad jurídica de mis operaciones.", 10], ["Me encargo de la gestión, pero me interesaría contar con un respaldo que me mantenga actualizado y me proporcione herramientas legales validadas.", 6], ["No quiero riesgos; necesito que un departamento legal especializado supervise y valide cada contrato y documento que firmo.", 0]] },
-        { q: "Dada la posibilidad de estar al final de un ciclo, ¿cuál es tu plan de contingencia financiero?", w: 1.3, a: [["Entiendo los ciclos del mercado y ajusto mi estructura de costes e inversión al máximo para ser rentable incluso si bajan las ventas.", 10], ["Soy consciente de la situación y valoraría incorporarme a un modelo de costes variables que me permita ser flexible si el mercado se frena.", 6], ["Ante una posible crisis de mercado, mi prioridad absoluta es mantener la seguridad de unos ingresos fijos garantizados.", 0]] },
-        { q: "¿Qué posición adoptas ante la irrupción de la Inteligencia Artificial y las nuevas tecnologías en tu operativa diaria?", w: 1.1, a: [["Investigo e implemento proactivamente mis propias herramientas de IA para ganar eficiencia y superar a la competencia por mi cuenta.", 10], ["Adopto las innovaciones tecnológicas pero valoro que me lleguen filtradas y testadas por un tercero que conoce mis necesidades.", 6], ["Prefiero seguir con los métodos tradicionales que me han funcionado y que la empresa decida qué tecnología debemos usar todos.", 0]] }
+        { q: "¿En qué medida consideras que tus resultados actuales son una consecuencia directa de tu esfuerzo y talento individual frente a factores externos?", w: 1.2, a: [["Mis resultados dependen exclusivamente de mi gestión, mi capacidad y mi trabajo diario.", 10], ["Mi esfuerzo es determinante, aunque reconozco que el mercado y los recursos influyen significativamente.", 6], ["Mis resultados están ligados principalmente al prestigio de la marca y la situación económica.", 0]] },
+        { q: "Ante un fracaso en una operación, ¿sueles analizar tu propia gestión o buscar la causa en las circunstancias del mercado?", w: 1.0, a: [["Analizo mi proceso de principio a fin para identificar qué errores cometí.", 10], ["Evalúo mis acciones, pero también analizo si hubo fallos en el soporte.", 6], ["Mi experiencia es que muchos fracasos son imputables a factores externos.", 0]] },
+        { q: "¿Qué nivel de variabilidad en tus ingresos mensuales estás dispuesto a tolerar?", w: 1.5, a: [["Tolero cualquier variabilidad; entiendo que es parte del negocio.", 10], ["Puedo gestionar variaciones moderadas con una seguridad mínima.", 6], ["Necesito una alta estabilidad; me genera ansiedad la incertidumbre.", 0]] },
+        { q: "¿Cómo de cómodo te sientes tomando decisiones de inversión sin garantías absolutas?", w: 1.2, a: [["Me siento cómodo; asumo que el riesgo es necesario.", 10], ["Actúo con cautela, asumiendo riesgos muy calculados.", 6], ["Nada cómodo; prefiero no tomar iniciativas sin éxito garantizado.", 0]] },
+        { q: "¿Qué valor le das a tener libertad total para decidir tus propios métodos de trabajo?", w: 1.2, a: [["Es mi máxima prioridad; no acepto supervisión en mi agenda.", 10], ["Valoro mucho la autonomía, con un marco de referencia en el que apoyarme.", 6], ["Prefiero que me marquen las pautas y los horarios.", 0]] },
+        { q: "¿Hasta qué punto te genera frustración tener que solicitar aprobación para cambios?", w: 1.0, a: [["Me frustra profundamente; sé mejor que nadie qué necesito.", 10], ["No me supone un problema, pero preferiría tener la última palabra.", 6], ["No me molesta en absoluto; me da seguridad la validación superior.", 0]] },
+        { q: "¿Te sientes capaz de generar el mismo volumen de negocio sin el respaldo de tu marca actual?", w: 1.5, a: [["Sin ninguna duda; mis clientes confían en mi marca personal.", 10], ["Probablemente sí, aunque al principio me costaría más esfuerzo.", 6], ["No; creo que mi volumen se debe al prestigio de la empresa actual.", 0]] },
+        { q: "¿Confías plenamente en tu habilidad para resolver problemas técnicos complejos de forma solitaria?", w: 1.0, a: [["Sí; tengo los conocimientos necesarios para resolverlos por mi cuenta.", 10], ["En la mayoría de los casos sí, aunque agradezco tener a quien consultar.", 6], ["Prefiero delegar esos problemas a especialistas para evitar errores.", 0]] },
+        { q: "¿Qué pesa más en tu satisfacción laboral: estabilidad o libertad?", w: 1.5, a: [["La libertad absoluta de ser dueño de mi destino profesional.", 10], ["Busco un equilibrio entre independencia y respaldo sólido.", 6], ["La estabilidad y la seguridad de una organización consolidada.", 0]] },
+        { q: "¿Renunciarías a la red de protección de una nómina a cambio de una comisión más alta?", w: 1.5, a: [["Sí, prefiero cobrar el máximo y gestionar yo mis ahorros.", 10], ["Me lo plantearía si el aumento de ingresos compensa esa falta de seguridad.", 6], ["No, valoro demasiado la estabilidad y las garantías legales.", 0]] },
+        { q: "¿Prefieres procesos operativos ya definidos o diseñar tus propios protocolos?", w: 1.0, a: [["Disfruto creando mis propios sistemas de trabajo.", 10], ["Me gusta tener una base definida que yo pueda adaptar.", 6], ["Prefiero seguir un manual de procedimientos claro y probado.", 0]] },
+        { q: "¿Consideras que el soporte administrativo es el motor principal de tu productividad?", w: 1.2, a: [["En absoluto; yo gestiono mis propios recursos de forma independiente.", 10], ["Es una ayuda importante que me libera tiempo.", 6], ["Es fundamental; sin ese soporte mi productividad caería drásticamente.", 0]] },
+        { q: "¿Eres capaz de mantener el rigor profesional sin rendir cuentas diariamente?", w: 1.2, a: [["Por supuesto; soy extremadamente autoexigente con mis objetivos.", 10], ["Generalmente sí, aunque puntualmente me vendría bien motivación externa.", 6], ["Me cuesta mucho ser constante si no tengo objetivos marcados por un jefe.", 0]] },
+        { q: "¿Cómo gestionas tu priorización de tareas sin una jerarquía de mando?", w: 1.0, a: [["Decido con rapidez basándome en la rentabilidad y valor estratégico.", 10], ["Me tomo mi tiempo para analizarlo y suelo priorizar bien.", 6], ["Me siento sobrepasado y prefiero que alguien me ayude a priorizar.", 0]] },
+        { q: "¿Te ves dedicando tiempo a tareas administrativas y de marketing?", w: 1.0, a: [["Sí; entiendo que gestionar esas áreas es parte esencial de mi nivel.", 10], ["Lo acepto como un trámite necesario para volver a la calle.", 6], ["No; yo soy un vendedor puro y quiero que otro se encargue del papeleo.", 0]] },
+        { q: "¿Gestionar tu propia infraestructura técnica es un reto o una distracción?", w: 1.0, a: [["Es un reto estimulante tener el control total.", 10], ["Es una tarea necesaria que puedo gestionar con herramientas sencillas.", 6], ["Es una distracción molesta que me quita tiempo de lo que me apasiona.", 0]] },
+        { q: "¿Cuánto valoras el contacto social diario con un equipo en un espacio físico?", w: 0.8, a: [["Nada; prefiero trabajar solo y me concentro mejor.", 10], ["Lo valoro puntualmente, pero no necesito una oficina diaria.", 6], ["Muchísimo; el ambiente de equipo y contacto humano son vitales.", 0]] },
+        { q: "¿Es fundamental para ti identificarte con la cultura de una marca superior?", w: 0.8, a: [["Es irrelevante; mi reputación personal está por encima de cualquier marca.", 10], ["Es importante; me gusta trabajar con una marca coherente con mis principios.", 6], ["Es fundamental; necesito sentir que formo parte de algo más grande.", 0]] },
+        { q: "¿Prefieres desconectar totalmente del trabajo o integrar vida profesional y personal?", w: 0.8, a: [["No me importa integrarlas; mi trabajo es mi estilo de vida.", 10], ["Trato de separarlas, aunque acepto cierta flexibilidad.", 6], ["Necesito una separación estricta y desconectar al 100%.", 0]] },
+        { q: "¿Tienes capacidad de establecer límites estrictos a tus clientes?", w: 0.8, a: [["Sí; soy muy estricto con mi tiempo y sé decir no.", 10], ["Lo intento, aunque a veces la presión me hace ceder.", 6], ["Me cuesta mucho; suelo acabar disponible las 24 horas.", 0]] },
+        { q: "¿Cuánto tardas en recuperar tu motivación tras un rechazo?", w: 1.0, a: [["Casi de forma instantánea; paso a la siguiente oportunidad.", 10], ["Unas horas o un día; analizo qué falló y vuelvo con energía.", 6], ["Varios días; los fracasos me afectan personalmente.", 0]] },
+        { q: "¿Estás preparado para afrontar rachas de baja actividad en soledad?", w: 1.2, a: [["Totalmente; tengo la fortaleza mental y el pulmón financiero.", 10], ["Sí, aunque en los momentos bajos echo de menos el respaldo.", 6], ["No; la soledad en la baja actividad me desmotiva rápidamente.", 0]] },
+        { q: "¿Cómo planteas tu estrategia de captación ante la escasez de oferta?", w: 1.4, a: [["Confío en mi prospección directa y red personal de contactos.", 10], ["Utilizaré mi red, pero con herramientas avanzadas de marca.", 6], ["Prefiero que la empresa invierta en marketing para yo vender.", 0]] },
+        { q: "¿Cómo gestionas la complejidad legal y cambios normativos?", w: 1.2, a: [["Me mantengo informado por mi cuenta y asumo la responsabilidad.", 10], ["Me encargo yo, pero con el respaldo de herramientas validadas.", 6], ["Necesito que un departamento legal especializado supervise todo.", 0]] },
+        { q: "¿Cuál es tu plan financiero ante un posible enfriamiento del mercado?", w: 1.3, a: [["Ajusto mi estructura de costes para ser rentable siempre.", 10], ["Valoraría un modelo de costes variables para ser flexible.", 6], ["Mi prioridad es mantener la seguridad de ingresos fijos.", 0]] },
+        { q: "¿Qué posición adoptas ante la irrupción de la IA?", w: 1.1, a: [["Implemento proactivamente mis propias herramientas para ganar eficiencia.", 10], ["Adopto las innovaciones filtradas y testadas por un tercero.", 6], ["Prefiero los métodos tradicionales y que la empresa decida la tecnología.", 0]] }
     ];
 
-    // Textos de recomendación finales 
-    const profileTexts = {
-        nom_low: { p: "El Especialista Protegido", m: "En nómina", t: "Tus respuestas dibujan un perfil con un protagonismo sobre tus resultados externo dominante y una alta necesidad de seguridad psicológica. Científicamente, esto indica que tu productividad florece cuando los factores de estrés ambiental están bajo el control de una organización. No es falta de ambición, es optimización de energía: prefieres canalizar todo tu talento hacia el cliente en lugar de malgastarlo peleando con Hacienda o configurando un CRM. Para ti, la red de protección de un contrato laboral no es una jaula, sino el andamio que te permite subir más alto." },
-        nom_high: { p: "El Intraemprendedor Cauto", m: "En nómina", t: "Tu perfil muestra una autoeficacia performativa latente, pero frenada por una baja tolerancia a la incertidumbre. Te gusta el juego inmobiliario y te sientes capaz de liderar operaciones complejas, pero valoras demasiado la infraestructura compartida. La ciencia organizacional sugiere que eres un 'intraemprendedor': alguien que quiere proponer y crecer, pero bajo un paraguas de marca que ya haya hecho el trabajo sucio de posicionamiento." },
-        bro_low: { p: "El Asociado de Proximidad", m: "Con broker", t: "Tus resultados indican una transición clara hacia la independencia, pero con un anclaje fuerte en la necesidad de afiliación. Posees la disciplina para ser autónomo, pero el 'lobo solitario' no es tu animal espiritual. Necesitas el contacto social diario y el refuerzo de un equipo presencial. El modelo de broker tradicional te ofrece lo que buscas: una oficina donde tomar café y comentar las jugadas, un líder que marque dirección estratégica y una estructura física que separe tu casa de tu trabajo." },
-        bro_high: { p: "El Profesional en Transición", m: "Con broker", t: "Estás en un punto de inflexión psicológico interesante. Tu anclaje de carrera se ha desplazado hacia la independencia, pero tu necesidad de estructura aún te mantiene ligado a modelos tradicionales. Eres un agente con gran capacidad de autogestión que, sin embargo, teme el vacío que supone gestionar la tecnología y el soporte legal por cuenta propia. En un mercado cambiante, este salto hacia la plataforma será tu próximo movimiento lógico." },
-        pla_1: { p: "El Emprendedor Eficiente", m: "Autónomo en plataforma", t: "Tu perfil es el del pragmático por excelencia. Tienes un protagonismo sobre tus resultados muy fuerte: sabes que tus éxitos dependen de ti y no tienes miedo a volar sin motor. Pero entiendes que tu tiempo vale dinero y que tu zona de genialidad es el cierre, no el back-office. Para ti, el modelo de plataforma es la simbiosis perfecta: libertad total con potencia de fuego de multinacional." },
-        pla_2: { p: "El Visionario Tecnológico", m: "Autónomo en plataforma", t: "Demuestras una alta capacidad de adaptación. Eres consciente de que la IA y los cambios normativos exigen un agente sofisticado. No buscas una agencia que te diga qué hacer, sino una plataforma que te dé las armas más avanzadas para que tú ejecutes tu propia estrategia. Tu mentalidad es 100% digital y tu operativa, pura eficiencia." },
-        pla_3: { p: "El Gestor de Estilo de Vida", m: "Autónomo en plataforma", t: "Tu prioridad absoluta es la gestión de límites. Entiendes que el éxito no es solo facturar, sino ser dueño de tu tiempo. Tu autogestión es altísima; no necesitas vigilancia porque tu propia disciplina es más exigente que cualquier jefe. La plataforma elimina las fricciones para que tu negocio trabaje para ti, y no al revés." },
-        pla_4: { p: "El Estratega del Rendimiento", m: "Autónomo en plataforma", t: "Rozas el límite de la independencia, pero tu realismo económico te mantiene en la plataforma. Sabes que, aunque podrías hacerlo solo, no sería rentable. Posees una resiliencia envidiable y sabes que el soporte experto multiplica tu valor ante clientes de alto nivel. Eres el punto óptimo de la cadena trófica inmobiliaria." },
-        solo: { p: "El Arquitecto Independiente", m: "Autónomo en solitario", t: "Eres el 'Lobo Estepario'. Tu necesidad de autonomía es radical y cualquier estructura externa te genera fricción. Estás dispuesto a asumirlo todo con tal de no rendir cuentas a nadie. Sin embargo, en un escenario de hiper-especialización tecnológica, considera que una plataforma no es perder independencia, sino externalizar el mantenimiento para seguir siendo el arquitecto jefe." }
+    const resultsTexts = {
+        nom_low: { p: "El Especialista Protegido", m: "En nómina", t: "Tus respuestas dibujan un perfil con una alta necesidad de seguridad psicológica. Científicamente, esto indica que tu productividad florece bajo el control de una organización. No es falta de ambición, sino optimización de energía: prefieres canalizar tu talento hacia el cliente en lugar de gestionarlo todo tú mismo." },
+        nom_high: { p: "El Intraemprendedor Cauto", m: "En nómina", t: "Tu perfil muestra una autoeficacia latente, pero frenada por una baja tolerancia a la incertidumbre. Quieres crecer, pero bajo un paraguas de marca sólido. Tu modelo ideal es una agencia consolidada con incentivos pero con red de seguridad." },
+        bro_low: { p: "El Asociado de Proximidad", m: "Con broker", t: "Indica una transición a la independencia con fuerte necesidad de afiliación. Necesitas el contacto social diario y el refuerzo de un equipo. El modelo de broker tradicional te ofrece la estructura física que necesitas." },
+        bro_high: { p: "El Profesional en Transición", m: "Con broker", t: "Estás en un punto de inflexión. Tienes capacidad de autogestión pero temes la soledad técnica y legal. En un mercado complejo, el salto a la plataforma será tu próximo movimiento lógico." },
+        pla_1: { p: "El Emprendedor Eficiente", m: "Autónomo en plataforma", t: "Perfil pragmático. Sabes que tus éxitos dependen de ti. Entiendes que tu tiempo es dinero y delegas lo administrativo en una plataforma profesional para centrarte en el cierre." },
+        pla_2: { p: "El Visionario Tecnológico", m: "Autónomo en plataforma", t: "Alta capacidad de adaptación. No buscas que te digan qué hacer, sino herramientas avanzadas para ejecutar tu estrategia. Tu operativa es pura eficiencia digital." },
+        pla_3: { p: "El Gestor de Estilo de Vida", m: "Autónomo en plataforma", t: "Tu prioridad es el tiempo. No necesitas vigilancia externa porque tu propia disciplina es exigente. Buscas un ecosistema que elimine las fricciones diarias." },
+        pla_4: { p: "El Estratega del Rendimiento", m: "Autónomo en plataforma", t: "Rozas la independencia total, pero sabes que el soporte experto multiplica tu valor ante clientes de alto nivel. Eres el punto óptimo del sector." },
+        solo: { p: "El Arquitecto Independiente", m: "Autónomo en solitario", t: "Eres el 'Lobo Estepario'. Tu necesidad de autonomía es radical. Estás dispuesto a asumirlo todo solo. Vigila que la gestión no canibalice tu tiempo de venta." }
     };
 
     let currentQ = 0;
@@ -238,35 +212,33 @@
         document.getElementById(`step-${step}`).classList.add('active');
     }
 
-    /* Sustituir la función loadQuestion por esta */
-function loadQuestion() {
-    const q = questions[currentQ];
-    const counterEl = document.getElementById('q-counter');
-    const textEl = document.getElementById('q-text');
-    const container = document.getElementById('options-container');
+    function startQuiz() {
+        currentQ = 0;
+        score = 0;
+        nextStep(2);
+        loadQuestion();
+    }
 
-    // Actualizamos el contador y el texto de la pregunta
-    counterEl.textContent = `Pregunta ${currentQ + 1} de ${questions.length}`;
-    textEl.textContent = q.q;
-    
-    container.innerHTML = '';
-    
-    // Generamos las respuestas
-    q.a.forEach((ans) => {
-        const div = document.createElement('div');
-        div.className = 'option-item font-roboto-normal';
-        div.textContent = ans[0]; // Inyectamos el texto de la respuesta
-        div.onclick = () => selectOption(div, ans[1]);
-        container.appendChild(div);
-    });
-    document.getElementById('next-btn').disabled = true;
-}
-
-    function selectOption(el, val) {
-        document.querySelectorAll('.option-item').forEach(opt => opt.classList.remove('selected'));
-        el.classList.add('selected');
-        selectedVal = val;
-        document.getElementById('next-btn').disabled = false;
+    function loadQuestion() {
+        const q = questions[currentQ];
+        document.getElementById('q-counter').innerText = `Pregunta ${currentQ + 1} de ${questions.length}`;
+        document.getElementById('q-text').innerText = q.q;
+        const container = document.getElementById('options-container');
+        container.innerHTML = '';
+        
+        q.a.forEach((ans) => {
+            const div = document.createElement('div');
+            div.className = 'option-item';
+            div.innerText = ans[0];
+            div.onclick = () => {
+                document.querySelectorAll('.option-item').forEach(opt => opt.classList.remove('selected'));
+                div.classList.add('selected');
+                selectedVal = ans[1];
+                document.getElementById('next-btn').disabled = false;
+            };
+            container.appendChild(div);
+        });
+        document.getElementById('next-btn').disabled = true;
     }
 
     function handleNextQuestion() {
@@ -281,21 +253,15 @@ function loadQuestion() {
 
     function calculateResult() {
         if (!document.getElementById('legal').checked) { alert("Debes aceptar las condiciones."); return; }
-        
         let res;
-        // Lógica de rangos según Step 4 [cite: 172-191]
-        if (score <= 60) {
-            res = score <= 30 ? profileTexts.nom_low : profileTexts.nom_high;
-        } else if (score <= 130) {
-            res = score <= 95 ? profileTexts.bro_low : profileTexts.bro_high;
-        } else if (score <= 255) {
-            if (score <= 160) res = profileTexts.pla_1;
-            else if (score <= 190) res = profileTexts.pla_2;
-            else if (score <= 225) res = profileTexts.pla_3;
-            else res = profileTexts.pla_4;
-        } else {
-            res = profileTexts.solo;
-        }
+        if (score <= 60) res = score <= 30 ? resultsTexts.nom_low : resultsTexts.nom_high;
+        else if (score <= 130) res = score <= 95 ? resultsTexts.bro_low : resultsTexts.bro_high;
+        else if (score <= 255) {
+            if (score <= 160) res = resultsTexts.pla_1;
+            else if (score <= 190) res = resultsTexts.pla_2;
+            else if (score <= 225) res = resultsTexts.pla_3;
+            else res = resultsTexts.pla_4;
+        } else res = resultsTexts.solo;
 
         document.getElementById('res-profile').innerText = res.p;
         document.getElementById('res-model').innerText = res.m;
@@ -304,16 +270,7 @@ function loadQuestion() {
     }
 
     function sendEmail() {
-        const email = document.getElementById('email').value;
-        const profile = document.getElementById('res-profile').innerText;
-        alert(`Informe enviado con éxito a ${email}. ¡Gracias por confiar en el análisis de Monapart!`);
-    }
-
-    function startQuiz() {
-        currentQ = 0;
-        score = 0;
-        nextStep(2);
-        loadQuestion();
+        alert("Enviando informe detallado...");
     }
 </script>
 </body>
