@@ -35,14 +35,17 @@
             flex-direction: column;
         }
 
+        /* Tipografías específicas */
         .font-lora { font-family: 'Lora', serif; }
         .font-roboto-thin { font-family: 'Roboto', sans-serif; font-weight: 100; }
         .font-roboto-medium { font-family: 'Roboto', sans-serif; font-weight: 500; }
         .font-roboto-normal { font-family: 'Roboto', sans-serif; font-weight: 400; }
 
+        /* Pantallas */
         .screen { display: none; flex-direction: column; height: 100%; }
         .screen.active { display: flex; }
 
+        /* Paso 1: Bienvenida */
         .welcome-title { font-size: 32px; color: var(--color-dark); margin-bottom: 20px; line-height: 1.2; }
         .welcome-desc { font-size: 18px; color: var(--color-dark); margin-bottom: 30px; line-height: 1.5; }
         .details-box { margin-bottom: 30px; }
@@ -58,24 +61,35 @@
             align-self: flex-start;
             transition: opacity 0.3s;
         }
+        .btn-main:hover { opacity: 0.9; }
 
-        .q-counter { font-size: 14px; color: var(--color-terracotta); margin-bottom: 15px; }
-        .q-text { font-size: 20px; margin-bottom: 25px; line-height: 1.4; color: var(--color-dark); }
+        /* Paso 2: Cuestionario */
+        .q-counter { font-size: 14px; color: var(--color-terracotta); margin-bottom: 15px; font-weight: 100; }
+        .q-text { font-size: 20px; margin-bottom: 25px; line-height: 1.4; color: var(--color-dark); font-weight: 400; }
         .option-item {
             padding: 14px;
             border: 1px solid #ddd;
             margin-bottom: 10px;
             border-radius: 4px;
             cursor: pointer;
-            font-size: 14px;
+            font-size: 14px; /* 30% menor que 20px */
+            transition: all 0.2s;
             color: var(--color-dark);
+            font-weight: 400;
         }
-        .option-item.selected { background-color: var(--color-terracotta); color: var(--color-white); border-color: var(--color-terracotta); }
+        .option-item:hover { background-color: #f9f9f9; }
+        .option-item.selected {
+            background-color: var(--color-terracotta);
+            color: var(--color-white);
+            border-color: var(--color-terracotta);
+        }
         .btn-next { align-self: flex-end; margin-top: 10px; }
 
+        /* Paso 3: Lead Capture */
         .input-field { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 4px; margin-bottom: 12px; font-size: 16px; }
         .checkbox-container { display: flex; align-items: flex-start; gap: 10px; font-size: 13px; margin-bottom: 20px; }
 
+        /* Paso 4: Resultados */
         .res-label { font-size: 15px; margin-bottom: 5px; }
         .res-value { font-size: 24px; margin-bottom: 15px; }
         .divider { height: 1px; background-color: #eee; border: none; margin: 15px 0; }
@@ -138,7 +152,7 @@
         { q: "¿Qué valor le das a decidir tus métodos y horarios sin supervisión externa?", w: 1.2, a: [["Es mi máxima prioridad; no acepto supervisión.", 10], ["Valoro la autonomía con un marco de referencia.", 6], ["Prefiero que me marquen las pautas y procesos.", 0]] },
         { q: "¿Te sientes capaz de generar el mismo volumen sin tu marca actual?", w: 1.5, a: [["Sin duda; los clientes confían en mi marca personal.", 10], ["Probablemente, aunque me costaría más al inicio.", 6], ["No; mi volumen depende del nombre de mi empresa.", 0]] },
         { q: "¿Qué pesa más para ti: estabilidad predecible o libertad de ser tu jefe?", w: 1.5, a: [["La libertad de ser dueño de mi destino es innegociable.", 10], ["Busco equilibrio: independencia con respaldo sólido.", 6], ["La estabilidad de una organización es mi prioridad.", 0]] },
-        { q: "¿Renunciarías a la red de nómina (paro, vacaciones) por una comisión más alta?", w: 1.5, a: [["Sí, prefiero gestionar yo mis ahorros y descansos.", 10], ["Solo si el aumento compensa esa falta de seguridad.", 6], ["No, valoro demasiado las garantías legales de la nómina.", 0]] },
+        { q: "¿Renunciarías a la red de nómina (paro, vacaciones) por una comisión más alta?", w: 1.5, a: [["Sí, prefiero cobrar el máximo y gestionar yo mis ahorros.", 10], ["Solo si el aumento compensa esa falta de seguridad.", 6], ["No, valoro demasiado las garantías legales de la nómina.", 0]] },
         { q: "¿Consideras que el soporte administrativo es el motor de tu productividad?", w: 1.2, a: [["En absoluto; gestiono mis recursos independientemente.", 10], ["Es una ayuda importante pero no crítica para vender.", 6], ["Es fundamental; sin soporte mi productividad caería.", 0]] },
         { q: "¿Mantienes el rigor profesional cuando nadie te pide cuentas diariamente?", w: 1.2, a: [["Por supuesto; soy extremadamente autoexigente.", 10], ["Sí, aunque puntualmente me vendría bien motivación.", 6], ["Me cuesta ser constante sin objetivos marcados.", 0]] },
         { q: "¿Te ves dedicando tiempo a tareas de gestión (fiscal, marketing, legal)?", w: 1.0, a: [["Sí; entiendo que es parte de ser un profesional.", 10], ["Lo acepto como un trámite necesario y breve.", 6], ["No; soy vendedor y quiero que otro haga el papeleo.", 0]] },
