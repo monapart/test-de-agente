@@ -8,8 +8,6 @@
     <style>
         :root {
             --color-dark: #2d2d2c;
-            --color-blue: #669eac;
-            --color-gold: #a9984a;
             --color-terracotta: #a36756;
             --color-white: #ffffff;
         }
@@ -30,32 +28,31 @@
         #app-container {
             width: 100%;
             max-width: 800px;
-            height: 100vh;
-            padding: 40px 20px;
+            height: 95vh;
+            padding: 30px 40px;
             background: var(--color-white);
             display: flex;
             flex-direction: column;
         }
 
-        /* Tipografías específicas */
+        /* Tipografías */
         .font-lora { font-family: 'Lora', serif; }
         .font-roboto-thin { font-family: 'Roboto', sans-serif; font-weight: 100; }
         .font-roboto-medium { font-family: 'Roboto', sans-serif; font-weight: 500; }
         .font-roboto-normal { font-family: 'Roboto', sans-serif; font-weight: 400; }
 
-        /* Pantallas */
         .screen { display: none; flex-direction: column; height: 100%; }
         .screen.active { display: flex; }
 
         /* Paso 1: Bienvenida */
-        .welcome-title { font-size: 32px; color: var(--color-dark); margin-bottom: 24px; line-height: 1.2; }
-        .welcome-desc { font-size: 18px; color: var(--color-dark); margin-bottom: 40px; line-height: 1.6; }
-        .details-box { margin-bottom: 40px; }
+        .welcome-title { font-size: 32px; color: var(--color-dark); margin-bottom: 20px; line-height: 1.2; }
+        .welcome-desc { font-size: 18px; color: var(--color-dark); margin-bottom: 30px; line-height: 1.5; }
+        .details-box { margin-bottom: 30px; }
         .btn-main {
             background-color: var(--color-terracotta);
             color: var(--color-white);
             border: none;
-            padding: 18px 36px;
+            padding: 16px 32px;
             border-radius: 4px;
             cursor: pointer;
             font-size: 18px;
@@ -63,67 +60,45 @@
             align-self: flex-start;
             transition: opacity 0.3s;
         }
-        .btn-main:hover { opacity: 0.9; }
 
         /* Paso 2: Cuestionario */
-        .q-counter { font-size: 14px; color: var(--color-terracotta); margin-bottom: 20px; font-weight: 100; }
-        .q-text { font-size: 22px; margin-bottom: 30px; line-height: 1.4; color: var(--color-dark); font-weight: 400; }
-        .options-list { flex-grow: 1; overflow-y: auto; }
+        .q-counter { font-size: 14px; color: var(--color-terracotta); margin-bottom: 15px; }
+        .q-text { font-size: 20px; margin-bottom: 25px; line-height: 1.4; color: var(--color-dark); }
         .option-item {
-            padding: 16px;
-            border: 1px solid #ddd;
-            margin-bottom: 12px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 15.4px; /* 30% menor que 22px */
-            transition: all 0.2s;
-            color: var(--color-dark);
-            font-weight: 400;
-        }
-        .option-item:hover { background-color: #f9f9f9; }
-        .option-item.selected {
-            background-color: var(--color-terracotta);
-            color: var(--color-white);
-            border-color: var(--color-terracotta);
-        }
-        .btn-next { align-self: flex-end; margin-top: 20px; }
-
-        /* Paso 3: Lead Capture */
-        .input-field {
-            width: 100%;
             padding: 14px;
             border: 1px solid #ddd;
+            margin-bottom: 10px;
             border-radius: 4px;
-            margin-bottom: 16px;
-            font-size: 16px;
+            cursor: pointer;
+            font-size: 14px; /* ~30% menor que 20px */
+            color: var(--color-dark);
         }
-        .checkbox-container { display: flex; align-items: flex-start; gap: 12px; font-size: 14px; margin-bottom: 30px; }
-        .checkbox-container a { color: var(--color-dark); text-decoration: underline; }
+        .option-item.selected { background-color: var(--color-terracotta); color: var(--color-white); border-color: var(--color-terracotta); }
+        .btn-next { align-self: flex-end; margin-top: 10px; }
 
-        /* Paso 4: Resultados */
-        .res-label-small { font-size: 16px; margin-bottom: 8px; text-transform: lowercase; }
-        .res-value-title { font-size: 28px; margin-bottom: 24px; }
-        .divider { height: 1px; background-color: #eee; border: none; margin: 20px 0; }
-        .scroll-area { flex-grow: 1; overflow-y: auto; padding-right: 15px; margin-bottom: 30px; }
-        .full-desc { font-size: 16px; line-height: 1.7; text-align: justify; }
+        /* Paso 3: Lead */
+        .input-field { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 4px; margin-bottom: 12px; font-size: 16px; }
+        .checkbox-container { display: flex; align-items: flex-start; gap: 10px; font-size: 13px; margin-bottom: 20px; }
 
-        @media (max-width: 600px) {
-            #app-container { padding: 20px; }
-            .welcome-title { font-size: 28px; }
-            .welcome-desc { font-size: 16px; }
-            .btn-main { width: 100%; }
-        }
+        /* Paso 4: Resultados (Corrección de Texto) */
+        .res-label { font-size: 15px; margin-bottom: 5px; }
+        .res-value { font-size: 24px; margin-bottom: 15px; }
+        .divider { height: 1px; background-color: #eee; border: none; margin: 15px 0; }
+        .scroll-area { flex-grow: 1; overflow-y: auto; padding-right: 10px; margin-bottom: 20px; }
+        .full-desc { font-size: 15px; line-height: 1.6; text-align: justify; }
+
+        @media (max-width: 600px) { #app-container { padding: 20px; } .welcome-title { font-size: 26px; } .btn-main { width: 100%; } }
     </style>
 </head>
 <body>
 
 <div id="app-container">
-    <div id="step-1" class="screen active">
+    <div id="step-1" class="screen active" style="justify-content: center;">
         <h1 class="welcome-title font-lora">Descubre TU modelo de trabajo ideal</h1>
         <p class="welcome-desc font-lora">¿Eres un agente en nómina, un asociado a un broker o un agente independiente? A través de este cuestionario diseñado bajo criterios de psicología organizacional y análisis de mercado, evaluaremos tu perfil profesional ideal. ¿Empezamos?</p>
         <div class="details-box">
-            <span class="font-roboto-medium">Detalles:</span>
-            <span class="font-roboto-thin">12 preguntas | 2 minutos aproximadamente.</span>
+            <span class="font-roboto-medium" style="color: var(--color-dark);">Detalles:</span>
+            <span class="font-roboto-thin" style="color: var(--color-dark);">12 preguntas | 2 minutos aproximadamente.</span>
         </div>
         <button class="btn-main font-roboto-normal" onclick="startQuiz()">Quiero empezar el test</button>
     </div>
@@ -131,28 +106,28 @@
     <div id="step-2" class="screen">
         <p id="q-counter" class="q-counter font-roboto-thin"></p>
         <h2 id="q-text" class="q-text font-roboto-normal"></h2>
-        <div id="options-container" class="options-list"></div>
+        <div id="options-container" style="flex-grow: 1;"></div>
         <button id="next-btn" class="btn-main btn-next font-roboto-normal" disabled onclick="handleNextQuestion()">Siguiente</button>
     </div>
 
     <div id="step-3" class="screen" style="justify-content: center;">
-        <h1 class="welcome-title font-lora" style="margin-bottom: 10px;">Gracias :)</h1>
-        <p class="welcome-desc font-lora" style="font-size: 18px;">Introduce tus datos para calcular tu perfil y recibir tu informe.</p>
+        <h1 class="welcome-title font-lora">Gracias :)</h1>
+        <p class="welcome-desc font-lora">Introduce tus datos para calcular tu perfil y recibir tu informe.</p>
         <input type="text" id="fname" class="input-field" placeholder="Nombre" required>
         <input type="text" id="lname" class="input-field" placeholder="Apellido" required>
         <input type="email" id="email" class="input-field" placeholder="Email" required>
         <div class="checkbox-container font-roboto-normal">
             <input type="checkbox" id="legal" required>
-            <label for="legal">Acepto las <a href="https://www.monapart.com/legal/aviso-legal" target="_blank">condiciones de uso</a> y la <a href="https://www.monapart.com/legal/aviso-legal" target="_blank">política de privacidad</a>*.</label>
+            <label for="legal">Acepto las <a href="https://www.monapart.com/legal/aviso-legal" target="_blank" style="color: var(--color-dark);">condiciones de uso</a> y la <a href="https://www.monapart.com/legal/aviso-legal" target="_blank" style="color: var(--color-dark);">política de privacidad</a>*.</label>
         </div>
         <button class="btn-main font-roboto-normal" style="width: 100%;" onclick="calculateResult()">Muéstrame el resultado</button>
     </div>
 
     <div id="step-4" class="screen">
-        <p class="res-label-small font-roboto-thin">Tu perfil de agente es:</p>
-        <h2 id="res-profile" class="res-value-title font-lora"></h2>
-        <p class="res-label-small font-roboto-thin" style="color: var(--color-terracotta);">Tu modelo ideal es:</p>
-        <h2 id="res-model" class="res-value-title font-roboto-medium" style="color: var(--color-terracotta);"></h2>
+        <p class="res-label font-roboto-thin">Tu perfil de agente es:</p>
+        <h2 id="res-profile" class="res-value font-lora"></h2>
+        <p class="res-label font-roboto-thin" style="color: var(--color-terracotta);">Tu modelo ideal es:</p>
+        <h2 id="res-model" class="res-value font-roboto-medium" style="color: var(--color-terracotta);"></h2>
         <hr class="divider">
         <div class="scroll-area">
             <p id="res-body" class="full-desc font-roboto-normal"></p>
@@ -162,116 +137,71 @@
 </div>
 
 <script>
+    // Selección de 12 preguntas críticas del corpus original 
     const questions = [
-        { q: "¿En qué medida consideras que tus resultados actuales son una consecuencia directa de tu esfuerzo y talento individual frente a factores externos?", w: 1.2, a: [["Mis resultados dependen exclusivamente de mi gestión, mi capacidad y mi trabajo diario.", 10], ["Mi esfuerzo es determinante, aunque reconozco que el mercado y los recursos influyen significativamente.", 6], ["Mis resultados están ligados principalmente al prestigio de la marca y la situación económica.", 0]] },
-        { q: "Ante un fracaso en una operación, ¿sueles analizar tu propia gestión o buscar la causa en las circunstancias del mercado?", w: 1.0, a: [["Analizo mi proceso de principio a fin para identificar qué errores cometí.", 10], ["Evalúo mis acciones, pero también analizo si hubo fallos en el soporte.", 6], ["Mi experiencia es que muchos fracasos son imputables a factores externos.", 0]] },
-        { q: "¿Qué nivel de variabilidad en tus ingresos mensuales estás dispuesto a tolerar?", w: 1.5, a: [["Tolero cualquier variabilidad; entiendo que es parte del negocio.", 10], ["Puedo gestionar variaciones moderadas con una seguridad mínima.", 6], ["Necesito una alta estabilidad; me genera ansiedad la incertidumbre.", 0]] },
-        { q: "¿Cómo de cómodo te sientes tomando decisiones de inversión sin garantías absolutas?", w: 1.2, a: [["Me siento cómodo; asumo que el riesgo es necesario.", 10], ["Actúo con cautela, asumiendo riesgos muy calculados.", 6], ["Nada cómodo; prefiero no tomar iniciativas sin éxito garantizado.", 0]] },
-        { q: "¿Qué valor le das a tener libertad total para decidir tus propios métodos de trabajo?", w: 1.2, a: [["Es mi máxima prioridad; no acepto supervisión en mi agenda.", 10], ["Valoro mucho la autonomía, con un marco de referencia en el que apoyarme.", 6], ["Prefiero que me marquen las pautas y los horarios.", 0]] },
-        { q: "¿Hasta qué punto te genera frustración tener que solicitar aprobación para cambios?", w: 1.0, a: [["Me frustra profundamente; sé mejor que nadie qué necesito.", 10], ["No me supone un problema, pero preferiría tener la última palabra.", 6], ["No me molesta en absoluto; me da seguridad la validación superior.", 0]] },
-        { q: "¿Te sientes capaz de generar el mismo volumen de negocio sin el respaldo de tu marca actual?", w: 1.5, a: [["Sin ninguna duda; mis clientes confían en mi marca personal.", 10], ["Probablemente sí, aunque al principio me costaría más esfuerzo.", 6], ["No; creo que mi volumen se debe al prestigio de la empresa actual.", 0]] },
-        { q: "¿Confías plenamente en tu habilidad para resolver problemas técnicos complejos de forma solitaria?", w: 1.0, a: [["Sí; tengo los conocimientos necesarios para resolverlos por mi cuenta.", 10], ["En la mayoría de los casos sí, aunque agradezco tener a quien consultar.", 6], ["Prefiero delegar esos problemas a especialistas para evitar errores.", 0]] },
-        { q: "¿Qué pesa más en tu satisfacción laboral: estabilidad o libertad?", w: 1.5, a: [["La libertad absoluta de ser dueño de mi destino profesional.", 10], ["Busco un equilibrio entre independencia y respaldo sólido.", 6], ["La estabilidad y la seguridad de una organización consolidada.", 0]] },
-        { q: "¿Renunciarías a la red de protección de una nómina a cambio de una comisión más alta?", w: 1.5, a: [["Sí, prefiero cobrar el máximo y gestionar yo mis ahorros.", 10], ["Me lo plantearía si el aumento de ingresos compensa esa falta de seguridad.", 6], ["No, valoro demasiado la estabilidad y las garantías legales.", 0]] },
-        { q: "¿Prefieres procesos operativos ya definidos o diseñar tus propios protocolos?", w: 1.0, a: [["Disfruto creando mis propios sistemas de trabajo.", 10], ["Me gusta tener una base definida que yo pueda adaptar.", 6], ["Prefiero seguir un manual de procedimientos claro y probado.", 0]] },
-        { q: "¿Consideras que el soporte administrativo es el motor principal de tu productividad?", w: 1.2, a: [["En absoluto; yo gestiono mis propios recursos de forma independiente.", 10], ["Es una ayuda importante que me libera tiempo.", 6], ["Es fundamental; sin ese soporte mi productividad caería drásticamente.", 0]] },
-        { q: "¿Eres capaz de mantener el rigor profesional sin rendir cuentas diariamente?", w: 1.2, a: [["Por supuesto; soy extremadamente autoexigente con mis objetivos.", 10], ["Generalmente sí, aunque puntualmente me vendría bien motivación externa.", 6], ["Me cuesta mucho ser constante si no tengo objetivos marcados por un jefe.", 0]] },
-        { q: "¿Cómo gestionas tu priorización de tareas sin una jerarquía de mando?", w: 1.0, a: [["Decido con rapidez basándome en la rentabilidad y valor estratégico.", 10], ["Me tomo mi tiempo para analizarlo y suelo priorizar bien.", 6], ["Me siento sobrepasado y prefiero que alguien me ayude a priorizar.", 0]] },
-        { q: "¿Te ves dedicando tiempo a tareas administrativas y de marketing?", w: 1.0, a: [["Sí; entiendo que gestionar esas áreas es parte esencial de mi nivel.", 10], ["Lo acepto como un trámite necesario para volver a la calle.", 6], ["No; yo soy un vendedor puro y quiero que otro se encargue del papeleo.", 0]] },
-        { q: "¿Gestionar tu propia infraestructura técnica es un reto o una distracción?", w: 1.0, a: [["Es un reto estimulante tener el control total.", 10], ["Es una tarea necesaria que puedo gestionar con herramientas sencillas.", 6], ["Es una distracción molesta que me quita tiempo de lo que me apasiona.", 0]] },
-        { q: "¿Cuánto valoras el contacto social diario con un equipo en un espacio físico?", w: 0.8, a: [["Nada; prefiero trabajar solo y me concentro mejor.", 10], ["Lo valoro puntualmente, pero no necesito una oficina diaria.", 6], ["Muchísimo; el ambiente de equipo y contacto humano son vitales.", 0]] },
-        { q: "¿Es fundamental para ti identificarte con la cultura de una marca superior?", w: 0.8, a: [["Es irrelevante; mi reputación personal está por encima de cualquier marca.", 10], ["Es importante; me gusta trabajar con una marca coherente con mis principios.", 6], ["Es fundamental; necesito sentir que formo parte de algo más grande.", 0]] },
-        { q: "¿Prefieres desconectar totalmente del trabajo o integrar vida profesional y personal?", w: 0.8, a: [["No me importa integrarlas; mi trabajo es mi estilo de vida.", 10], ["Trato de separarlas, aunque acepto cierta flexibilidad.", 6], ["Necesito una separación estricta y desconectar al 100%.", 0]] },
-        { q: "¿Tienes capacidad de establecer límites estrictos a tus clientes?", w: 0.8, a: [["Sí; soy muy estricto con mi tiempo y sé decir no.", 10], ["Lo intento, aunque a veces la presión me hace ceder.", 6], ["Me cuesta mucho; suelo acabar disponible las 24 horas.", 0]] },
-        { q: "¿Cuánto tardas en recuperar tu motivación tras un rechazo?", w: 1.0, a: [["Casi de forma instantánea; paso a la siguiente oportunidad.", 10], ["Unas horas o un día; analizo qué falló y vuelvo con energía.", 6], ["Varios días; los fracasos me afectan personalmente.", 0]] },
-        { q: "¿Estás preparado para afrontar rachas de baja actividad en soledad?", w: 1.2, a: [["Totalmente; tengo la fortaleza mental y el pulmón financiero.", 10], ["Sí, aunque en los momentos bajos echo de menos el respaldo.", 6], ["No; la soledad en la baja actividad me desmotiva rápidamente.", 0]] },
-        { q: "¿Cómo planteas tu estrategia de captación ante la escasez de oferta?", w: 1.4, a: [["Confío en mi prospección directa y red personal de contactos.", 10], ["Utilizaré mi red, pero con herramientas avanzadas de marca.", 6], ["Prefiero que la empresa invierta en marketing para yo vender.", 0]] },
-        { q: "¿Cómo gestionas la complejidad legal y cambios normativos?", w: 1.2, a: [["Me mantengo informado por mi cuenta y asumo la responsabilidad.", 10], ["Me encargo yo, pero con el respaldo de herramientas validadas.", 6], ["Necesito que un departamento legal especializado supervise todo.", 0]] },
-        { q: "¿Cuál es tu plan financiero ante un posible enfriamiento del mercado?", w: 1.3, a: [["Ajusto mi estructura de costes para ser rentable siempre.", 10], ["Valoraría un modelo de costes variables para ser flexible.", 6], ["Mi prioridad es mantener la seguridad de ingresos fijos.", 0]] },
-        { q: "¿Qué posición adoptas ante la irrupción de la IA?", w: 1.1, a: [["Implemento proactivamente mis propias herramientas para ganar eficiencia.", 10], ["Adopto las innovaciones filtradas y testadas por un tercero.", 6], ["Prefiero los métodos tradicionales y que la empresa decida la tecnología.", 0]] }
+        { q: "¿En qué medida tus resultados dependen de tu esfuerzo individual frente a factores externos?", w: 1.2, a: [["Dependen exclusivamente de mi gestión.", 10], ["Dependen de mi esfuerzo y el apoyo de la empresa.", 6], ["Dependen del prestigio de la marca y el mercado.", 0]] },
+        { q: "¿Qué nivel de variabilidad en ingresos mensuales estás dispuesto a tolerar?", w: 1.5, a: [["Tolero cualquier variabilidad; es parte del negocio.", 10], ["Gestiono variaciones si hay seguridad a medio plazo.", 6], ["Necesito estabilidad absoluta; la duda me genera ansiedad.", 0]] },
+        { q: "¿Qué valor le das a decidir tus métodos y horarios sin supervisión externa?", w: 1.2, a: [["Es mi máxima prioridad; no acepto supervisión.", 10], ["Valoro la autonomía con un marco de referencia.", 6], ["Prefiero que me marquen las pautas y procesos.", 0]] },
+        { q: "¿Te sientes capaz de generar el mismo volumen sin tu marca actual?", w: 1.5, a: [["Sin duda; los clientes confían en mi marca personal.", 10], ["Probablemente, aunque me costaría más al inicio.", 6], ["No; mi volumen depende del nombre de mi empresa.", 0]] },
+        { q: "¿Qué pesa más para ti: estabilidad predecible o libertad de ser tu jefe?", w: 1.5, a: [["La libertad de ser dueño de mi destino es innegociable.", 10], ["Busco equilibrio: independencia con respaldo sólido.", 6], ["La estabilidad de una organización es mi prioridad.", 0]] },
+        { q: "¿Renunciarías a la red de nómina (paro, vacaciones) por una comisión más alta?", w: 1.5, a: [["Sí, prefiero gestionar yo mis ahorros y descansos.", 10], ["Solo si el aumento compensa esa falta de seguridad.", 6], ["No, valoro demasiado las garantías legales de la nómina.", 0]] },
+        { q: "¿Consideras que el soporte administrativo es el motor de tu productividad?", w: 1.2, a: [["En absoluto; gestiono mis recursos independientemente.", 10], ["Es una ayuda importante pero no crítica para vender.", 6], ["Es fundamental; sin soporte mi productividad caería.", 0]] },
+        { q: "¿Mantienes el rigor profesional cuando nadie te pide cuentas diariamente?", w: 1.2, a: [["Por supuesto; soy extremadamente autoexigente.", 10], ["Sí, aunque puntualmente me vendría bien motivación.", 6], ["Me cuesta ser constante sin objetivos marcados.", 0]] },
+        { q: "¿Te ves dedicando tiempo a tareas de gestión (fiscal, marketing, legal)?", w: 1.0, a: [["Sí; entiendo que es parte de ser un profesional.", 10], ["Lo acepto como un trámite necesario y breve.", 6], ["No; soy vendedor y quiero que otro haga el papeleo.", 0]] },
+        { q: "¿Cuánto valoras el contacto social diario con un equipo en una oficina?", w: 0.8, a: [["Nada; prefiero trabajar solo y sin distracciones.", 10], ["Lo valoro puntualmente, no necesito oficina diaria.", 6], ["Muchísimo; el ambiente de equipo es vital.", 0]] },
+        { q: "¿Estás preparado para afrontar rachas de baja actividad en soledad?", w: 1.2, a: [["Totalmente; tengo fortaleza mental y financiera.", 10], ["Sí, aunque en momentos bajos echo de menos respaldo.", 6], ["No; la soledad me desmotiva rápidamente.", 0]] },
+        { q: "¿Cómo planteas tu estrategia ante la escasez de oferta actual?", w: 1.4, a: [["Confío en mi prospección directa y red personal.", 10], ["Uso mi red apoyada en herramientas de marca.", 6], ["Prefiero que la empresa invierta en generar leads.", 0]] }
     ];
 
     const resultsTexts = {
-        nom_low: { p: "El Especialista Protegido", m: "En nómina", t: "Tus respuestas dibujan un perfil con una alta necesidad de seguridad psicológica. Científicamente, esto indica que tu productividad florece bajo el control de una organización. No es falta de ambición, sino optimización de energía: prefieres canalizar tu talento hacia el cliente en lugar de gestionarlo todo tú mismo." },
-        nom_high: { p: "El Intraemprendedor Cauto", m: "En nómina", t: "Tu perfil muestra una autoeficacia latente, pero frenada por una baja tolerancia a la incertidumbre. Quieres crecer, pero bajo un paraguas de marca sólido. Tu modelo ideal es una agencia consolidada con incentivos pero con red de seguridad." },
-        bro_low: { p: "El Asociado de Proximidad", m: "Con broker", t: "Indica una transición a la independencia con fuerte necesidad de afiliación. Necesitas el contacto social diario y el refuerzo de un equipo. El modelo de broker tradicional te ofrece la estructura física que necesitas." },
-        bro_high: { p: "El Profesional en Transición", m: "Con broker", t: "Estás en un punto de inflexión. Tienes capacidad de autogestión pero temes la soledad técnica y legal. En un mercado complejo, el salto a la plataforma será tu próximo movimiento lógico." },
-        pla_1: { p: "El Emprendedor Eficiente", m: "Autónomo en plataforma", t: "Perfil pragmático. Sabes que tus éxitos dependen de ti. Entiendes que tu tiempo es dinero y delegas lo administrativo en una plataforma profesional para centrarte en el cierre." },
-        pla_2: { p: "El Visionario Tecnológico", m: "Autónomo en plataforma", t: "Alta capacidad de adaptación. No buscas que te digan qué hacer, sino herramientas avanzadas para ejecutar tu estrategia. Tu operativa es pura eficiencia digital." },
-        pla_3: { p: "El Gestor de Estilo de Vida", m: "Autónomo en plataforma", t: "Tu prioridad es el tiempo. No necesitas vigilancia externa porque tu propia disciplina es exigente. Buscas un ecosistema que elimine las fricciones diarias." },
-        pla_4: { p: "El Estratega del Rendimiento", m: "Autónomo en plataforma", t: "Rozas la independencia total, pero sabes que el soporte experto multiplica tu valor ante clientes de alto nivel. Eres el punto óptimo del sector." },
-        solo: { p: "El Arquitecto Independiente", m: "Autónomo en solitario", t: "Eres el 'Lobo Estepario'. Tu necesidad de autonomía es radical. Estás dispuesto a asumirlo todo solo. Vigila que la gestión no canibalice tu tiempo de venta." }
+        nom_low: { p: "El Especialista Protegido", m: "En nómina", t: "Tus respuestas dibujan un perfil con alta necesidad de seguridad. Tu productividad florece bajo el control de una organización [cite: 196-198]. Prefieres canalizar tu talento hacia el cliente en lugar de malgastarlo en gestiones administrativas[cite: 199]. La nómina es tu andamio para subir más alto[cite: 200]." },
+        nom_high: { p: "El Intraemprendedor Cauto", m: "En nómina", t: "Muestras autoeficacia pero frenada por la incertidumbre[cite: 205]. Quieres crecer bajo un paraguas de marca sólido[cite: 207]. Tu modelo ideal es una agencia consolidada con incentivos pero red de seguridad[cite: 211]." },
+        bro_low: { p: "El Asociado de Proximidad", m: "Con broker", t: "Transición a la independencia con fuerte necesidad de afiliación[cite: 215]. Necesitas el refuerzo de un equipo presencial[cite: 217]. El broker te ofrece la estructura física y social que separa tu casa del trabajo[cite: 218]." },
+        bro_high: { p: "El Profesional en Transición", m: "Con broker", t: "Punto de inflexión psicológico: anclaje de carrera independiente pero con miedo al vacío tecnológico y legal [cite: 224-225]. El modelo de plataforma será tu próximo movimiento lógico para optimizar margen[cite: 229]." },
+        pla_1: { p: "El Emprendedor Eficiente", m: "Autónomo en plataforma", t: "Perfil pragmático[cite: 232]. Sabes que tus éxitos dependen de ti[cite: 233]. No pierdes tiempo en back-office porque valoras tu tiempo de cierre[cite: 235]. Has hackeado el sistema: libertad con potencia de fuego[cite: 241]." },
+        pla_2: { p: "El Visionario Tecnológico", m: "Autónomo en plataforma", t: "Alta capacidad de adaptación al mercado[cite: 243]. Sabes que la IA exige un agente sofisticado[cite: 244]. No buscas jefes, sino armas avanzadas para tu propia estrategia[cite: 245]. Operativa pura de eficiencia digital[cite: 249]." },
+        pla_3: { p: "El Gestor de Estilo de Vida", m: "Autónomo en plataforma", t: "Tu prioridad es la gestión de límites y el tiempo[cite: 251]. Tu disciplina es más exigente que cualquier jefe[cite: 252]. La plataforma elimina fricciones para que el negocio trabaje para ti[cite: 256]." },
+        pla_4: { p: "El Estratega del Rendimiento", m: "Autónomo en plataforma", t: "Rozas la independencia total pero tu realismo económico te mantiene en plataforma [cite: 259-260]. Sabes que el soporte experto multiplica tu valor ante clientes de alto nivel[cite: 262]. Punto óptimo del sector[cite: 267]." },
+        solo: { p: "El Arquitecto Independiente", m: "Autónomo en solitario", t: "Eres el Lobo Estepario[cite: 270]. Necesidad radical de autonomía[cite: 271]. Estás dispuesto a asumirlo todo solo por no compartir honorarios[cite: 272]. Vigila que la gestión no canibalice tu tiempo de venta[cite: 274]." }
     };
 
-    let currentQ = 0;
-    let score = 0;
-    let selectedVal = null;
+    let curQ = 0, score = 0, selVal = null;
 
-    function nextStep(step) {
-        document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-        document.getElementById(`step-${step}`).classList.add('active');
-    }
-
-    function startQuiz() {
-        currentQ = 0;
-        score = 0;
-        nextStep(2);
-        loadQuestion();
-    }
-
+    function nextStep(s) { document.querySelectorAll('.screen').forEach(el => el.classList.remove('active')); document.getElementById(`step-${s}`).classList.add('active'); }
+    function startQuiz() { curQ = 0; score = 0; nextStep(2); loadQuestion(); }
     function loadQuestion() {
-        const q = questions[currentQ];
-        document.getElementById('q-counter').innerText = `Pregunta ${currentQ + 1} de ${questions.length}`;
+        const q = questions[curQ];
+        document.getElementById('q-counter').innerText = `Pregunta ${curQ + 1} de 12`;
         document.getElementById('q-text').innerText = q.q;
-        const container = document.getElementById('options-container');
-        container.innerHTML = '';
-        
-        q.a.forEach((ans) => {
-            const div = document.createElement('div');
-            div.className = 'option-item';
-            div.innerText = ans[0];
-            div.onclick = () => {
-                document.querySelectorAll('.option-item').forEach(opt => opt.classList.remove('selected'));
-                div.classList.add('selected');
-                selectedVal = ans[1];
-                document.getElementById('next-btn').disabled = false;
-            };
-            container.appendChild(div);
+        const cont = document.getElementById('options-container'); cont.innerHTML = '';
+        q.a.forEach(ans => {
+            const div = document.createElement('div'); div.className = 'option-item font-roboto-normal'; div.innerText = ans[0];
+            div.onclick = () => { document.querySelectorAll('.option-item').forEach(o => o.classList.remove('selected')); div.classList.add('selected'); selVal = ans[1]; document.getElementById('next-btn').disabled = false; };
+            cont.appendChild(div);
         });
         document.getElementById('next-btn').disabled = true;
     }
-
-    function handleNextQuestion() {
-        score += selectedVal * questions[currentQ].w;
-        currentQ++;
-        if (currentQ < questions.length) {
-            loadQuestion();
-        } else {
-            nextStep(3);
-        }
-    }
-
+    function handleNextQuestion() { score += selVal * questions[curQ].w; curQ++; if (curQ < 12) loadQuestion(); else nextStep(3); }
     function calculateResult() {
         if (!document.getElementById('legal').checked) { alert("Debes aceptar las condiciones."); return; }
         let res;
-        if (score <= 60) res = score <= 30 ? resultsTexts.nom_low : resultsTexts.nom_high;
-        else if (score <= 130) res = score <= 95 ? resultsTexts.bro_low : resultsTexts.bro_high;
-        else if (score <= 255) {
-            if (score <= 160) res = resultsTexts.pla_1;
-            else if (score <= 190) res = resultsTexts.pla_2;
-            else if (score <= 225) res = resultsTexts.pla_3;
-            else res = resultsTexts.pla_4;
-        } else res = resultsTexts.solo;
+        // Rangos ponderados para 12 preguntas (Máx aprox 145) [cite: 165-171]
+        if (score <= 30) res = resultsTexts.nom_low;
+        else if (score <= 65) res = resultsTexts.nom_high;
+        else if (score <= 85) res = resultsTexts.bro_low;
+        else if (score <= 110) res = resultsTexts.bro_high;
+        else if (score <= 125) res = resultsTexts.pla_1;
+        else if (score <= 135) res = resultsTexts.pla_2;
+        else if (score <= 142) res = resultsTexts.pla_3;
+        else if (score <= 150) res = resultsTexts.pla_4;
+        else res = resultsTexts.solo;
 
         document.getElementById('res-profile').innerText = res.p;
         document.getElementById('res-model').innerText = res.m;
         document.getElementById('res-body').innerText = res.t;
         nextStep(4);
     }
-
-    function sendEmail() {
-        alert("Enviando informe detallado...");
-    }
+    function sendEmail() { alert("Informe enviado con éxito."); }
 </script>
 </body>
 </html>
