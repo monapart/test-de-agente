@@ -137,7 +137,7 @@
             <p id="res-body" class="full-desc font-roboto-normal"></p>
         </div>
         
-        <button class="btn-start font-roboto-normal" style="width: 100%; align-self: stretch;" onclick="alert('Resultado enviado')">Envíame el resultado</button>
+        <button class="btn-start font-roboto-normal" style="width: 100%; align-self: stretch;" onclick="window.location.href='https://www.monapart.com/unirse-a-monapart'">Rellena el formulario si quieres que te contactemos</button>
     </div>
 </div>
 
@@ -205,17 +205,16 @@
     }
 
     function handleNextQuestion() {
-        score += selVal * questions[curQ].w;
-        curQ++;
-        if (curQ < questions.length) {
-            loadQuestion();
-        } else {
-            nextStep(3);
-        }
+    score += selVal * questions[curQ].w;
+    curQ++;
+    if (curQ < questions.length) {
+        loadQuestion();
+    } else {
+        calculateResult();
     }
+}
 
     function calculateResult() {
-        if (!document.getElementById('legal').checked) { alert("Debes aceptar las condiciones."); return; }
         let res;
         // Rangos según Perfiles.docx [cite: 278-338]
         if (score <= 16) res = resultsTexts.nom_low;
